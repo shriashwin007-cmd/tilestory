@@ -1,11 +1,11 @@
 .about {
   position: relative;
-  padding: 6rem 1.5rem;
+  padding: 4.5rem 1.5rem;
   background: var(--bg-dark);
 }
 @media (min-width: 900px) {
   .about {
-    padding: 9rem 4rem;
+    padding: 6rem 4rem;
   }
 }
 .inner {
@@ -19,7 +19,7 @@
 @media (min-width: 900px) {
   .inner {
     grid-template-columns: 1fr 1.1fr;
-    gap: 6rem;
+    gap: 4rem;
   }
 }
 .imgWrap {
@@ -29,7 +29,7 @@
   border-radius: 1.2rem;
   overflow: hidden;
   aspect-ratio: 4 / 5;
-  background: linear-gradient(135deg, var(--teal-dark), var(--bg-void));
+  background: linear-gradient(135deg, #e4f2ef, #cfe7e2);
   border: 1px solid var(--border-teal);
   box-shadow: var(--shadow-mid);
   display: flex;
@@ -101,7 +101,7 @@
   font-size: 0.7rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--yellow-bright);
+  color: var(--yellow-deep);
   white-space: nowrap;
 }
 .desc {

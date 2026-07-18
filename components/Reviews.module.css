@@ -1,11 +1,11 @@
 .section {
   position: relative;
-  padding: 6rem 1.5rem;
+  padding: 4rem 1.5rem;
   background: var(--bg-dark);
 }
 @media (min-width: 900px) {
   .section {
-    padding: 9rem 4rem;
+    padding: 5.5rem 4rem;
   }
 }
 .inner {

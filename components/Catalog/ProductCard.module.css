@@ -18,7 +18,7 @@
   position: relative;
   aspect-ratio: 4 / 5;
   overflow: hidden;
-  background: linear-gradient(135deg, var(--teal-dark), var(--bg-void));
+  background: linear-gradient(135deg, #e4f2ef, #cfe7e2);
 }
 .imgPlaceholder {
   position: absolute;
@@ -44,7 +44,7 @@
   text-transform: uppercase;
   padding: 0.32rem 0.75rem;
   border-radius: 100px;
-  background: rgba(11, 11, 13, 0.85);
+  background: rgba(255, 255, 255, 0.92);
   border: 1px solid var(--border-teal);
   color: var(--teal-primary);
 }
@@ -83,7 +83,7 @@
   font-size: 0.58rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--yellow-bright);
+  color: var(--yellow-deep);
 }
 .colors {
   display: flex;
@@ -93,5 +93,5 @@
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  border: 1px solid rgba(245, 241, 232, 0.2);
+  border: 1px solid rgba(20, 24, 26, 0.15);
 }

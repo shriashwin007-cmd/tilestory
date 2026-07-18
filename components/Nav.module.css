@@ -11,11 +11,11 @@
   transition: background 0.4s, box-shadow 0.4s, padding 0.4s;
 }
 .nav.scrolled {
-  background: rgba(11, 11, 13, 0.85);
+  background: rgba(248, 246, 241, 0.9);
   backdrop-filter: blur(24px);
   border-bottom: 1px solid var(--border-teal);
   padding: 0.85rem 2.8rem;
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 8px 40px rgba(20, 24, 26, 0.08);
 }
 .logo {
   display: flex;
@@ -31,24 +31,40 @@
   font-size: 1.05rem;
   letter-spacing: 0.18em;
   font-weight: 500;
+  color: #f7f5ee;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+  transition: color 0.4s;
+}
+.nav.scrolled .logoName {
+  color: var(--text-primary);
+  text-shadow: none;
 }
 .logoSub {
   font-family: var(--font-ui);
   font-size: 0.55rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: var(--teal-primary);
+  color: #6fe0d2;
   display: block;
   margin-top: 1px;
+  transition: color 0.4s;
+}
+.nav.scrolled .logoSub {
+  color: var(--teal-primary);
 }
 .links {
   display: none;
   align-items: center;
   gap: 0.4rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--border-teal);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(247, 245, 238, 0.3);
   border-radius: 100px;
   padding: 0.28rem;
+  transition: background 0.4s, border-color 0.4s;
+}
+.nav.scrolled .links {
+  background: rgba(20, 24, 26, 0.04);
+  border-color: var(--border-teal);
 }
 @media (min-width: 900px) {
   .links {
@@ -61,15 +77,22 @@
   font-size: 0.72rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--text-secondary);
+  color: rgba(247, 245, 238, 0.85);
   cursor: pointer;
   white-space: nowrap;
   border-radius: 100px;
   transition: color 0.25s, background 0.25s;
 }
 .navItem:hover {
+  color: #f7f5ee;
+  background: rgba(255, 255, 255, 0.14);
+}
+.nav.scrolled .navItem {
+  color: var(--text-secondary);
+}
+.nav.scrolled .navItem:hover {
   color: var(--text-primary);
-  background: rgba(69, 196, 184, 0.12);
+  background: rgba(27, 143, 130, 0.1);
 }
 .actions {
   display: none;
@@ -88,14 +111,21 @@
   text-transform: uppercase;
   padding: 0.55rem 1.3rem;
   border-radius: 100px;
-  border: 1px solid var(--border-teal);
-  color: var(--teal-primary);
+  border: 1px solid rgba(247, 245, 238, 0.4);
+  color: #f7f5ee;
   background: transparent;
   cursor: pointer;
   transition: all 0.3s;
 }
 .btnGhost:hover {
-  background: rgba(69, 196, 184, 0.12);
+  background: rgba(255, 255, 255, 0.14);
+}
+.nav.scrolled .btnGhost {
+  border-color: var(--border-teal);
+  color: var(--teal-primary);
+}
+.nav.scrolled .btnGhost:hover {
+  background: rgba(27, 143, 130, 0.1);
 }
 .btnCta {
   font-family: var(--font-ui);
@@ -123,9 +153,15 @@
   width: 40px;
   height: 40px;
   border-radius: 100px;
-  border: 1px solid var(--border-teal);
+  border: 1px solid rgba(247, 245, 238, 0.4);
+  color: #f7f5ee;
   background: transparent;
   cursor: pointer;
+  transition: color 0.4s, border-color 0.4s;
+}
+.nav.scrolled .burger {
+  border-color: var(--border-teal);
+  color: var(--text-primary);
 }
 @media (min-width: 900px) {
   .burger {

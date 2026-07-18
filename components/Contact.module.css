@@ -1,11 +1,11 @@
 .section {
   position: relative;
-  padding: 6rem 1.5rem;
+  padding: 4rem 1.5rem;
   background: var(--bg-void);
 }
 @media (min-width: 900px) {
   .section {
-    padding: 9rem 4rem;
+    padding: 5.5rem 4rem;
   }
 }
 .inner {
@@ -18,14 +18,14 @@
 .grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 3rem;
+  gap: 2.5rem;
   align-items: start;
-  margin-top: 3rem;
+  margin-top: 2.5rem;
 }
 @media (min-width: 900px) {
   .grid {
     grid-template-columns: 1fr 1fr;
-    gap: 5rem;
+    gap: 3.5rem;
   }
 }
 .infoBox {
