@@ -1,0 +1,223 @@
+.section {
+  position: relative;
+  padding: 6rem 1.5rem 7rem;
+  background: var(--bg-void);
+}
+@media (min-width: 900px) {
+  .section {
+    padding: 9rem 3rem 10rem;
+  }
+}
+.inner {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.head {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+.head .headLabel {
+  justify-content: center;
+}
+
+.searchWrap {
+  max-width: 680px;
+  margin: 2.5rem auto 2rem;
+}
+.searchBox {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-teal);
+  border-radius: 100px;
+  padding: 0.35rem 0.5rem 0.35rem 1.5rem;
+  box-shadow: var(--shadow-soft);
+}
+.searchBox:focus-within {
+  border-color: var(--teal-primary);
+  box-shadow: 0 0 0 3px rgba(27, 58, 107, 0.1);
+}
+.searchInput {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  padding: 0.85rem 0;
+}
+.searchInput::placeholder {
+  color: var(--text-muted);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+@media (min-width: 1000px) {
+  .layout {
+    grid-template-columns: 260px 1fr;
+    gap: 2.5rem;
+  }
+}
+
+.filters {
+  align-self: start;
+  padding: 1.6rem 1.4rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 1rem;
+}
+@media (min-width: 1000px) {
+  .filters {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 130px);
+    overflow-y: auto;
+  }
+}
+.filterHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.3rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.filterTitle {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  letter-spacing: 0.14em;
+  color: var(--text-primary);
+  text-transform: uppercase;
+}
+.filterClear {
+  font-family: var(--font-ui);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--teal-primary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.3rem 0.5rem;
+  border-radius: 0.3rem;
+}
+.filterClear:hover {
+  background: rgba(27, 58, 107, 0.08);
+}
+.filterGroup {
+  margin-bottom: 1.5rem;
+}
+.filterLabel {
+  font-family: var(--font-ui);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.8rem;
+  display: block;
+}
+.chipGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.chip {
+  font-family: var(--font-ui);
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  padding: 0.45rem 0.85rem;
+  border-radius: 100px;
+  border: 1px solid var(--border-subtle);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.25s;
+  white-space: nowrap;
+}
+.chip:hover {
+  border-color: var(--border-teal);
+  color: var(--teal-primary);
+}
+.chip.active {
+  background: linear-gradient(135deg, var(--teal-primary), var(--teal-deep));
+  border-color: var(--teal-primary);
+  color: var(--bg-void);
+  font-weight: 600;
+}
+.colorGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.colorChip {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid var(--border-subtle);
+  transition: all 0.25s;
+}
+.colorChip:hover {
+  transform: scale(1.1);
+}
+.colorChip.active {
+  border-color: var(--teal-primary);
+  box-shadow: 0 0 0 2px rgba(27, 58, 107, 0.3);
+  transform: scale(1.1);
+}
+
+.resultsBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  padding: 0 0.3rem;
+}
+.count {
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  color: var(--text-secondary);
+}
+.count strong {
+  color: var(--teal-primary);
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  margin-right: 0.3rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.4rem;
+}
+
+.empty {
+  text-align: center;
+  padding: 5rem 1rem;
+  color: var(--text-muted);
+}
+.emptyIc {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.4;
+}
+.emptyTitle {
+  font-family: var(--font-editorial);
+  font-size: 1.4rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+  font-style: italic;
+}
+.emptySub {
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
