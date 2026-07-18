@@ -63,7 +63,7 @@
   transition: background 0.4s, border-color 0.4s;
 }
 .nav.scrolled .links {
-  background: rgba(20, 24, 26, 0.04);
+  background: rgba(27, 143, 130, 0.06);
   border-color: var(--border-teal);
 }
 @media (min-width: 900px) {

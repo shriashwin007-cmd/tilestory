@@ -14,10 +14,12 @@
   --brown-rich: #7a4f2e;
   --brown-light: #9b6b45;
   --brown-deep: #4a2e18;
-  /* SURFACES */
+  /* SURFACES — bg-void is the 60% neutral base; bg-dark/bg-mid carry a
+     teal undertone so the 30% secondary brand color reads at the
+     structural level, not just in small accents */
   --bg-void: #f8f6f1;
-  --bg-dark: #f1ede3;
-  --bg-mid: #eae4d4;
+  --bg-dark: #eef4f2;
+  --bg-mid: #e2eeea;
   --bg-card: #ffffff;
   /* TEXT */
   --text-primary: #14181a;
