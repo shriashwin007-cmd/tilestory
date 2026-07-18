@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, type ReactNode, type ElementType } from "react";
+import { createElement, useRef, type ReactNode, type ElementType } from "react";
 
 export default function MagneticButton({
   children,
@@ -14,7 +14,7 @@ export default function MagneticButton({
   [key: string]: unknown;
 }) {
   const ref = useRef<HTMLElement | null>(null);
-  const Tag = (as ?? "button") as ElementType;
+  const Tag: ElementType = as ?? "button";
 
   const onMove = (e: React.MouseEvent) => {
     const el = ref.current;
@@ -30,15 +30,15 @@ export default function MagneticButton({
     if (el) el.style.transform = "translate(0, 0)";
   };
 
-  return (
-    <Tag
-      ref={ref}
-      onMouseMove={onMove}
-      onMouseLeave={onLeave}
-      style={{ transition: "transform 0.25s var(--ease-spring)" }}
-      {...props}
-    >
-      {children}
-    </Tag>
+  return createElement(
+    Tag,
+    {
+      ref,
+      onMouseMove: onMove,
+      onMouseLeave: onLeave,
+      style: { transition: "transform 0.25s var(--ease-spring)" },
+      ...props,
+    },
+    children
   );
 }

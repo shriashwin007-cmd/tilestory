@@ -1,5 +1,5 @@
 import Nav from "@/components/Nav";
-import Hero from "@/components/Hero";
+import Hero3D from "@/components/hero3d/Hero3DLoader";
 import Marquee from "@/components/Marquee";
 import About from "@/components/About";
 import Catalog from "@/components/Catalog/Catalog";
@@ -12,7 +12,7 @@ export default function Home() {
     <>
       <Nav />
       <main>
-        <Hero />
+        <Hero3D />
         <Marquee />
         <About />
         <Catalog />

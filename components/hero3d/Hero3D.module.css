@@ -1,0 +1,53 @@
+.wrap {
+  position: relative;
+  height: 200vh;
+  background: var(--bg-ink);
+}
+.sticky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  width: 100%;
+  overflow: hidden;
+}
+.bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 42%, rgba(109, 152, 141, 0.16), transparent 65%),
+    radial-gradient(ellipse 60% 50% at 78% 80%, rgba(199, 165, 123, 0.14), transparent 65%),
+    radial-gradient(ellipse 80% 80% at 50% 100%, rgba(10, 8, 6, 0.6), transparent 70%),
+    var(--bg-ink);
+}
+.canvas {
+  position: absolute !important;
+  inset: 0;
+  z-index: 1;
+}
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 6rem 2rem 5rem;
+  pointer-events: none;
+  will-change: opacity, transform;
+}
+/* Re-enable interaction on the actual controls */
+.overlay a,
+.overlay button {
+  pointer-events: auto;
+}
+.content {
+  position: relative;
+  z-index: 2;
+  max-width: 880px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
