@@ -1,6 +1,6 @@
 .card {
   position: relative;
-  border-radius: 0.9rem;
+  border-radius: var(--radius-card);
   overflow: hidden;
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
@@ -43,7 +43,7 @@
   letter-spacing: 0.16em;
   text-transform: uppercase;
   padding: 0.32rem 0.75rem;
-  border-radius: 100px;
+  border-radius: var(--radius-button);
   background: rgba(255, 255, 255, 0.92);
   border: 1px solid var(--border-teal);
   color: var(--teal-primary);

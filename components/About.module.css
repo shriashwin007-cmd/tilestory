@@ -26,7 +26,7 @@
   position: relative;
 }
 .imgBox {
-  border-radius: 1.2rem;
+  border-radius: var(--radius-section);
   overflow: hidden;
   aspect-ratio: 4 / 5;
   background: linear-gradient(135deg, #e4f2ef, #cfe7e2);
@@ -123,17 +123,17 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   padding: 0.38rem 0.95rem;
-  border-radius: 100px;
+  border-radius: var(--radius-button);
   border: 1px solid var(--border-teal);
   color: var(--teal-primary);
-  background: rgba(69, 196, 184, 0.08);
+  background: rgba(111, 157, 151, 0.1);
 }
 .infoBlock {
   display: flex;
   flex-direction: column;
   gap: 0.9rem;
   padding: 1.4rem 1.6rem;
-  border-radius: 0.85rem;
+  border-radius: var(--radius-card);
   border: 1px solid var(--border-subtle);
   background: var(--bg-card);
 }

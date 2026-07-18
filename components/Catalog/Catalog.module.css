@@ -30,13 +30,13 @@
   gap: 0.7rem;
   background: var(--bg-card);
   border: 1px solid var(--border-teal);
-  border-radius: 100px;
+  border-radius: var(--radius-button);
   padding: 0.35rem 0.5rem 0.35rem 1.5rem;
   box-shadow: var(--shadow-soft);
 }
 .searchBox:focus-within {
   border-color: var(--teal-primary);
-  box-shadow: 0 0 0 3px rgba(69, 196, 184, 0.15);
+  box-shadow: 0 0 0 3px rgba(111, 157, 151, 0.15);
 }
 .searchInput {
   flex: 1;
@@ -70,7 +70,7 @@
   padding: 1.6rem 1.4rem;
   background: var(--bg-mid);
   border: 1px solid var(--border-teal);
-  border-radius: 1rem;
+  border-radius: var(--radius-card);
 }
 @media (min-width: 1000px) {
   .filters {
@@ -108,7 +108,7 @@
   border-radius: 0.3rem;
 }
 .filterClear:hover {
-  background: rgba(69, 196, 184, 0.12);
+  background: rgba(111, 157, 151, 0.12);
 }
 .filterGroup {
   margin-bottom: 1.5rem;
@@ -132,7 +132,7 @@
   font-size: 0.66rem;
   letter-spacing: 0.08em;
   padding: 0.45rem 0.85rem;
-  border-radius: 100px;
+  border-radius: var(--radius-button);
   border: 1px solid var(--border-subtle);
   background: transparent;
   color: var(--text-secondary);
@@ -168,7 +168,7 @@
 }
 .colorChip.active {
   border-color: var(--teal-primary);
-  box-shadow: 0 0 0 2px rgba(69, 196, 184, 0.35);
+  box-shadow: 0 0 0 2px rgba(111, 157, 151, 0.35);
   transform: scale(1.1);
 }
 

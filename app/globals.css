@@ -1,47 +1,50 @@
 :root {
-  /* TILE STORY — elegant light theme matched to logo (black / teal / gold mosaic mark) */
-  --teal-primary: #1b8f82;
-  --teal-deep: #0f5951;
-  --teal-mid: #2aa79a;
-  --teal-dark: #0a332e;
-  --teal-light: #8fe0d8;
-  /* GOLD */
-  --yellow-bright: #e8b93c;
-  --yellow-gold: #c79a2e;
-  --yellow-cream: #f5e3b3;
-  --yellow-deep: #8a6a1e;
+  /* TILE STORY — official brand palette: Minimal. Elegant. Timeless. */
+  --teal-primary: #6f9d97; /* Sage Teal */
+  --teal-deep: #5e8a84; /* Deep Sage */
+  --teal-mid: #7fada6;
+  --teal-dark: #3e5f5a;
+  --teal-light: #bfd4cf; /* Mist Sage */
+  /* SAND (accent, plays the role formerly called "gold") */
+  --yellow-bright: #c7a57b; /* Warm Sand */
+  --yellow-gold: #a9825a;
+  --yellow-cream: #e5d2b8; /* Light Sand */
+  --yellow-deep: #8a6a48;
   /* BROWN ACCENTS (legacy, unused by current theme) */
   --brown-rich: #7a4f2e;
   --brown-light: #9b6b45;
   --brown-deep: #4a2e18;
-  /* SURFACES — bg-void is the 60% neutral base; bg-dark/bg-mid carry a
-     teal undertone so the 30% secondary brand color reads at the
-     structural level, not just in small accents */
-  --bg-void: #f8f6f1;
-  --bg-dark: #eef4f2;
-  --bg-mid: #e2eeea;
-  --bg-card: #ffffff;
+  /* SURFACES — neutral base per brand board */
+  --bg-void: #f8f6f2; /* Warm Ivory */
+  --bg-dark: #f2eee8; /* Soft Linen */
+  --bg-mid: #e6ded4; /* Warm Stone */
+  --bg-card: #fcfbf9; /* Porcelain White */
   /* TEXT */
-  --text-primary: #14181a;
-  --text-secondary: rgba(20, 24, 26, 0.7);
-  --text-muted: rgba(20, 24, 26, 0.45);
+  --text-primary: #2d2b28; /* Charcoal */
+  --text-secondary: #5f5b55; /* Warm Gray */
+  --text-muted: #8d867d; /* Stone Gray */
+  --text-faint: #b9b2a8; /* Soft Gray */
   /* BORDERS */
-  --border-teal: rgba(27, 143, 130, 0.25);
-  --border-yellow: rgba(199, 154, 46, 0.32);
-  --border-subtle: rgba(20, 24, 26, 0.1);
+  --border-teal: rgba(111, 157, 151, 0.3);
+  --border-yellow: rgba(199, 165, 123, 0.35);
+  --border-subtle: rgba(45, 43, 40, 0.1);
   --border-brown: rgba(122, 79, 46, 0.25);
-  /* FONTS */
-  --font-display: var(--font-cinzel), serif;
-  --font-editorial: var(--font-cormorant), serif;
-  --font-body: var(--font-dm-sans), sans-serif;
-  --font-ui: var(--font-outfit), sans-serif;
+  /* FONTS — SF Pro Display (system, Apple devices) falling back to Inter everywhere else */
+  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", var(--font-inter), sans-serif;
+  --font-editorial: -apple-system, BlinkMacSystemFont, "SF Pro Display", var(--font-inter), sans-serif;
+  --font-body: var(--font-inter), -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  --font-ui: var(--font-inter), -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
-  /* SHADOWS */
-  --shadow-soft: 0 4px 20px rgba(20, 24, 26, 0.08), 0 1px 4px rgba(20, 24, 26, 0.05);
-  --shadow-mid: 0 12px 40px rgba(20, 24, 26, 0.12), 0 3px 10px rgba(20, 24, 26, 0.06);
-  --shadow-strong: 0 24px 60px rgba(20, 24, 26, 0.16), 0 6px 16px rgba(20, 24, 26, 0.08);
-  --shadow-gold: 0 6px 24px rgba(199, 154, 46, 0.2);
+  /* SHADOWS — per brand board */
+  --shadow-soft: 0 8px 40px rgba(45, 43, 40, 0.06);
+  --shadow-mid: 0 14px 50px rgba(45, 43, 40, 0.07);
+  --shadow-strong: 0 20px 60px rgba(45, 43, 40, 0.08);
+  --shadow-gold: 0 6px 24px rgba(199, 165, 123, 0.25);
+  /* RADIUS — per brand board */
+  --radius-button: 18px;
+  --radius-card: 28px;
+  --radius-section: 36px;
 }
 
 *,
@@ -101,7 +104,7 @@ button {
 .s-title {
   font-family: var(--font-editorial);
   font-size: clamp(2.4rem, 4.5vw, 3.8rem);
-  font-weight: 300;
+  font-weight: 600;
   line-height: 1.1;
   color: var(--text-primary);
 }

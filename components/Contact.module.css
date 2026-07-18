@@ -33,7 +33,7 @@
   flex-direction: column;
   gap: 1.4rem;
   padding: 1.8rem;
-  border-radius: 1.2rem;
+  border-radius: var(--radius-card);
   background: var(--bg-card);
   border: 1px solid var(--border-teal);
 }
@@ -60,10 +60,10 @@
   color: var(--teal-primary);
   border: 1px solid var(--border-teal);
   padding: 0.5rem 1rem;
-  border-radius: 100px;
+  border-radius: var(--radius-button);
 }
 .mapLink:hover {
-  background: rgba(69, 196, 184, 0.12);
+  background: rgba(111, 157, 151, 0.12);
 }
 .fg {
   margin-bottom: 1.4rem;
@@ -82,7 +82,7 @@
   width: 100%;
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
-  border-radius: 0.65rem;
+  border-radius: var(--radius-button);
   padding: 0.9rem 1.2rem;
   font-family: var(--font-body);
   font-size: 0.88rem;
@@ -94,7 +94,7 @@
 .fi:focus,
 .fta:focus {
   border-color: var(--teal-primary);
-  box-shadow: 0 0 0 3px rgba(69, 196, 184, 0.15);
+  box-shadow: 0 0 0 3px rgba(111, 157, 151, 0.15);
 }
 .fta {
   min-height: 130px;
@@ -106,7 +106,7 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   padding: 1rem;
-  border-radius: 0.65rem;
+  border-radius: var(--radius-button);
   background: linear-gradient(135deg, var(--teal-primary), var(--teal-deep));
   color: var(--bg-void);
   font-weight: 700;
@@ -116,7 +116,7 @@
 }
 .fsub:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(23, 118, 110, 0.4);
+  box-shadow: 0 12px 30px rgba(94, 138, 132, 0.4);
 }
 .error {
   font-family: var(--font-ui);

@@ -31,7 +31,7 @@
   font-size: 1.05rem;
   letter-spacing: 0.18em;
   font-weight: 500;
-  color: #f7f5ee;
+  color: #fcfbf9;
   text-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
   transition: color 0.4s;
 }
@@ -44,7 +44,7 @@
   font-size: 0.55rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: #6fe0d2;
+  color: #bfd4cf;
   display: block;
   margin-top: 1px;
   transition: color 0.4s;
@@ -57,13 +57,13 @@
   align-items: center;
   gap: 0.4rem;
   background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(247, 245, 238, 0.3);
-  border-radius: 100px;
+  border: 1px solid rgba(252, 251, 249, 0.3);
+  border-radius: var(--radius-button);
   padding: 0.28rem;
   transition: background 0.4s, border-color 0.4s;
 }
 .nav.scrolled .links {
-  background: rgba(27, 143, 130, 0.06);
+  background: rgba(111, 157, 151, 0.06);
   border-color: var(--border-teal);
 }
 @media (min-width: 900px) {
@@ -77,14 +77,14 @@
   font-size: 0.72rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(247, 245, 238, 0.85);
+  color: rgba(252, 251, 249, 0.85);
   cursor: pointer;
   white-space: nowrap;
-  border-radius: 100px;
+  border-radius: var(--radius-button);
   transition: color 0.25s, background 0.25s;
 }
 .navItem:hover {
-  color: #f7f5ee;
+  color: #fcfbf9;
   background: rgba(255, 255, 255, 0.14);
 }
 .nav.scrolled .navItem {
@@ -92,7 +92,7 @@
 }
 .nav.scrolled .navItem:hover {
   color: var(--text-primary);
-  background: rgba(27, 143, 130, 0.1);
+  background: rgba(111, 157, 151, 0.1);
 }
 .actions {
   display: none;
@@ -110,9 +110,9 @@
   letter-spacing: 0.1em;
   text-transform: uppercase;
   padding: 0.55rem 1.3rem;
-  border-radius: 100px;
-  border: 1px solid rgba(247, 245, 238, 0.4);
-  color: #f7f5ee;
+  border-radius: var(--radius-button);
+  border: 1px solid rgba(252, 251, 249, 0.4);
+  color: #fcfbf9;
   background: transparent;
   cursor: pointer;
   transition: all 0.3s;
@@ -125,7 +125,7 @@
   color: var(--teal-primary);
 }
 .nav.scrolled .btnGhost:hover {
-  background: rgba(27, 143, 130, 0.1);
+  background: rgba(111, 157, 151, 0.1);
 }
 .btnCta {
   font-family: var(--font-ui);
@@ -133,18 +133,18 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   padding: 0.55rem 1.4rem;
-  border-radius: 100px;
+  border-radius: var(--radius-button);
   background: linear-gradient(135deg, var(--yellow-bright), var(--yellow-gold));
-  color: #1a1200;
+  color: #2d2b28;
   font-weight: 700;
   border: none;
   cursor: pointer;
   transition: all 0.3s;
-  box-shadow: 0 4px 20px rgba(253, 218, 106, 0.3);
+  box-shadow: 0 4px 20px rgba(199, 165, 123, 0.35);
 }
 .btnCta:hover {
   transform: translateY(-1px);
-  box-shadow: 0 8px 32px rgba(253, 218, 106, 0.45);
+  box-shadow: 0 8px 32px rgba(199, 165, 123, 0.5);
 }
 .burger {
   display: flex;
@@ -152,9 +152,9 @@
   justify-content: center;
   width: 40px;
   height: 40px;
-  border-radius: 100px;
-  border: 1px solid rgba(247, 245, 238, 0.4);
-  color: #f7f5ee;
+  border-radius: 50%;
+  border: 1px solid rgba(252, 251, 249, 0.4);
+  color: #fcfbf9;
   background: transparent;
   cursor: pointer;
   transition: color 0.4s, border-color 0.4s;
