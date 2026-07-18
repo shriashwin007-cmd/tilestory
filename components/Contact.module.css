@@ -63,7 +63,7 @@
   border-radius: 100px;
 }
 .mapLink:hover {
-  background: rgba(27, 58, 107, 0.08);
+  background: rgba(69, 196, 184, 0.12);
 }
 .fg {
   margin-bottom: 1.4rem;
@@ -94,7 +94,7 @@
 .fi:focus,
 .fta:focus {
   border-color: var(--teal-primary);
-  box-shadow: 0 0 0 3px rgba(27, 58, 107, 0.1);
+  box-shadow: 0 0 0 3px rgba(69, 196, 184, 0.15);
 }
 .fta {
   min-height: 130px;
@@ -116,7 +116,7 @@
 }
 .fsub:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(27, 58, 107, 0.3);
+  box-shadow: 0 12px 30px rgba(23, 118, 110, 0.4);
 }
 .error {
   font-family: var(--font-ui);

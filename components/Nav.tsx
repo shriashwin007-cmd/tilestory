@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { STORE, waLink } from "@/lib/store";
 import styles from "./Nav.module.css";
 
@@ -30,6 +31,14 @@ export default function Nav() {
     <>
       <nav className={`${styles.nav} ${scrolled ? styles.scrolled : ""}`}>
         <a href="#hero" className={styles.logo}>
+          <Image
+            src="/images/logo.jpg"
+            alt="Tile Story"
+            width={38}
+            height={38}
+            className={styles.logoMark}
+            priority
+          />
           <div>
             <span className={styles.logoName}>Tile Story</span>
             <span className={styles.logoSub}>Chennai</span>

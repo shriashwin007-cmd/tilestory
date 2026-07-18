@@ -11,16 +11,20 @@
   transition: background 0.4s, box-shadow 0.4s, padding 0.4s;
 }
 .nav.scrolled {
-  background: rgba(245, 240, 232, 0.92);
+  background: rgba(11, 11, 13, 0.85);
   backdrop-filter: blur(24px);
   border-bottom: 1px solid var(--border-teal);
   padding: 0.85rem 2.8rem;
-  box-shadow: 0 8px 40px rgba(13, 32, 64, 0.08);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
 }
 .logo {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+}
+.logoMark {
+  border-radius: 50%;
+  flex-shrink: 0;
 }
 .logoName {
   font-family: var(--font-display);
@@ -41,7 +45,7 @@
   display: none;
   align-items: center;
   gap: 0.4rem;
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.05);
   border: 1px solid var(--border-teal);
   border-radius: 100px;
   padding: 0.28rem;
@@ -65,7 +69,7 @@
 }
 .navItem:hover {
   color: var(--text-primary);
-  background: rgba(27, 58, 107, 0.08);
+  background: rgba(69, 196, 184, 0.12);
 }
 .actions {
   display: none;
@@ -91,7 +95,7 @@
   transition: all 0.3s;
 }
 .btnGhost:hover {
-  background: rgba(27, 58, 107, 0.08);
+  background: rgba(69, 196, 184, 0.12);
 }
 .btnCta {
   font-family: var(--font-ui);
@@ -106,11 +110,11 @@
   border: none;
   cursor: pointer;
   transition: all 0.3s;
-  box-shadow: 0 4px 20px rgba(184, 146, 42, 0.3);
+  box-shadow: 0 4px 20px rgba(253, 218, 106, 0.3);
 }
 .btnCta:hover {
   transform: translateY(-1px);
-  box-shadow: 0 8px 32px rgba(184, 146, 42, 0.45);
+  box-shadow: 0 8px 32px rgba(253, 218, 106, 0.45);
 }
 .burger {
   display: flex;
@@ -142,7 +146,7 @@
   gap: 0.5rem;
   transform: translateX(100%);
   transition: transform 0.4s var(--ease-smooth);
-  box-shadow: -20px 0 60px rgba(13, 32, 64, 0.15);
+  box-shadow: -20px 0 60px rgba(0, 0, 0, 0.5);
 }
 .mobileMenu.open {
   transform: translateX(0);
@@ -167,7 +171,7 @@
   position: fixed;
   inset: 0;
   z-index: 550;
-  background: rgba(13, 32, 64, 0.35);
+  background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(4px);
   opacity: 0;
   pointer-events: none;

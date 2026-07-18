@@ -4,6 +4,12 @@ import styles from "./Hero.module.css";
 export default function Hero() {
   return (
     <section className={styles.hero} id="hero">
+      <div className={styles.videoWrap}>
+        <video autoPlay muted loop playsInline preload="auto">
+          <source src="/video/hero_bg.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <div className={styles.overlay} />
       <div className={styles.content}>
         <div className={styles.eyebrow}>
           <span className={styles.eyebrowLine} />
