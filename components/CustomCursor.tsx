@@ -1,22 +1,24 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import styles from "./CustomCursor.module.css";
 
 export default function CustomCursor() {
-  const dotRef = useRef<HTMLDivElement | null>(null);
-  const ringRef = useRef<HTMLDivElement | null>(null);
-  const [enabled, setEnabled] = useState(false);
+  const dotRef = useRef<HTMLDivElement>(null);
+  const ringRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Only enable on devices with a fine pointer (mouse), not touch
-    const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-    if (!fine) return;
-    setEnabled(true);
+    // Only take over the cursor on precise-pointer (mouse) devices.
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
 
     const dot = dotRef.current;
     const ring = ringRef.current;
     if (!dot || !ring) return;
+
+    // Reveal our cursor and hide the native one (via the root class in globals).
+    document.documentElement.classList.add("cursorActive");
+    dot.classList.add(styles.visible);
+    ring.classList.add(styles.visible);
 
     let mouseX = window.innerWidth / 2;
     let mouseY = window.innerHeight / 2;
@@ -31,15 +33,15 @@ export default function CustomCursor() {
     };
 
     const loop = () => {
-      ringX += (mouseX - ringX) * 0.18;
-      ringY += (mouseY - ringY) * 0.18;
+      ringX += (mouseX - ringX) * 0.2;
+      ringY += (mouseY - ringY) * 0.2;
       ring.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%)`;
       raf = requestAnimationFrame(loop);
     };
 
     const onOver = (e: MouseEvent) => {
-      const t = e.target as HTMLElement;
-      if (t.closest("a, button, [role='button'], input, textarea, .cursor-hover")) {
+      const t = e.target as HTMLElement | null;
+      if (t?.closest("a, button, [role='button'], input, textarea, .cursor-hover")) {
         ring.classList.add(styles.hover);
         dot.classList.add(styles.hover);
       }
@@ -55,14 +57,13 @@ export default function CustomCursor() {
     raf = requestAnimationFrame(loop);
 
     return () => {
+      document.documentElement.classList.remove("cursorActive");
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("mouseover", onOver);
       window.removeEventListener("mouseout", onOut);
       cancelAnimationFrame(raf);
     };
   }, []);
-
-  if (!enabled) return null;
 
   return (
     <>

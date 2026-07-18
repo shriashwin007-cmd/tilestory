@@ -94,17 +94,18 @@ button {
   font: inherit;
 }
 
-/* Hide the native cursor on precise-pointer (mouse) devices — the custom
-   cursor component replaces it there. Touch devices keep their default. */
-@media (hover: hover) and (pointer: fine) {
-  html,
-  a,
-  button,
-  input,
-  textarea,
-  [role="button"] {
-    cursor: none;
-  }
+/* Hide the native cursor only once the custom-cursor component has
+   mounted and added `cursorActive` to <html> (it does so only on
+   precise-pointer devices). If JS is off or the component fails, the
+   native cursor stays — never leaving the user with no cursor at all. */
+html.cursorActive,
+html.cursorActive a,
+html.cursorActive button,
+html.cursorActive input,
+html.cursorActive textarea,
+html.cursorActive [role="button"],
+html.cursorActive .cursor-hover {
+  cursor: none;
 }
 
 /* Shared section styles */

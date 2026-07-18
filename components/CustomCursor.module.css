@@ -8,7 +8,8 @@
   background: var(--teal-deep);
   pointer-events: none;
   z-index: 9999;
-  transition: width 0.25s, height 0.25s, background 0.25s;
+  opacity: 0;
+  transition: width 0.25s, height 0.25s, background 0.25s, opacity 0.3s;
   will-change: transform;
 }
 .ring {
@@ -21,9 +22,13 @@
   border: 1.5px solid rgba(92, 135, 124, 0.6);
   pointer-events: none;
   z-index: 9998;
+  opacity: 0;
   transition: width 0.35s var(--ease-spring), height 0.35s var(--ease-spring),
-    border-color 0.3s, background 0.3s;
+    border-color 0.3s, background 0.3s, opacity 0.3s;
   will-change: transform;
+}
+.visible {
+  opacity: 1;
 }
 .dot.hover {
   width: 10px;
