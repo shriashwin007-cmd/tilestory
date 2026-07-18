@@ -1,4 +1,6 @@
-import { STORE, waLink } from "@/lib/store";
+import { waLink } from "@/lib/store";
+import MagneticButton from "./MagneticButton";
+import CountUp from "./CountUp";
 import styles from "./Hero.module.css";
 
 export default function Hero() {
@@ -31,27 +33,36 @@ export default function Hero() {
         </p>
 
         <div className={styles.ctas}>
-          <a href="#collections" className={styles.btnPrimary}>
+          <MagneticButton
+            as="a"
+            href="#collections"
+            className={styles.btnPrimary}
+          >
             Explore Collection
-          </a>
-          <a
+          </MagneticButton>
+          <MagneticButton
+            as="a"
             href={waLink("Hi Tile Story! I'd like to know more about your tiles.")}
             target="_blank"
             rel="noopener noreferrer"
             className={styles.btnOutline}
           >
             Chat on WhatsApp
-          </a>
+          </MagneticButton>
         </div>
 
         <div className={styles.stats}>
           <div className={styles.stat}>
-            <div className={styles.statValue}>{STORE.rating} ★</div>
+            <div className={styles.statValue}>
+              <CountUp end={4.85} decimals={2} /> ★
+            </div>
             <div className={styles.statLabel}>Rating</div>
           </div>
           <div className={styles.statDiv} />
           <div className={styles.stat}>
-            <div className={styles.statValue}>30+</div>
+            <div className={styles.statValue}>
+              <CountUp end={30} suffix="+" />
+            </div>
             <div className={styles.statLabel}>Collections</div>
           </div>
           <div className={styles.statDiv} />
@@ -60,6 +71,11 @@ export default function Hero() {
             <div className={styles.statLabel}>Delivery</div>
           </div>
         </div>
+      </div>
+
+      <div className={styles.scrollCue}>
+        Scroll
+        <span className={styles.scrollCueLine} />
       </div>
     </section>
   );

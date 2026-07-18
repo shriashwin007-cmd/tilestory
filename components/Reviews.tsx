@@ -1,3 +1,4 @@
+import Reveal from "./Reveal";
 import styles from "./Reviews.module.css";
 
 const REVIEWS = [
@@ -18,21 +19,24 @@ const REVIEWS = [
 export default function Reviews() {
   return (
     <section className={styles.section} id="reviews">
+      <div className={styles.glow} />
       <div className={styles.inner}>
-        <div className="s-label" style={{ justifyContent: "center" }}>
-          Customer Stories
-        </div>
-        <h2 className="s-title">
-          What Our <em>Clients Say</em>
-        </h2>
+        <Reveal>
+          <div className={styles.label}>Customer Stories</div>
+          <h2 className={styles.title}>
+            What Our <em>Clients Say</em>
+          </h2>
+        </Reveal>
 
         <div className={styles.grid}>
-          {REVIEWS.map((r) => (
-            <div key={r.name} className={styles.card}>
-              <div className={styles.stars}>★★★★★</div>
-              <p className={styles.text}>&quot;{r.text}&quot;</p>
-              <div className={styles.name}>{r.name}</div>
-            </div>
+          {REVIEWS.map((r, i) => (
+            <Reveal key={r.name} delay={i * 120}>
+              <div className={styles.card}>
+                <div className={styles.stars}>★★★★★</div>
+                <p className={styles.text}>&quot;{r.text}&quot;</p>
+                <div className={styles.name}>{r.name}</div>
+              </div>
+            </Reveal>
           ))}
         </div>
       </div>

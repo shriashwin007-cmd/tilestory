@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import { STORE, waLink } from "@/lib/store";
+import Reveal from "./Reveal";
 import styles from "./Contact.module.css";
 
 export default function Contact() {
@@ -24,14 +25,14 @@ export default function Contact() {
   return (
     <section className={styles.section} id="contact">
       <div className={styles.inner}>
-        <div className={styles.head}>
+        <Reveal className={styles.head}>
           <div className="s-label" style={{ justifyContent: "center" }}>
             Get In Touch
           </div>
           <h2 className="s-title">
             Visit Our <em>Showroom</em>
           </h2>
-        </div>
+        </Reveal>
 
         <div className={styles.grid}>
           <div className={styles.infoBox}>

@@ -1,4 +1,5 @@
 import { STORE } from "@/lib/store";
+import Reveal from "./Reveal";
 import styles from "./About.module.css";
 
 const TAGS = ["Flooring", "Bathroom", "Moroccan", "Large Slab", "Imported", "Elevation"];
@@ -7,7 +8,7 @@ export default function About() {
   return (
     <section className={styles.about} id="about">
       <div className={styles.inner}>
-        <div className={styles.imgWrap}>
+        <Reveal className={styles.imgWrap}>
           <div className={styles.imgBox}>Showroom Photo</div>
           <div className={styles.delBadge}>
             <div className={styles.delIcon}>🚚</div>
@@ -18,9 +19,9 @@ export default function About() {
             <div className={styles.badgeNum}>{STORE.rating}</div>
             <div className={styles.badgeTxt}>Google Rating</div>
           </div>
-        </div>
+        </Reveal>
 
-        <div>
+        <Reveal delay={120}>
           <div className="s-label">Our Story</div>
           <h2 className="s-title">
             A Showroom Built on <em>Craft &amp; Trust</em>
@@ -55,7 +56,7 @@ export default function About() {
               <span>{STORE.phoneDisplay}</span>
             </div>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

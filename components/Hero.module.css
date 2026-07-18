@@ -8,7 +8,7 @@
   justify-content: center;
   overflow: hidden;
   padding: 6rem 2rem 5rem;
-  background: var(--bg-void);
+  background: var(--bg-ink);
 }
 .videoWrap {
   position: absolute;
@@ -26,7 +26,7 @@
   min-height: 100%;
   transform: translate(-50%, -50%);
   object-fit: cover;
-  filter: brightness(0.55) saturate(0.95);
+  filter: brightness(0.42) saturate(0.85) contrast(1.02);
 }
 .overlay {
   position: absolute;
@@ -34,14 +34,14 @@
   z-index: 1;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(111, 157, 151, 0.22), transparent 60%),
-    radial-gradient(ellipse 60% 50% at 100% 100%, rgba(199, 165, 123, 0.18), transparent 60%),
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(92, 135, 124, 0.18), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 100% 100%, rgba(189, 156, 106, 0.16), transparent 60%),
     linear-gradient(
       to bottom,
-      rgba(20, 22, 20, 0.4) 0%,
-      rgba(20, 22, 20, 0.22) 35%,
-      rgba(20, 22, 20, 0.5) 78%,
-      var(--bg-void) 100%
+      rgba(20, 18, 14, 0.55) 0%,
+      rgba(20, 18, 14, 0.3) 35%,
+      rgba(20, 18, 14, 0.62) 82%,
+      var(--bg-ink) 100%
     );
 }
 .content {
@@ -58,7 +58,7 @@
   font-size: 0.65rem;
   letter-spacing: 0.38em;
   text-transform: uppercase;
-  color: #bfd4cf;
+  color: var(--teal-light);
   display: flex;
   align-items: center;
   gap: 0.8rem;
@@ -68,19 +68,20 @@
   display: inline-block;
   width: 36px;
   height: 1px;
-  background: #bfd4cf;
+  background: var(--teal-light);
+  opacity: 0.6;
 }
 .title {
   font-family: var(--font-editorial);
   font-size: clamp(3rem, 8vw, 6.5rem);
   font-weight: 600;
   line-height: 1.03;
-  color: #fcfbf9;
-  text-shadow: 0 2px 30px rgba(0, 0, 0, 0.35);
+  color: var(--text-on-dark);
+  text-shadow: 0 2px 40px rgba(0, 0, 0, 0.45);
 }
 .title em {
   font-style: italic;
-  color: #bfd4cf;
+  color: var(--teal-light);
 }
 .accent {
   display: block;
@@ -89,13 +90,29 @@
   font-weight: 600;
   letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: #e5d2b8;
-  margin-top: 0.4rem;
+  margin-top: 0.5rem;
+  background: linear-gradient(
+    100deg,
+    var(--yellow-cream) 20%,
+    #f3e6c8 40%,
+    var(--yellow-bright) 55%,
+    var(--yellow-cream) 75%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 6s linear infinite;
+}
+@keyframes shine {
+  to {
+    background-position: -200% center;
+  }
 }
 .sub {
   font-family: var(--font-body);
   font-size: clamp(0.9rem, 1.3vw, 1rem);
-  color: rgba(252, 251, 249, 0.82);
+  color: var(--text-on-dark-soft);
   line-height: 1.85;
   margin-top: 1.6rem;
   max-width: 460px;
@@ -113,49 +130,51 @@
   font-size: 0.78rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  padding: 0.9rem 2.2rem;
+  padding: 0.95rem 2.2rem;
   border-radius: var(--radius-button);
-  background: linear-gradient(135deg, var(--teal-primary), var(--teal-deep));
-  color: var(--bg-void);
-  font-weight: 700;
+  background: var(--teal-primary);
+  color: #f4efe4;
+  font-weight: 600;
   border: none;
   cursor: pointer;
-  transition: all 0.35s;
-  box-shadow: 0 10px 30px rgba(94, 138, 132, 0.4);
+  transition: background 0.35s, box-shadow 0.35s;
+  box-shadow: 0 8px 26px rgba(43, 66, 59, 0.4);
+  will-change: transform;
 }
 .btnPrimary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 14px 40px rgba(94, 138, 132, 0.5);
+  background: var(--teal-deep);
+  box-shadow: 0 12px 34px rgba(43, 66, 59, 0.5);
 }
 .btnOutline {
   font-family: var(--font-ui);
   font-size: 0.78rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  padding: 0.9rem 2.2rem;
+  padding: 0.95rem 2.2rem;
   border-radius: var(--radius-button);
-  border: 1px solid rgba(252, 251, 249, 0.4);
-  color: #fcfbf9;
-  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-on-dark);
+  color: var(--text-on-dark);
+  background: rgba(236, 228, 213, 0.06);
   backdrop-filter: blur(8px);
   cursor: pointer;
-  transition: all 0.35s;
+  transition: background 0.35s, border-color 0.35s;
+  will-change: transform;
 }
 .btnOutline:hover {
-  background: rgba(255, 255, 255, 0.16);
-  border-color: #fcfbf9;
+  background: rgba(236, 228, 213, 0.14);
+  border-color: rgba(236, 228, 213, 0.4);
 }
 .stats {
   position: relative;
   margin-top: 3.5rem;
   display: flex;
   align-items: center;
-  background: rgba(255, 255, 255, 0.94);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--border-teal);
+  background: rgba(38, 34, 25, 0.55);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--border-on-dark);
   border-radius: var(--radius-button);
-  padding: 0.8rem 2rem;
-  box-shadow: var(--shadow-mid);
+  padding: 0.85rem 2rem;
+  box-shadow: 0 14px 44px rgba(0, 0, 0, 0.35);
 }
 .stat {
   text-align: center;
@@ -163,9 +182,10 @@
 }
 .statValue {
   font-family: var(--font-display);
-  font-size: 1.15rem;
-  color: var(--teal-primary);
-  letter-spacing: 0.04em;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--teal-light);
+  letter-spacing: 0.02em;
   line-height: 1;
 }
 .statLabel {
@@ -173,11 +193,37 @@
   font-size: 0.58rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--text-muted);
-  margin-top: 0.25rem;
+  color: var(--text-on-dark-muted);
+  margin-top: 0.35rem;
 }
 .statDiv {
   width: 1px;
   height: 36px;
-  background: linear-gradient(to bottom, transparent, var(--border-teal), transparent);
+  background: linear-gradient(to bottom, transparent, var(--border-on-dark), transparent);
+}
+.scrollCue {
+  position: absolute;
+  bottom: 1.6rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-on-dark-muted);
+  font-family: var(--font-ui);
+  font-size: 0.55rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+.scrollCueLine {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--teal-light), transparent);
+  animation: cuePulse 2.2s ease-in-out infinite;
+}
+@keyframes cuePulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(0.7); }
+  50% { opacity: 1; transform: scaleY(1); }
 }

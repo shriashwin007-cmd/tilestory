@@ -5,6 +5,7 @@ import { CATEGORIES, FINISHES, SIZES, PRODUCTS } from "@/lib/products";
 import { COLOR_FAMILIES } from "@/lib/colorFamilies";
 import ProductCard from "./ProductCard";
 import ProductModal from "./ProductModal";
+import Reveal from "../Reveal";
 import styles from "./Catalog.module.css";
 
 type Filters = {
@@ -168,8 +169,10 @@ export default function Catalog() {
               </div>
             ) : (
               <div className={styles.grid}>
-                {results.map((p) => (
-                  <ProductCard key={p.id} product={p} onOpen={setOpenId} />
+                {results.map((p, i) => (
+                  <Reveal key={p.id} delay={(i % 3) * 90}>
+                    <ProductCard product={p} onOpen={setOpenId} />
+                  </Reveal>
                 ))}
               </div>
             )}

@@ -1,7 +1,7 @@
 .footer {
-  padding: 2.5rem 1.5rem;
-  background: var(--bg-dark);
-  border-top: 1px solid var(--border-subtle);
+  padding: 2.75rem 1.5rem;
+  background: var(--bg-ink);
+  border-top: 1px solid var(--border-on-dark);
 }
 @media (min-width: 900px) {
   .footer {
@@ -24,16 +24,23 @@
     text-align: left;
   }
 }
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
 .brandName {
   font-family: var(--font-display);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   letter-spacing: 0.15em;
+  font-weight: 600;
+  color: var(--text-on-dark);
 }
 .copy {
   font-family: var(--font-ui);
   font-size: 0.65rem;
   letter-spacing: 0.08em;
-  color: var(--text-muted);
+  color: var(--text-on-dark-muted);
   margin-top: 0.25rem;
 }
 .nav {
@@ -47,8 +54,9 @@
   font-size: 0.65rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--text-on-dark-soft);
+  transition: color 0.3s;
 }
 .nav a:hover {
-  color: var(--teal-primary);
+  color: var(--teal-light);
 }

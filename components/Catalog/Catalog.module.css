@@ -36,7 +36,7 @@
 }
 .searchBox:focus-within {
   border-color: var(--teal-primary);
-  box-shadow: 0 0 0 3px rgba(111, 157, 151, 0.15);
+  box-shadow: 0 0 0 3px rgba(92, 135, 124, 0.15);
 }
 .searchInput {
   flex: 1;
@@ -108,7 +108,7 @@
   border-radius: 0.3rem;
 }
 .filterClear:hover {
-  background: rgba(111, 157, 151, 0.12);
+  background: rgba(92, 135, 124, 0.12);
 }
 .filterGroup {
   margin-bottom: 1.5rem;
@@ -168,7 +168,7 @@
 }
 .colorChip.active {
   border-color: var(--teal-primary);
-  box-shadow: 0 0 0 2px rgba(111, 157, 151, 0.35);
+  box-shadow: 0 0 0 2px rgba(92, 135, 124, 0.35);
   transform: scale(1.1);
 }
 
