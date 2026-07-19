@@ -1,7 +1,7 @@
 import { waLink } from "@/lib/store";
 import MagneticButton from "./MagneticButton";
 import CountUp from "./CountUp";
-import TilePanelLoader from "./hero3d/TilePanelLoader";
+import TileDiamond from "./TileDiamond";
 import styles from "./Hero.module.css";
 
 export default function Hero() {
@@ -76,7 +76,7 @@ export default function Hero() {
             last — with same-day delivery across Chennai.
           </p>
 
-          <TilePanelLoader />
+          <TileDiamond />
         </div>
       </div>
 

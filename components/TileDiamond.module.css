@@ -1,0 +1,90 @@
+.panel {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  max-height: 480px;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  border: 1px solid var(--border-on-dark);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 40%, rgba(92, 135, 124, 0.14), transparent 65%),
+    var(--bg-ink-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Establishes the 3D perspective context for the rotating stage below */
+  perspective: 900px;
+}
+.shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background: linear-gradient(
+    to top,
+    rgba(20, 18, 14, 0.35) 0%,
+    transparent 40%,
+    rgba(92, 135, 124, 0.08) 100%
+  );
+}
+
+.stage {
+  position: relative;
+  width: 62%;
+  aspect-ratio: 1;
+  max-width: 220px;
+  transform-style: preserve-3d;
+  animation: spinY 16s linear infinite;
+}
+@keyframes spinY {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .stage {
+    animation: none;
+    transform: rotateY(24deg);
+  }
+}
+
+.sway {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  animation: swayX 7s ease-in-out infinite;
+}
+@keyframes swayX {
+  0%, 100% {
+    transform: rotateX(8deg);
+  }
+  50% {
+    transform: rotateX(-4deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sway {
+    animation: none;
+  }
+}
+
+.diamond {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transform: rotateZ(45deg);
+}
+
+.plank {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 4px;
+  box-shadow:
+    inset 1px 1px 2px rgba(255, 255, 255, 0.25),
+    inset -2px -3px 5px rgba(0, 0, 0, 0.28),
+    0 6px 14px rgba(0, 0, 0, 0.3);
+}
