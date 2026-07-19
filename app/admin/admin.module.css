@@ -136,6 +136,54 @@
   color: var(--text-muted);
   padding: 1.5rem;
 }
+.photoForm {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.photoSlot {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  border: 1px dashed var(--border-subtle);
+  overflow: hidden;
+  cursor: pointer;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+}
+.photoThumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.photoEmpty {
+  font-size: 0.7rem;
+  color: var(--text-faint);
+}
+.photoInput {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.uploadBtn {
+  font-family: var(--font-ui);
+  font-size: 0.65rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.45rem 0.8rem;
+  border-radius: 8px;
+  border: none;
+  background: var(--teal-primary);
+  color: #fff;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
 .deleteBtn {
   font-family: var(--font-ui);
   font-size: 0.68rem;

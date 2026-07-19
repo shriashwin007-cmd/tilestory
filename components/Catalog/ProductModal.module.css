@@ -27,8 +27,13 @@
     grid-template-columns: 1fr 1fr;
   }
 }
+.gallery {
+  display: flex;
+  flex-direction: column;
+}
 .imgWrap {
   position: relative;
+  flex: 1;
   aspect-ratio: 4 / 3;
   background: linear-gradient(135deg, #d8cfb9, #c6bb9f);
   display: flex;
@@ -41,11 +46,50 @@
   color: var(--text-muted);
   text-align: center;
   padding: 2rem;
+  overflow: hidden;
 }
 @media (min-width: 800px) {
   .imgWrap {
     aspect-ratio: auto;
   }
+}
+.mainImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.thumbRow {
+  display: flex;
+  gap: 0.6rem;
+  padding: 0.9rem;
+  background: rgba(0, 0, 0, 0.04);
+}
+.thumb {
+  width: 56px;
+  height: 56px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  cursor: pointer;
+  padding: 0;
+  opacity: 0.65;
+  transition: opacity 0.2s, border-color 0.2s;
+  flex-shrink: 0;
+}
+.thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.thumb:hover {
+  opacity: 0.9;
+}
+.thumbActive {
+  opacity: 1;
+  border-color: var(--teal-primary);
 }
 .body {
   padding: 2rem;

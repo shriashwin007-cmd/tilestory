@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import type { Product } from "@/lib/products";
 import { STORE, waLink } from "@/lib/store";
 import styles from "./ProductModal.module.css";
@@ -12,6 +12,9 @@ export default function ProductModal({
   product: Product;
   onClose: () => void;
 }) {
+  const images = product.images.filter(Boolean);
+  const [activeImg, setActiveImg] = useState(0);
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -38,7 +41,32 @@ export default function ProductModal({
           ✕
         </button>
 
-        <div className={styles.imgWrap}>{product.name}</div>
+        <div className={styles.gallery}>
+          <div className={styles.imgWrap}>
+            {images.length > 0 ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={images[activeImg]} alt={product.name} className={styles.mainImg} />
+            ) : (
+              product.name
+            )}
+          </div>
+          {images.length > 1 && (
+            <div className={styles.thumbRow}>
+              {images.map((src, i) => (
+                <button
+                  key={src}
+                  type="button"
+                  className={`${styles.thumb} ${i === activeImg ? styles.thumbActive : ""}`}
+                  onMouseEnter={() => setActiveImg(i)}
+                  onClick={() => setActiveImg(i)}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={src} alt="" />
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
 
         <div className={styles.body}>
           <div className={styles.cat}>{product.category}</div>

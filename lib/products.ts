@@ -8,6 +8,7 @@ export type Product = {
   use: string[];
   desc: string;
   image: string;
+  images: string[];
   tags: string[];
 };
 

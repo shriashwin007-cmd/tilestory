@@ -27,6 +27,7 @@ type ProductRow = {
   use_cases: string[];
   description: string;
   image: string;
+  images: string[] | null;
   tags: string[];
 };
 
@@ -46,6 +47,7 @@ export async function getProducts(): Promise<Product[]> {
     use: p.use_cases,
     desc: p.description,
     image: p.image,
+    images: p.images ?? [],
     tags: p.tags,
   }));
 }

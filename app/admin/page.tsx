@@ -1,6 +1,14 @@
 import { getProducts, getReviews, getEnquiries } from "@/lib/data";
 import { CATEGORIES, FINISHES, SIZES } from "@/lib/products";
-import { upsertProduct, deleteProduct, addReview, deleteReview, deleteEnquiry, signOut } from "./actions";
+import {
+  upsertProduct,
+  uploadProductImages,
+  deleteProduct,
+  addReview,
+  deleteReview,
+  deleteEnquiry,
+  signOut,
+} from "./actions";
 import styles from "./admin.module.css";
 
 export const dynamic = "force-dynamic";
@@ -151,8 +159,7 @@ export default async function AdminDashboard() {
                 <th>ID</th>
                 <th>Name</th>
                 <th>Category</th>
-                <th>Size</th>
-                <th>Finish</th>
+                <th>Photos (up to 3)</th>
                 <th />
               </tr>
             </thead>
@@ -162,8 +169,30 @@ export default async function AdminDashboard() {
                   <td>{p.id}</td>
                   <td>{p.name}</td>
                   <td>{p.category}</td>
-                  <td>{p.size}</td>
-                  <td>{p.finish}</td>
+                  <td>
+                    <form action={uploadProductImages} className={styles.photoForm}>
+                      <input type="hidden" name="id" value={p.id} />
+                      {[0, 1, 2].map((i) => (
+                        <label key={i} className={styles.photoSlot}>
+                          {p.images[i] ? (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img src={p.images[i]} alt="" className={styles.photoThumb} />
+                          ) : (
+                            <span className={styles.photoEmpty}>{i + 1}</span>
+                          )}
+                          <input
+                            type="file"
+                            name={`image${i + 1}`}
+                            accept="image/*"
+                            className={styles.photoInput}
+                          />
+                        </label>
+                      ))}
+                      <button className={styles.uploadBtn} type="submit">
+                        Upload
+                      </button>
+                    </form>
+                  </td>
                   <td>
                     <form action={deleteProduct}>
                       <input type="hidden" name="id" value={p.id} />
