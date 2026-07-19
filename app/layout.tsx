@@ -3,7 +3,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import CustomCursor from "@/components/CustomCursor";
 import ScrollProgress from "@/components/ScrollProgress";
-import ScrollTriggerRefresher from "@/components/ScrollTriggerRefresher";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -29,7 +28,6 @@ export default function RootLayout({
         <div className="grain" aria-hidden="true" />
         <ScrollProgress />
         <CustomCursor />
-        <ScrollTriggerRefresher />
         {children}
       </body>
     </html>
