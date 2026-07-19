@@ -2,6 +2,8 @@
   padding: 2.75rem 1.5rem;
   background: var(--bg-ink);
   border-top: 1px solid var(--border-on-dark);
+  border-radius: 0 0 var(--frame-radius, 0px) var(--frame-radius, 0px);
+  overflow: hidden;
 }
 @media (min-width: 900px) {
   .footer {
