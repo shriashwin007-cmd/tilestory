@@ -3,6 +3,8 @@ import { CATEGORIES, FINISHES, SIZES } from "@/lib/products";
 import { upsertProduct, deleteProduct, addReview, deleteReview, deleteEnquiry, signOut } from "./actions";
 import styles from "./admin.module.css";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminDashboard() {
   const [products, reviews, enquiries] = await Promise.all([
     getProducts(),
