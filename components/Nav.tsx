@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { STORE, waLink } from "@/lib/store";
+import ArrowButton from "./ArrowButton";
 import styles from "./Nav.module.css";
 
 const LINKS = [
@@ -57,14 +58,14 @@ export default function Nav() {
           <a href={`tel:${STORE.phoneTel}`} className={styles.btnGhost}>
             Call Now
           </a>
-          <a
+          <ArrowButton
+            as="a"
             href={waLink("Hi Tile Story! I'd like to know more about your tiles.")}
             target="_blank"
             rel="noopener noreferrer"
-            className={styles.btnCta}
           >
             WhatsApp
-          </a>
+          </ArrowButton>
         </div>
 
         <button

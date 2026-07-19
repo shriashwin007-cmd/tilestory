@@ -21,10 +21,10 @@ export default function Reviews() {
     <section className={styles.section} id="reviews">
       <div className={styles.glow} />
       <div className={styles.inner}>
-        <span className="ghost-num on-dark">03</span>
+        <span className="ghost-num on-dark">04</span>
         <Reveal>
           <div className={styles.label}>
-            <span className="s-index">03</span>Customer Stories
+            <span className="s-index">04</span>Customer Stories
           </div>
           <h2 className={styles.title}>
             What Our <em>Clients Say</em>

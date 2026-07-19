@@ -1,0 +1,60 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.4rem 0.4rem 0.4rem 1.3rem;
+  border-radius: 100px;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: background 0.3s, box-shadow 0.3s, transform 0.25s var(--ease-spring);
+  will-change: transform;
+}
+.label {
+  white-space: nowrap;
+}
+.circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: transform 0.35s var(--ease-spring);
+}
+.btn:hover .circle {
+  transform: rotate(45deg);
+}
+
+/* Solid — sand-filled pill, dark ink content, teal circle */
+.solid {
+  background: var(--yellow-bright);
+  color: #241d11;
+}
+.solid:hover {
+  background: var(--yellow-cream);
+  box-shadow: 0 8px 26px rgba(189, 156, 106, 0.35);
+}
+.solid .circle {
+  background: var(--teal-deep);
+  color: #f4efe4;
+}
+
+/* Ghost — for use on light or dark surfaces via currentColor */
+.ghost {
+  background: rgba(236, 228, 213, 0.08);
+  color: var(--text-on-dark);
+  border: 1px solid var(--border-on-dark);
+  padding-left: 1.3rem;
+}
+.ghost:hover {
+  background: rgba(236, 228, 213, 0.16);
+}
+.ghost .circle {
+  background: var(--yellow-bright);
+  color: #241d11;
+}

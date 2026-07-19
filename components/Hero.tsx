@@ -73,10 +73,21 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className={styles.scrollCue}>
-        Scroll
-        <span className={styles.scrollCueLine} />
+      <div className={styles.categoryRow}>
+        {CATEGORY_ROW.map((c) => (
+          <a key={c.num} href="#collections" className={styles.categoryItem}>
+            <span className={styles.categoryNum}>#{c.num}</span>
+            <span className={styles.categoryLabel}>{c.label}</span>
+          </a>
+        ))}
       </div>
     </section>
   );
 }
+
+const CATEGORY_ROW = [
+  { num: "01", label: "Flooring" },
+  { num: "02", label: "Moroccan" },
+  { num: "03", label: "Large Slab" },
+  { num: "04", label: "Bathroom" },
+];

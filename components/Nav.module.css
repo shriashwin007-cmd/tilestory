@@ -1,22 +1,33 @@
 .nav {
   position: fixed;
   top: 0;
-  left: 0;
-  right: 0;
+  left: var(--frame-inset, 0px);
+  right: var(--frame-inset, 0px);
   z-index: 500;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.1rem 2.8rem;
+  padding: 1.1rem 1.6rem;
+  border-radius: 0 0 var(--frame-radius, 0px) var(--frame-radius, 0px);
   transition: background 0.5s, box-shadow 0.5s, padding 0.4s, border-color 0.5s;
   border-bottom: 1px solid transparent;
+}
+@media (min-width: 700px) {
+  .nav {
+    padding: 1.1rem 2.4rem;
+  }
 }
 .nav.scrolled {
   background: rgba(22, 19, 14, 0.82);
   backdrop-filter: blur(20px) saturate(1.2);
   border-bottom: 1px solid var(--border-on-dark);
-  padding: 0.8rem 2.8rem;
+  padding: 0.8rem 1.6rem;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+}
+@media (min-width: 700px) {
+  .nav.scrolled {
+    padding: 0.8rem 2.4rem;
+  }
 }
 .logo {
   display: flex;
@@ -115,26 +126,6 @@
 .btnGhost:hover {
   background: rgba(236, 228, 213, 0.12);
   border-color: rgba(236, 228, 213, 0.4);
-}
-.btnCta {
-  font-family: var(--font-ui);
-  font-size: 0.72rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  padding: 0.6rem 1.4rem;
-  border-radius: var(--radius-button);
-  background: var(--yellow-bright);
-  color: #241d11;
-  font-weight: 600;
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s;
-  box-shadow: 0 4px 18px rgba(189, 156, 106, 0.28);
-}
-.btnCta:hover {
-  transform: translateY(-1px);
-  background: var(--yellow-cream);
-  box-shadow: 0 8px 28px rgba(189, 156, 106, 0.4);
 }
 .burger {
   display: flex;
