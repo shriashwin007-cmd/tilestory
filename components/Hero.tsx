@@ -8,9 +8,6 @@ export default function Hero() {
   return (
     <section className={styles.hero} id="hero">
       <div className={styles.overlay} />
-      <div className={styles.ghostType} aria-hidden="true">
-        TILE STORY
-      </div>
 
       <div className={styles.grid}>
         <div className={styles.left}>
