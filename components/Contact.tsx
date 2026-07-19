@@ -19,6 +19,13 @@ export default function Contact() {
       return;
     }
     setError("");
+
+    fetch("/api/enquiry", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, phone, message }),
+    }).catch(() => {});
+
     const waMessage = `Hi Tile Story!\n\nName: ${name}\nPhone: ${phone}\n\nMessage: ${message || "I'd like to know more."}`;
     window.open(waLink(waMessage), "_blank", "noopener,noreferrer");
   };

@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { CATEGORIES, FINISHES, SIZES, PRODUCTS } from "@/lib/products";
+import { CATEGORIES, FINISHES, SIZES, type Product } from "@/lib/products";
 import { COLOR_FAMILIES } from "@/lib/colorFamilies";
 import ProductCard from "./ProductCard";
 import ProductModal from "./ProductModal";
@@ -24,14 +24,14 @@ function matchesColorFamily(colors: string[], familyName: string | null): boolea
   return colors.some((c) => family.match.includes(c.toUpperCase()));
 }
 
-export default function Catalog() {
+export default function Catalog({ products }: { products: Product[] }) {
   const [search, setSearch] = useState("");
   const [filters, setFilters] = useState<Filters>(EMPTY_FILTERS);
   const [openId, setOpenId] = useState<string | null>(null);
 
   const results = useMemo(() => {
     const q = search.trim().toLowerCase();
-    return PRODUCTS.filter((p) => {
+    return products.filter((p) => {
       if (filters.category && p.category !== filters.category) return false;
       if (filters.finish && p.finish !== filters.finish) return false;
       if (filters.size && p.size !== filters.size) return false;
@@ -42,9 +42,9 @@ export default function Catalog() {
       }
       return true;
     });
-  }, [search, filters]);
+  }, [products, search, filters]);
 
-  const openProduct = PRODUCTS.find((p) => p.id === openId) ?? null;
+  const openProduct = products.find((p) => p.id === openId) ?? null;
 
   const toggle = (key: keyof Filters, value: string) => {
     setFilters((prev) => ({ ...prev, [key]: prev[key] === value ? null : value }));

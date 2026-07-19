@@ -8,8 +8,13 @@ import Catalog from "@/components/Catalog/Catalog";
 import Reviews from "@/components/Reviews";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import { getProducts, getReviews } from "@/lib/data";
 
-export default function Home() {
+export const revalidate = 60;
+
+export default async function Home() {
+  const [products, reviews] = await Promise.all([getProducts(), getReviews()]);
+
   return (
     <>
       <Nav />
@@ -20,8 +25,8 @@ export default function Home() {
           <About />
           <ScrollVideo />
           <Gallery />
-          <Catalog />
-          <Reviews />
+          <Catalog products={products} />
+          <Reviews reviews={reviews} />
           <Contact />
         </main>
         <Footer />
