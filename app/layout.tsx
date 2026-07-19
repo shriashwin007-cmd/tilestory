@@ -25,6 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <body>
+        <div className="grain" aria-hidden="true" />
         <ScrollProgress />
         <CustomCursor />
         {children}

@@ -13,6 +13,7 @@
   margin: 0 auto;
 }
 .head {
+  position: relative;
   text-align: center;
   margin-bottom: 2.5rem;
 }
@@ -128,6 +129,9 @@
   gap: 0.4rem;
 }
 .chip {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
   font-family: var(--font-ui);
   font-size: 0.66rem;
   letter-spacing: 0.08em;
@@ -137,12 +141,24 @@
   background: transparent;
   color: var(--text-secondary);
   cursor: pointer;
-  transition: all 0.25s;
+  transition: color 0.3s, border-color 0.3s;
   white-space: nowrap;
+}
+.chip::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgba(92, 135, 124, 0.14);
+  transform: translateX(-101%);
+  transition: transform 0.35s var(--ease-smooth);
 }
 .chip:hover {
   border-color: var(--border-teal);
-  color: var(--teal-primary);
+  color: var(--teal-deep);
+}
+.chip:hover::before {
+  transform: translateX(0);
 }
 .chip.active {
   background: linear-gradient(135deg, var(--teal-primary), var(--teal-deep));

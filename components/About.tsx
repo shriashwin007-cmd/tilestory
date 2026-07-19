@@ -22,7 +22,9 @@ export default function About() {
         </Reveal>
 
         <Reveal delay={120}>
-          <div className="s-label">Our Story</div>
+          <div className="s-label">
+            <span className="s-index">01</span>Our Story
+          </div>
           <h2 className="s-title">
             A Showroom Built on <em>Craft &amp; Trust</em>
           </h2>

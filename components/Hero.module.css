@@ -53,6 +53,39 @@
   flex-direction: column;
   align-items: center;
 }
+
+/* Orchestrated page-load: content cascades in, one considered moment. */
+@keyframes heroRise {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+.content > * {
+  opacity: 0;
+  animation: heroRise 1s var(--ease-smooth) forwards;
+}
+.content > *:nth-child(1) { animation-delay: 0.15s; }
+.content > *:nth-child(2) { animation-delay: 0.3s; }
+.content > *:nth-child(3) {
+  animation: heroRise 1s var(--ease-smooth) 0.45s forwards,
+    shine 6s linear 1.5s infinite;
+}
+.content > *:nth-child(4) { animation-delay: 0.6s; }
+.content > *:nth-child(5) { animation-delay: 0.75s; }
+.content > *:nth-child(6) { animation-delay: 0.9s; }
+@media (prefers-reduced-motion: reduce) {
+  .content > * {
+    opacity: 1;
+    animation: none;
+  }
+}
 .eyebrow {
   font-family: var(--font-ui);
   font-size: 0.65rem;

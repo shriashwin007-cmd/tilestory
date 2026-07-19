@@ -59,6 +59,7 @@
   }
 }
 .navItem {
+  position: relative;
   padding: 0.5rem 1.2rem;
   font-family: var(--font-ui);
   font-size: 0.72rem;
@@ -68,11 +69,25 @@
   cursor: pointer;
   white-space: nowrap;
   border-radius: 12px;
-  transition: color 0.25s, background 0.25s;
+  transition: color 0.25s, letter-spacing 0.25s;
+}
+.navItem::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 5px;
+  width: 0;
+  height: 1px;
+  background: var(--yellow-bright);
+  transform: translateX(-50%);
+  transition: width 0.32s var(--ease-smooth);
 }
 .navItem:hover {
   color: var(--text-on-dark);
-  background: rgba(236, 228, 213, 0.1);
+  letter-spacing: 0.13em;
+}
+.navItem:hover::after {
+  width: 42%;
 }
 .actions {
   display: none;

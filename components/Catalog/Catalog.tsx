@@ -62,7 +62,10 @@ export default function Catalog() {
     <section className={styles.section} id="collections">
       <div className={styles.inner}>
         <div className={styles.head}>
-          <div className={`s-label ${styles.headLabel}`}>Our Collections</div>
+          <span className="ghost-num">02</span>
+          <div className={`s-label ${styles.headLabel}`}>
+            <span className="s-index">02</span>Our Collections
+          </div>
           <h2 className="s-title">
             Every Tile, <em>Every Story</em>
           </h2>

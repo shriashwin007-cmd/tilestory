@@ -25,6 +25,8 @@
   text-align: center;
 }
 .label {
+  position: relative;
+  z-index: 1;
   font-family: var(--font-ui);
   font-size: 0.62rem;
   letter-spacing: 0.34em;
@@ -46,6 +48,8 @@
   opacity: 0.5;
 }
 .title {
+  position: relative;
+  z-index: 1;
   font-family: var(--font-editorial);
   font-size: clamp(2.4rem, 4.5vw, 3.8rem);
   font-weight: 600;

@@ -26,8 +26,9 @@ export default function Contact() {
     <section className={styles.section} id="contact">
       <div className={styles.inner}>
         <Reveal className={styles.head}>
+          <span className="ghost-num">04</span>
           <div className="s-label" style={{ justifyContent: "center" }}>
-            Get In Touch
+            <span className="s-index">04</span>Get In Touch
           </div>
           <h2 className="s-title">
             Visit Our <em>Showroom</em>
