@@ -22,7 +22,11 @@ export default function ScrollVideo() {
 
   useGSAP(
     () => {
+      const section = sectionRef.current;
+      if (!section) return;
+
       let cancelled = false;
+      let started = false;
       const images: HTMLImageElement[] = new Array(FRAME_COUNT);
       imagesRef.current = images;
 
@@ -35,19 +39,39 @@ export default function ScrollVideo() {
           images[i] = img;
         });
 
-      (async () => {
-        await loadFrame(0);
-        if (cancelled) return;
-        setReady(true);
-        for (let i = 1; i < FRAME_COUNT; i++) {
+      const startLoading = () => {
+        if (started) return;
+        started = true;
+        (async () => {
+          await loadFrame(0);
           if (cancelled) return;
-          await loadFrame(i);
-        }
-        ScrollTrigger.refresh();
-      })();
+          setReady(true);
+          // Fire the rest in parallel (the browser queues/multiplexes them)
+          // instead of round-tripping one at a time.
+          await Promise.all(
+            Array.from({ length: FRAME_COUNT - 1 }, (_, i) => loadFrame(i + 1))
+          );
+          if (cancelled) return;
+          ScrollTrigger.refresh();
+        })();
+      };
+
+      // Only start pulling 151 frames once this section is actually close to
+      // view, so it doesn't compete with the rest of the page on initial load.
+      const io = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            startLoading();
+            io.disconnect();
+          }
+        },
+        { rootMargin: "800px 0px 800px 0px" }
+      );
+      io.observe(section);
 
       return () => {
         cancelled = true;
+        io.disconnect();
       };
     },
     { scope: sectionRef }
