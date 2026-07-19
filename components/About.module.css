@@ -85,6 +85,7 @@
   border: 1px solid var(--border-yellow);
   border-radius: 0.75rem;
   padding: 0.9rem 1.2rem;
+  box-shadow: var(--shadow-mid);
   z-index: 10;
 }
 @media (min-width: 900px) {

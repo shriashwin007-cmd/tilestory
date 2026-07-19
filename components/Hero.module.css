@@ -44,6 +44,26 @@
     linear-gradient(to bottom, rgba(20, 18, 14, 0.35) 0%, rgba(20, 18, 14, 0.55) 100%);
 }
 
+/* Oversized wordmark bleeding off the top edge, sitting between the video
+   overlay and the foreground content, for a layered sense of depth. */
+.ghostType {
+  position: absolute;
+  top: -9vw;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  font-family: var(--font-editorial);
+  font-weight: 800;
+  font-size: clamp(9rem, 32vw, 30rem);
+  line-height: 0.8;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  color: rgba(236, 228, 213, 0.022);
+  -webkit-text-stroke: 1px rgba(236, 228, 213, 0.05);
+}
+
 /* Two-column layout: headline left, tagline + 3D tile panel right */
 .grid {
   position: relative;
@@ -216,7 +236,7 @@
   border: 1px solid var(--border-on-dark);
   border-radius: var(--radius-button);
   padding: 0.85rem 1.6rem;
-  box-shadow: 0 14px 44px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 22px 54px rgba(0, 0, 0, 0.45), 0 4px 14px rgba(0, 0, 0, 0.3);
 }
 .stat {
   text-align: left;
