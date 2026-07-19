@@ -1,12 +1,18 @@
 import { waLink } from "@/lib/store";
 import MagneticButton from "./MagneticButton";
 import CountUp from "./CountUp";
+import TilePanelLoader from "./hero3d/TilePanelLoader";
 import styles from "./Hero.module.css";
 
 export default function Hero() {
   return (
     <section className={styles.hero} id="hero">
-      <div className={styles.bgGlow} />
+      <div className={styles.videoWrap}>
+        <video autoPlay muted loop playsInline preload="auto">
+          <source src="/video/hero_bg.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <div className={styles.overlay} />
 
       <div className={styles.grid}>
         <div className={styles.left}>
@@ -70,12 +76,7 @@ export default function Hero() {
             last — with same-day delivery across Chennai.
           </p>
 
-          <div className={styles.videoPanel}>
-            <video autoPlay muted loop playsInline preload="auto">
-              <source src="/video/hero_bg.mp4" type="video/mp4" />
-            </video>
-            <div className={styles.videoShade} />
-          </div>
+          <TilePanelLoader />
         </div>
       </div>
 
