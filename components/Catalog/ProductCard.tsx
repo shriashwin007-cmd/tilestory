@@ -51,7 +51,13 @@ export default function ProductCard({
       <div className={styles.imgWrap}>
         {images.length > 0 ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={images[activeImg]} alt={product.name} className={styles.img} />
+          <img
+            src={images[activeImg]}
+            alt={product.name}
+            className={styles.img}
+            loading="lazy"
+            decoding="async"
+          />
         ) : (
           <div className={styles.imgPlaceholder}>{product.name}</div>
         )}

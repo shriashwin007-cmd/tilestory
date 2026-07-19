@@ -3,6 +3,7 @@ import { CATEGORIES, FINISHES, SIZES } from "@/lib/products";
 import {
   upsertProduct,
   uploadProductImages,
+  removeProductImage,
   deleteProduct,
   addReview,
   deleteReview,
@@ -173,20 +174,34 @@ export default async function AdminDashboard() {
                     <form action={uploadProductImages} className={styles.photoForm}>
                       <input type="hidden" name="id" value={p.id} />
                       {[0, 1, 2].map((i) => (
-                        <label key={i} className={styles.photoSlot}>
-                          {p.images[i] ? (
-                            // eslint-disable-next-line @next/next/no-img-element
-                            <img src={p.images[i]} alt="" className={styles.photoThumb} />
-                          ) : (
-                            <span className={styles.photoEmpty}>{i + 1}</span>
+                        <div key={i} className={styles.photoSlotWrap}>
+                          <label className={styles.photoSlot}>
+                            {p.images[i] ? (
+                              // eslint-disable-next-line @next/next/no-img-element
+                              <img src={p.images[i]} alt="" className={styles.photoThumb} />
+                            ) : (
+                              <span className={styles.photoEmpty}>{i + 1}</span>
+                            )}
+                            <input
+                              type="file"
+                              name={`image${i + 1}`}
+                              accept="image/*"
+                              className={styles.photoInput}
+                            />
+                          </label>
+                          {p.images[i] && (
+                            <button
+                              type="submit"
+                              formAction={removeProductImage}
+                              name="slot"
+                              value={i + 1}
+                              className={styles.photoRemove}
+                              title="Remove photo"
+                            >
+                              ×
+                            </button>
                           )}
-                          <input
-                            type="file"
-                            name={`image${i + 1}`}
-                            accept="image/*"
-                            className={styles.photoInput}
-                          />
-                        </label>
+                        </div>
                       ))}
                       <button className={styles.uploadBtn} type="submit">
                         Upload
