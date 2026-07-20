@@ -25,10 +25,40 @@ const CATEGORY_ROW = [
   { num: "04", label: "Bathroom" },
 ];
 
+// Right-side captions that each reveal then disappear at their own point in
+// the scroll, one after another, filling the rest of the scrub after the
+// headline has faded away — timed to finish right as the video ends.
+const STORY_BEATS = [
+  { tag: "01", title: "Flooring", desc: "Wood-look porcelain to polished marble, for every room." },
+  { tag: "02", title: "Moroccan", desc: "Handcrafted encaustic patterns, laid one tile at a time." },
+  { tag: "03", title: "Large Slab", desc: "Book-matched marble in dramatic, seamless format." },
+  { tag: "04", title: "Bathroom", desc: "Spa-grade finishes for statement walls and floors." },
+];
+
+function beatWindow(index: number, count: number, rangeStart: number) {
+  const span = (1 - rangeStart) / count;
+  const gap = span * 0.12;
+  const start = rangeStart + index * span;
+  return { start, end: start + span - gap };
+}
+
+// Trapezoid: fades in over the first slice of the window, holds, fades out
+// over the last slice — 0 outside the window entirely.
+function beatOpacity(progress: number, start: number, end: number) {
+  if (progress <= start || progress >= end) return 0;
+  const span = end - start;
+  const fadeIn = start + span * 0.25;
+  const fadeOut = end - span * 0.25;
+  if (progress < fadeIn) return (progress - start) / (fadeIn - start);
+  if (progress > fadeOut) return 1 - (progress - fadeOut) / (end - fadeOut);
+  return 1;
+}
+
 export default function Hero() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const fadeRef = useRef<HTMLDivElement | null>(null);
+  const storyRefs = useRef<(HTMLDivElement | null)[]>([]);
   const imagesRef = useRef<HTMLImageElement[]>([]);
   const targetFrameRef = useRef(0);
   const currentFrameRef = useRef(0);
@@ -112,6 +142,8 @@ export default function Hero() {
     // into the rest of the site, which is what made everything feel laggy.
     let lastDrawnFrame = -1;
     let lastOpacity = -1;
+    const lastBeatOpacity = STORY_BEATS.map(() => -1);
+    const beatWindows = STORY_BEATS.map((_, i) => beatWindow(i, STORY_BEATS.length, CONTENT_FADE_RANGE));
 
     const tick = () => {
       const rect = section.getBoundingClientRect();
@@ -138,6 +170,23 @@ export default function Hero() {
         fadeEl.style.pointerEvents = roundedOpacity < 0.4 ? "none" : "auto";
         lastOpacity = roundedOpacity;
       }
+
+      // Directly track the (already-smooth) trapezoid target with no extra
+      // lerp — the beatOpacity() curve itself changes gradually with scroll,
+      // so adding lag on top just made adjacent beats overlap and blend into
+      // illegible double-exposed text during the crossfade.
+      STORY_BEATS.forEach((_, i) => {
+        const { start, end } = beatWindows[i];
+        const roundedB = Math.round(beatOpacity(clamped, start, end) * 1000) / 1000;
+        if (roundedB !== lastBeatOpacity[i]) {
+          const el = storyRefs.current[i];
+          if (el) {
+            el.style.opacity = String(roundedB);
+            el.style.transform = `translateY(${(1 - roundedB) * 22}px)`;
+          }
+          lastBeatOpacity[i] = roundedB;
+        }
+      });
 
       rafRef.current = requestAnimationFrame(tick);
     };
@@ -234,6 +283,23 @@ export default function Hero() {
             <span className={styles.scrollHintDot} />
             Scroll
           </div>
+        </div>
+
+        <div className={styles.storyBeats} aria-hidden="true">
+          {STORY_BEATS.map((beat, i) => (
+            <div
+              key={beat.tag}
+              ref={(el) => {
+                storyRefs.current[i] = el;
+              }}
+              className={styles.storyBeat}
+              style={{ opacity: 0 }}
+            >
+              <span className={styles.storyTag}>{beat.tag}</span>
+              <h3 className={styles.storyTitle}>{beat.title}</h3>
+              <p className={styles.storyDesc}>{beat.desc}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>
