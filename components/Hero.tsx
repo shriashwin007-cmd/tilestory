@@ -7,7 +7,7 @@ import CountUp from "./CountUp";
 import { useRewards } from "./Rewards/RewardsContext";
 import styles from "./Hero.module.css";
 
-const FRAME_COUNT = 151;
+const FRAME_COUNT = 150;
 const FRAME_PATH = (i: number) =>
   `/scroll-frames/frame-${String(i + 1).padStart(4, "0")}.webp`;
 
