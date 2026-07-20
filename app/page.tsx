@@ -2,7 +2,6 @@ import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import Marquee from "@/components/Marquee";
 import About from "@/components/About";
-import ScrollVideo from "@/components/ScrollVideo";
 import Gallery from "@/components/Gallery";
 import Catalog from "@/components/Catalog/Catalog";
 import Reviews from "@/components/Reviews";
@@ -23,7 +22,6 @@ export default async function Home() {
           <Hero />
           <Marquee />
           <About />
-          <ScrollVideo />
           <Gallery />
           <Catalog products={products} />
           <Reviews reviews={reviews} />
