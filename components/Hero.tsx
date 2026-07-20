@@ -102,6 +102,15 @@ export default function Hero() {
     // loop — that combo could get stuck (loop never (re)started) around
     // fullscreen transitions or other edge cases, leaving the hero frozen
     // no matter how much the page was actually scrolled.
+    //
+    // The loop itself never stops (that's what fixed the freeze), but once
+    // the frame/opacity have converged to their targets it skips the actual
+    // canvas redraw and style writes — otherwise this would burn a full
+    // clearRect+drawImage 60x/sec for the entire session, even scrolled deep
+    // into the rest of the site, which is what made everything feel laggy.
+    let lastDrawnFrame = -1;
+    let lastOpacity = -1;
+
     const tick = () => {
       const rect = section.getBoundingClientRect();
       const total = rect.height - window.innerHeight;
@@ -112,13 +121,21 @@ export default function Hero() {
 
       const diff = targetFrameRef.current - currentFrameRef.current;
       currentFrameRef.current += Math.abs(diff) > 0.02 ? diff * SMOOTHING : diff;
-      draw(currentFrameRef.current);
+      const frameIndex = Math.round(currentFrameRef.current);
+      if (frameIndex !== lastDrawnFrame) {
+        draw(currentFrameRef.current);
+        lastDrawnFrame = frameIndex;
+      }
 
       const diffO = targetOpacityRef.current - currentOpacityRef.current;
       currentOpacityRef.current += Math.abs(diffO) > 0.002 ? diffO * SMOOTHING : diffO;
-      fadeEl.style.opacity = String(currentOpacityRef.current);
-      fadeEl.style.transform = `translateY(${(1 - currentOpacityRef.current) * -36}px)`;
-      fadeEl.style.pointerEvents = currentOpacityRef.current < 0.4 ? "none" : "auto";
+      const roundedOpacity = Math.round(currentOpacityRef.current * 1000) / 1000;
+      if (roundedOpacity !== lastOpacity) {
+        fadeEl.style.opacity = String(roundedOpacity);
+        fadeEl.style.transform = `translateY(${(1 - roundedOpacity) * -36}px)`;
+        fadeEl.style.pointerEvents = roundedOpacity < 0.4 ? "none" : "auto";
+        lastOpacity = roundedOpacity;
+      }
 
       rafRef.current = requestAnimationFrame(tick);
     };
