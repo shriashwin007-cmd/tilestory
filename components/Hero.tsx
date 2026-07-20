@@ -97,16 +97,19 @@ export default function Hero() {
       draw(currentFrameRef.current);
     };
 
-    const onScroll = () => {
+    // Read real scroll progress fresh every animation frame instead of
+    // relying on 'scroll' events + an IntersectionObserver to start/stop the
+    // loop — that combo could get stuck (loop never (re)started) around
+    // fullscreen transitions or other edge cases, leaving the hero frozen
+    // no matter how much the page was actually scrolled.
+    const tick = () => {
       const rect = section.getBoundingClientRect();
       const total = rect.height - window.innerHeight;
       const progress = total > 0 ? -rect.top / total : 0;
       const clamped = Math.min(1, Math.max(0, progress));
       targetFrameRef.current = clamped * (FRAME_COUNT - 1);
       targetOpacityRef.current = 1 - Math.min(1, clamped / CONTENT_FADE_RANGE);
-    };
 
-    const tick = () => {
       const diff = targetFrameRef.current - currentFrameRef.current;
       currentFrameRef.current += Math.abs(diff) > 0.02 ? diff * SMOOTHING : diff;
       draw(currentFrameRef.current);
@@ -120,28 +123,12 @@ export default function Hero() {
       rafRef.current = requestAnimationFrame(tick);
     };
 
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && rafRef.current === null) {
-          rafRef.current = requestAnimationFrame(tick);
-        } else if (!entry.isIntersecting && rafRef.current !== null) {
-          cancelAnimationFrame(rafRef.current);
-          rafRef.current = null;
-        }
-      },
-      { rootMargin: "200px 0px 200px 0px" }
-    );
-    io.observe(section);
-
     resize();
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", resize);
+    rafRef.current = requestAnimationFrame(tick);
 
     return () => {
-      window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", resize);
-      io.disconnect();
       if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
     };
   }, [ready]);
