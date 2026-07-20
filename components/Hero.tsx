@@ -11,8 +11,8 @@ const FRAME_COUNT = 150;
 const FRAME_PATH = (i: number) =>
   `/scroll-frames/frame-${String(i + 1).padStart(4, "0")}.webp`;
 
-// Larger = more scroll distance = a calmer, slower scrub.
-const SCROLL_LENGTH_VH = 320;
+// Larger = more scroll distance = a calmer, slower scrub. (448 = 320 * 1.4)
+const SCROLL_LENGTH_VH = 448;
 // Lower = more lag behind the scroll target = smoother, more "eased" motion.
 const SMOOTHING = 0.08;
 // Fraction of the pinned scroll over which the headline fades/lifts away.
