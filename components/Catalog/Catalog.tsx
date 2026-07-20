@@ -6,6 +6,7 @@ import { COLOR_FAMILIES } from "@/lib/colorFamilies";
 import ProductCard from "./ProductCard";
 import ProductModal from "./ProductModal";
 import Reveal from "../Reveal";
+import { useRewards } from "../Rewards/RewardsContext";
 import styles from "./Catalog.module.css";
 
 type Filters = {
@@ -28,6 +29,7 @@ export default function Catalog({ products }: { products: Product[] }) {
   const [search, setSearch] = useState("");
   const [filters, setFilters] = useState<Filters>(EMPTY_FILTERS);
   const [openId, setOpenId] = useState<string | null>(null);
+  const { addPoints } = useRewards();
 
   const results = useMemo(() => {
     const q = search.trim().toLowerCase();
@@ -48,6 +50,12 @@ export default function Catalog({ products }: { products: Product[] }) {
 
   const toggle = (key: keyof Filters, value: string) => {
     setFilters((prev) => ({ ...prev, [key]: prev[key] === value ? null : value }));
+    addPoints("used_filter", 10, "Filtered the Collection");
+  };
+
+  const openProductAndScore = (id: string) => {
+    setOpenId(id);
+    addPoints("viewed_product", 5, "Viewed a Tile");
   };
 
   const clearAll = () => {
@@ -78,7 +86,10 @@ export default function Catalog({ products }: { products: Product[] }) {
                 type="text"
                 placeholder="Search tiles by name, style, color, room..."
                 value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                  if (e.target.value.trim()) addPoints("used_search", 10, "Searched the Collection");
+                }}
               />
             </div>
           </div>
@@ -174,7 +185,7 @@ export default function Catalog({ products }: { products: Product[] }) {
               <div className={styles.grid}>
                 {results.map((p, i) => (
                   <Reveal key={p.id} delay={(i % 3) * 90}>
-                    <ProductCard product={p} onOpen={setOpenId} />
+                    <ProductCard product={p} onOpen={openProductAndScore} />
                   </Reveal>
                 ))}
               </div>

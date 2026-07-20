@@ -1,5 +1,6 @@
 import Reveal from "./Reveal";
 import ArrowButton from "./ArrowButton";
+import ScoreOnView from "./Rewards/ScoreOnView";
 import { waLink } from "@/lib/store";
 import styles from "./Gallery.module.css";
 
@@ -11,7 +12,13 @@ const SHOTS = [
 
 export default function Gallery() {
   return (
-    <section className={styles.section}>
+    <section className={styles.section} id="gallery">
+      <ScoreOnView
+        sectionId="gallery"
+        pointsKey="viewed_gallery"
+        points={10}
+        label="Viewed Craftsmanship"
+      />
       <div className={styles.inner}>
         <Reveal>
           <div className={styles.head}>

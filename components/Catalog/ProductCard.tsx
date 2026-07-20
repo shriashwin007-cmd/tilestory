@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import type { Product } from "@/lib/products";
+import { useRewards } from "../Rewards/RewardsContext";
 import styles from "./ProductCard.module.css";
 
 export default function ProductCard({
@@ -11,10 +12,18 @@ export default function ProductCard({
   product: Product;
   onOpen: (id: string) => void;
 }) {
-  const ref = useRef<HTMLButtonElement | null>(null);
+  const ref = useRef<HTMLDivElement | null>(null);
   const cycleRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const [activeImg, setActiveImg] = useState(0);
   const images = product.images.filter(Boolean);
+  const { addPoints, hasEarned } = useRewards();
+  const favoriteKey = `favorite_${product.id}`;
+  const favorited = hasEarned(favoriteKey);
+
+  const onFavorite = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    addPoints(favoriteKey, 8, `Favorited ${product.name}`);
+  };
 
   const onMove = (e: React.MouseEvent) => {
     const el = ref.current;
@@ -40,10 +49,18 @@ export default function ProductCard({
   };
 
   return (
-    <button
+    <div
       ref={ref}
+      role="button"
+      tabIndex={0}
       className={styles.card}
       onClick={() => onOpen(product.id)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onOpen(product.id);
+        }
+      }}
       onMouseMove={onMove}
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
@@ -69,6 +86,15 @@ export default function ProductCard({
           </div>
         )}
         <div className={styles.badge}>{product.category}</div>
+        <button
+          type="button"
+          className={`${styles.favBtn} ${favorited ? styles.favBtnActive : ""}`}
+          onClick={onFavorite}
+          aria-label={favorited ? "Favorited" : "Favorite this tile"}
+          aria-pressed={favorited}
+        >
+          {favorited ? "♥" : "♡"}
+        </button>
         <span className={styles.view}>View</span>
       </div>
       <div className={styles.body}>
@@ -88,6 +114,6 @@ export default function ProductCard({
           ))}
         </div>
       </div>
-    </button>
+    </div>
   );
 }

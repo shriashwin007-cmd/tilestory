@@ -4,6 +4,7 @@ import Marquee from "@/components/Marquee";
 import About from "@/components/About";
 import Gallery from "@/components/Gallery";
 import Catalog from "@/components/Catalog/Catalog";
+import Rewards from "@/components/Rewards/Rewards";
 import Reviews from "@/components/Reviews";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
@@ -24,6 +25,7 @@ export default async function Home() {
           <About />
           <Gallery />
           <Catalog products={products} />
+          <Rewards />
           <Reviews reviews={reviews} />
           <Contact />
         </main>

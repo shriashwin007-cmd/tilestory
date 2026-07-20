@@ -1,16 +1,23 @@
 import Reveal from "./Reveal";
+import ScoreOnView from "./Rewards/ScoreOnView";
 import styles from "./Reviews.module.css";
 import type { Review } from "@/lib/data";
 
 export default function Reviews({ reviews }: { reviews: Review[] }) {
   return (
     <section className={styles.section} id="reviews">
+      <ScoreOnView
+        sectionId="reviews"
+        pointsKey="viewed_reviews"
+        points={10}
+        label="Read Customer Reviews"
+      />
       <div className={styles.glow} />
       <div className={styles.inner}>
-        <span className="ghost-num on-dark">04</span>
+        <span className="ghost-num on-dark">05</span>
         <Reveal>
           <div className={styles.label}>
-            <span className="s-index">04</span>Customer Stories
+            <span className="s-index">05</span>Customer Stories
           </div>
           <h2 className={styles.title}>
             What Our <em>Clients Say</em>

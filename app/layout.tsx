@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import CustomCursor from "@/components/CustomCursor";
 import ScrollProgress from "@/components/ScrollProgress";
+import { RewardsProvider } from "@/components/Rewards/RewardsContext";
+import PointToasts from "@/components/Rewards/PointToasts";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -28,7 +30,10 @@ export default function RootLayout({
         <div className="grain" aria-hidden="true" />
         <ScrollProgress />
         <CustomCursor />
-        {children}
+        <RewardsProvider>
+          {children}
+          <PointToasts />
+        </RewardsProvider>
       </body>
     </html>
   );

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { waLink } from "@/lib/store";
 import MagneticButton from "./MagneticButton";
 import CountUp from "./CountUp";
+import { useRewards } from "./Rewards/RewardsContext";
 import styles from "./Hero.module.css";
 
 const FRAME_COUNT = 151;
@@ -35,6 +36,7 @@ export default function Hero() {
   const currentOpacityRef = useRef(1);
   const rafRef = useRef<number | null>(null);
   const [ready, setReady] = useState(false);
+  const { addPoints } = useRewards();
 
   useEffect(() => {
     let cancelled = false;
@@ -191,6 +193,7 @@ export default function Hero() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.btnOutline}
+                onClick={() => addPoints("whatsapp_click", 15, "Chatted on WhatsApp")}
               >
                 Chat on WhatsApp
               </MagneticButton>

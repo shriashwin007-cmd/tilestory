@@ -1,5 +1,6 @@
 import { STORE } from "@/lib/store";
 import Reveal from "./Reveal";
+import ScoreOnView from "./Rewards/ScoreOnView";
 import styles from "./About.module.css";
 
 const TAGS = ["Flooring", "Bathroom", "Moroccan", "Large Slab", "Imported", "Elevation"];
@@ -7,6 +8,12 @@ const TAGS = ["Flooring", "Bathroom", "Moroccan", "Large Slab", "Imported", "Ele
 export default function About() {
   return (
     <section className={styles.about} id="about">
+      <ScoreOnView
+        sectionId="about"
+        pointsKey="explored_story"
+        points={10}
+        label="Explored Our Story"
+      />
       <div className={styles.inner}>
         <Reveal className={styles.imgWrap}>
           <div className={styles.imgBox}>Showroom Photo</div>

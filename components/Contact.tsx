@@ -4,6 +4,7 @@ import { FormEvent, useState } from "react";
 import { STORE, waLink } from "@/lib/store";
 import Reveal from "./Reveal";
 import ArrowButton from "./ArrowButton";
+import { useRewards } from "./Rewards/RewardsContext";
 import styles from "./Contact.module.css";
 
 export default function Contact() {
@@ -11,6 +12,7 @@ export default function Contact() {
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const { addPoints } = useRewards();
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -26,6 +28,8 @@ export default function Contact() {
       body: JSON.stringify({ name, phone, message }),
     }).catch(() => {});
 
+    addPoints("contact_submit", 20, "Sent an Enquiry");
+
     const waMessage = `Hi Tile Story!\n\nName: ${name}\nPhone: ${phone}\n\nMessage: ${message || "I'd like to know more."}`;
     window.open(waLink(waMessage), "_blank", "noopener,noreferrer");
   };
@@ -34,9 +38,9 @@ export default function Contact() {
     <section className={styles.section} id="contact">
       <div className={styles.inner}>
         <Reveal className={styles.head}>
-          <span className="ghost-num">05</span>
+          <span className="ghost-num">06</span>
           <div className="s-label" style={{ justifyContent: "center" }}>
-            <span className="s-index">05</span>Get In Touch
+            <span className="s-index">06</span>Get In Touch
           </div>
           <h2 className="s-title">
             Visit Our <em>Showroom</em>
