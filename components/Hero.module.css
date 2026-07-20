@@ -42,11 +42,10 @@
   top: 0;
   right: 0;
   bottom: 0;
-  width: min(420px, 42vw);
+  width: min(480px, 46vw);
   display: none;
   align-items: center;
   justify-content: center;
-  padding: 0 3rem;
   pointer-events: none;
 }
 @media (min-width: 900px) {
@@ -64,27 +63,35 @@
 .storyTag {
   display: block;
   font-family: var(--font-ui);
-  font-size: 0.65rem;
-  letter-spacing: 0.3em;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.34em;
   color: var(--yellow-bright);
-  margin-bottom: 0.7rem;
+  margin-bottom: 0.9rem;
 }
+/* Distinct from the headline's editorial-italic style: bold display face,
+   uppercase, with a warm gradient fill for a more colorful, graphic feel. */
 .storyTitle {
-  font-family: var(--font-editorial);
-  font-size: clamp(1.8rem, 3vw, 2.6rem);
-  font-weight: 600;
-  font-style: italic;
-  color: var(--text-on-dark);
-  line-height: 1.1;
-  margin-bottom: 0.7rem;
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 4.4vw, 4rem);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  margin-bottom: 1rem;
+  background: linear-gradient(100deg, var(--yellow-cream) 10%, var(--teal-light) 55%, var(--yellow-bright) 90%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 .storyDesc {
   font-family: var(--font-body);
-  font-size: 0.85rem;
-  line-height: 1.6;
+  font-size: 1.05rem;
+  line-height: 1.65;
   color: var(--text-on-dark-soft);
   margin-left: auto;
-  max-width: 30ch;
+  max-width: 32ch;
 }
 
 .loader {
@@ -178,7 +185,7 @@
 }
 .title {
   font-family: var(--font-editorial);
-  font-size: clamp(2.8rem, 6.5vw, 5.2rem);
+  font-size: clamp(3.2rem, 7.2vw, 6rem);
   font-weight: 700;
   line-height: 1.02;
   letter-spacing: -0.01em;
@@ -216,7 +223,7 @@
 }
 .subtitle {
   font-family: var(--font-body);
-  font-size: 0.95rem;
+  font-size: 1.08rem;
   line-height: 1.7;
   color: var(--text-on-dark-soft);
   max-width: 42ch;

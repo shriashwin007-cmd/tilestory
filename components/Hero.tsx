@@ -59,7 +59,7 @@ export default function Hero() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const fadeRef = useRef<HTMLDivElement | null>(null);
   const storyRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const imagesRef = useRef<HTMLImageElement[]>([]);
+  const imagesRef = useRef<(ImageBitmap | null)[]>([]);
   const targetFrameRef = useRef(0);
   const currentFrameRef = useRef(0);
   const targetOpacityRef = useRef(1);
@@ -70,17 +70,24 @@ export default function Hero() {
 
   useEffect(() => {
     let cancelled = false;
-    const images: HTMLImageElement[] = new Array(FRAME_COUNT);
+    const images: (ImageBitmap | null)[] = new Array(FRAME_COUNT).fill(null);
     imagesRef.current = images;
 
-    const loadFrame = (i: number) =>
-      new Promise<void>((resolve) => {
-        const img = new Image();
-        img.onload = () => resolve();
-        img.onerror = () => resolve();
-        img.src = FRAME_PATH(i);
-        images[i] = img;
-      });
+    // createImageBitmap decodes off the main thread and hands back a bitmap
+    // the compositor can use directly — plain Image()+decode() still paid a
+    // real decode/resample cost on drawImage (measured ~0.6-2s spread across
+    // a scroll pass, i.e. actual jank), because that path decodes for
+    // *display*, not specifically for canvas compositing.
+    const loadFrame = async (i: number) => {
+      try {
+        const res = await fetch(FRAME_PATH(i));
+        const blob = await res.blob();
+        if (cancelled) return;
+        images[i] = await createImageBitmap(blob);
+      } catch {
+        // frame just won't be drawable — draw() already guards on null.
+      }
+    };
 
     (async () => {
       await loadFrame(0);
@@ -106,23 +113,27 @@ export default function Hero() {
     if (!ctx) return;
 
     const draw = (frame: number) => {
-      const img = imagesRef.current[Math.round(frame)];
-      if (!img || !img.complete || img.naturalWidth === 0) return;
+      const bitmap = imagesRef.current[Math.round(frame)];
+      if (!bitmap) return;
       const cw = canvas.width;
       const ch = canvas.height;
-      const iw = img.naturalWidth;
-      const ih = img.naturalHeight;
+      const iw = bitmap.width;
+      const ih = bitmap.height;
       const scale = Math.max(cw / iw, ch / ih);
       const dw = iw * scale;
       const dh = ih * scale;
       const dx = (cw - dw) / 2;
       const dy = (ch - dh) / 2;
       ctx.clearRect(0, 0, cw, ch);
-      ctx.drawImage(img, dx, dy, dw, dh);
+      ctx.drawImage(bitmap, dx, dy, dw, dh);
     };
 
     const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      // Capped lower than the usual 2x: at 448vh of scroll this canvas is
+      // redrawn continuously while scrolling, and rendering it at full
+      // retina resolution measurably added to scroll jank for a background
+      // element that's already softened by a gradient overlay.
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.25);
       const rect = canvas.getBoundingClientRect();
       canvas.width = Math.round(rect.width * dpr);
       canvas.height = Math.round(rect.height * dpr);
