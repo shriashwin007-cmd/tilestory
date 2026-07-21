@@ -2,7 +2,6 @@ import { getProducts, getReviews, getEnquiries } from "@/lib/data";
 import { CATEGORIES, FINISHES, SIZES } from "@/lib/products";
 import {
   upsertProduct,
-  uploadProductImages,
   removeProductImage,
   deleteProduct,
   addReview,
@@ -171,42 +170,46 @@ export default async function AdminDashboard() {
                   <td>{p.name}</td>
                   <td>{p.category}</td>
                   <td>
-                    <form action={uploadProductImages} className={styles.photoForm}>
-                      <input type="hidden" name="id" value={p.id} />
+                    <div className={styles.photoForm}>
                       {[0, 1, 2].map((i) => (
                         <div key={i} className={styles.photoSlotWrap}>
-                          <label className={styles.photoSlot}>
-                            {p.images[i] ? (
-                              // eslint-disable-next-line @next/next/no-img-element
-                              <img src={p.images[i]} alt="" className={styles.photoThumb} />
-                            ) : (
-                              <span className={styles.photoEmpty}>{i + 1}</span>
-                            )}
-                            <input
-                              type="file"
-                              name={`image${i + 1}`}
-                              accept="image/*"
-                              className={styles.photoInput}
-                            />
-                          </label>
-                          {p.images[i] && (
-                            <button
-                              type="submit"
-                              formAction={removeProductImage}
-                              name="slot"
-                              value={i + 1}
-                              className={styles.photoRemove}
-                              title="Remove photo"
-                            >
-                              ×
+                          <form
+                            action="/admin/upload-image"
+                            method="POST"
+                            encType="multipart/form-data"
+                            className={styles.slotForm}
+                          >
+                            <input type="hidden" name="id" value={p.id} />
+                            <label className={styles.photoSlot}>
+                              {p.images[i] ? (
+                                // eslint-disable-next-line @next/next/no-img-element
+                                <img src={p.images[i]} alt="" className={styles.photoThumb} />
+                              ) : (
+                                <span className={styles.photoEmpty}>{i + 1}</span>
+                              )}
+                              <input
+                                type="file"
+                                name={`image${i + 1}`}
+                                accept="image/*"
+                                className={styles.photoInput}
+                              />
+                            </label>
+                            <button type="submit" className={styles.slotSaveBtn} title="Upload photo">
+                              ↑
                             </button>
+                          </form>
+                          {p.images[i] && (
+                            <form action={removeProductImage}>
+                              <input type="hidden" name="id" value={p.id} />
+                              <input type="hidden" name="slot" value={i + 1} />
+                              <button type="submit" className={styles.photoRemove} title="Remove photo">
+                                ×
+                              </button>
+                            </form>
                           )}
                         </div>
                       ))}
-                      <button className={styles.uploadBtn} type="submit">
-                        Upload
-                      </button>
-                    </form>
+                    </div>
                   </td>
                   <td>
                     <form action={deleteProduct}>

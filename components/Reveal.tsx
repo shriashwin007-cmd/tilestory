@@ -30,18 +30,20 @@ export default function Reveal({
         return;
       }
 
+      // Slower, gentler than a typical UI fade — editorial pacing rather
+      // than a snappy interface transition.
       gsap.fromTo(
         el,
-        { opacity: 0, y: 28 },
+        { opacity: 0, y: 46 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.85,
+          duration: 1.4,
           delay: delay / 1000,
           ease: "power2.out",
           scrollTrigger: {
             trigger: el,
-            start: "top 88%",
+            start: "top 90%",
             once: true,
           },
         }

@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Fraunces } from "next/font/google";
 import "./globals.css";
 import CustomCursor from "@/components/CustomCursor";
 import ScrollProgress from "@/components/ScrollProgress";
+import SmoothScroll from "@/components/SmoothScroll";
 import { RewardsProvider } from "@/components/Rewards/RewardsContext";
 import PointToasts from "@/components/Rewards/PointToasts";
 
@@ -11,6 +12,16 @@ const inter = Inter({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
   style: ["normal", "italic"],
+});
+
+// Large elegant serif for headlines — moody editorial feel, paired with
+// Inter's small uppercase spaced-out labels for contrast.
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
+  subsets: ["latin"],
+  weight: "variable",
+  style: ["normal", "italic"],
+  axes: ["opsz", "SOFT", "WONK"],
 });
 
 export const metadata: Metadata = {
@@ -25,9 +36,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={`${inter.variable} ${fraunces.variable}`}>
       <body>
         <div className="grain" aria-hidden="true" />
+        <SmoothScroll />
         <ScrollProgress />
         <CustomCursor />
         <RewardsProvider>

@@ -5,9 +5,9 @@ import { waLink } from "@/lib/store";
 import styles from "./Gallery.module.css";
 
 const SHOTS = [
-  { tag: "Living Room · Large Slab" },
-  { tag: "Bathroom · Moroccan" },
-  { tag: "Villa Exterior · Elevation" },
+  { num: "01", tag: "Living Room · Large Slab" },
+  { num: "02", tag: "Bathroom · Moroccan" },
+  { num: "03", tag: "Villa Exterior · Elevation" },
 ];
 
 export default function Gallery() {
@@ -49,17 +49,23 @@ export default function Gallery() {
           </div>
         </Reveal>
 
-        <div className={styles.grid}>
-          {SHOTS.map((s, i) => (
-            <Reveal key={s.tag} delay={i * 110} className={i === 1 ? styles.drop : ""}>
-              <div className={styles.card}>
+        <Reveal delay={120} className={styles.railWrap}>
+          <div className={styles.rail}>
+            {SHOTS.map((s) => (
+              <div key={s.tag} className={styles.card}>
                 <div className={styles.cardImg}>{s.tag}</div>
                 <div className={styles.cardShade} />
+                <span className={styles.cardNum}>{s.num}</span>
                 <div className={styles.cardTag}>{s.tag}</div>
               </div>
-            </Reveal>
-          ))}
-        </div>
+            ))}
+            <div className={styles.railEnd} aria-hidden="true" />
+          </div>
+          <div className={styles.railHint}>
+            <span className={styles.railHintLine} />
+            Scroll for more
+          </div>
+        </Reveal>
       </div>
     </section>
   );
