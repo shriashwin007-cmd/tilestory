@@ -1,7 +1,9 @@
 .section {
   position: relative;
   padding: 4rem 1.5rem;
-  background: var(--bg-void);
+  background:
+    linear-gradient(color-mix(in srgb, var(--bg-void) 92%, transparent), color-mix(in srgb, var(--bg-void) 92%, transparent)),
+    url("/images/section-texture.webp") center / cover no-repeat;
 }
 @media (min-width: 900px) {
   .section {

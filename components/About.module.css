@@ -1,7 +1,9 @@
 .about {
   position: relative;
   padding: 4.5rem 1.5rem;
-  background: var(--bg-dark);
+  background:
+    linear-gradient(color-mix(in srgb, var(--bg-dark) 90%, transparent), color-mix(in srgb, var(--bg-dark) 90%, transparent)),
+    url("/images/section-texture.webp") center / cover no-repeat;
 }
 @media (min-width: 900px) {
   .about {
