@@ -89,14 +89,28 @@ export default function Hero() {
       }
     };
 
+    // Loading the remaining 149 frames one at a time (await in a loop) kept
+    // a network request continuously in flight for ~30s total — which not
+    // only delayed the frames themselves, it starved every other request on
+    // the page (fonts, Catalog product images, etc.) of connection slots
+    // for that whole window. A handful of parallel workers pulling from a
+    // shared queue finishes in a fraction of the time and shares bandwidth
+    // properly with the rest of the page.
+    const CONCURRENCY = 6;
     (async () => {
       await loadFrame(0);
       if (cancelled) return;
       setReady(true);
-      for (let i = 1; i < FRAME_COUNT; i++) {
-        if (cancelled) return;
-        await loadFrame(i);
-      }
+
+      let next = 1;
+      const worker = async () => {
+        while (next < FRAME_COUNT) {
+          const i = next++;
+          if (cancelled) return;
+          await loadFrame(i);
+        }
+      };
+      await Promise.all(Array.from({ length: CONCURRENCY }, worker));
     })();
 
     return () => {
