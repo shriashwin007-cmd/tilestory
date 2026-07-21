@@ -1,5 +1,6 @@
 import Reveal from "./Reveal";
 import ScoreOnView from "./Rewards/ScoreOnView";
+import KineticText from "./KineticText";
 import styles from "./Reviews.module.css";
 import type { Review } from "@/lib/data";
 
@@ -19,9 +20,11 @@ export default function Reviews({ reviews }: { reviews: Review[] }) {
           <div className={styles.label}>
             <span className="s-index">05</span>Customer Stories
           </div>
-          <h2 className={styles.title}>
-            What Our <em>Clients Say</em>
-          </h2>
+          <KineticText
+            as="h2"
+            className={styles.title}
+            segments={[{ text: "What Our " }, { text: "Clients Say", em: true }]}
+          />
         </Reveal>
 
         <div className={styles.grid}>

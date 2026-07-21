@@ -1,6 +1,7 @@
 import { STORE } from "@/lib/store";
 import Reveal from "./Reveal";
 import ScoreOnView from "./Rewards/ScoreOnView";
+import KineticText from "./KineticText";
 import styles from "./About.module.css";
 
 const TAGS = ["Flooring", "Bathroom", "Moroccan", "Large Slab", "Imported", "Elevation"];
@@ -32,9 +33,11 @@ export default function About() {
           <div className="s-label">
             <span className="s-index">01</span>Our Story
           </div>
-          <h2 className="s-title">
-            A Showroom Built on <em>Craft &amp; Trust</em>
-          </h2>
+          <KineticText
+            as="h2"
+            className="s-title"
+            segments={[{ text: "A Showroom Built on " }, { text: "Craft & Trust", em: true }]}
+          />
           <p className={styles.desc}>
             Tile Story is Chennai&apos;s destination for premium designer
             tiles — from handcrafted Moroccan patterns to grand imported

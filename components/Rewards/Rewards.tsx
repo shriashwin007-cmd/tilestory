@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { TIERS, nextTier, tierForPoints } from "@/lib/rewards";
 import { waLink } from "@/lib/store";
 import Reveal from "../Reveal";
+import KineticText from "../KineticText";
 import { useRewards } from "./RewardsContext";
 import styles from "./Rewards.module.css";
 
@@ -63,9 +64,11 @@ export default function Rewards() {
           <div className={styles.label}>
             <span className="s-index">04</span>Tile Points
           </div>
-          <h2 className={styles.title}>
-            Explore More, <em>Save More</em>
-          </h2>
+          <KineticText
+            as="h2"
+            className={styles.title}
+            segments={[{ text: "Explore More, " }, { text: "Save More", em: true }]}
+          />
           <p className={styles.intro}>
             Browse the site, favorite tiles, and get in touch — every action
             earns Tile Points. Climb the tiers and unlock a real discount

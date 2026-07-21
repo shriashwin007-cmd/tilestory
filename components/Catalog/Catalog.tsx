@@ -6,6 +6,7 @@ import { COLOR_FAMILIES } from "@/lib/colorFamilies";
 import ProductCard from "./ProductCard";
 import ProductModal from "./ProductModal";
 import Reveal from "../Reveal";
+import KineticText from "../KineticText";
 import { useRewards } from "../Rewards/RewardsContext";
 import styles from "./Catalog.module.css";
 
@@ -74,9 +75,11 @@ export default function Catalog({ products }: { products: Product[] }) {
           <div className={`s-label ${styles.headLabel}`}>
             <span className="s-index">03</span>Our Collections
           </div>
-          <h2 className="s-title">
-            Every Tile, <em>Every Story</em>
-          </h2>
+          <KineticText
+            as="h2"
+            className="s-title"
+            segments={[{ text: "Every Tile, " }, { text: "Every Story", em: true }]}
+          />
 
           <div className={styles.searchWrap}>
             <div className={styles.searchBox}>

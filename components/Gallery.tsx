@@ -1,6 +1,7 @@
 import Reveal from "./Reveal";
 import ArrowButton from "./ArrowButton";
 import ScoreOnView from "./Rewards/ScoreOnView";
+import KineticText from "./KineticText";
 import { waLink } from "@/lib/store";
 import styles from "./Gallery.module.css";
 
@@ -26,11 +27,11 @@ export default function Gallery() {
               <div className={styles.label}>
                 <span className="s-index">02</span>Behind the Tiles
               </div>
-              <h2 className={styles.title}>
-                Spaces That Feel
-                <br />
-                Considered, Not Decorated
-              </h2>
+              <KineticText
+                as="h2"
+                className={styles.title}
+                segments={[{ text: "Spaces That Feel\nConsidered, Not Decorated" }]}
+              />
             </div>
             <div className={styles.right}>
               <p className={styles.desc}>

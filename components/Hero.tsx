@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { waLink } from "@/lib/store";
 import MagneticButton from "./MagneticButton";
 import CountUp from "./CountUp";
+import KineticText from "./KineticText";
 import { useRewards } from "./Rewards/RewardsContext";
 import styles from "./Hero.module.css";
 
@@ -67,6 +69,14 @@ export default function Hero() {
   const rafRef = useRef<number | null>(null);
   const [ready, setReady] = useState(false);
   const { addPoints } = useRewards();
+
+  // Parallax drift on the headline itself, independent of the fadeGroup's
+  // own opacity/lift (that's handled imperatively in the rAF loop below).
+  // The scale/translate here composes on top of the parent's transform
+  // rather than fighting it, since they're on different DOM nodes.
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] });
+  const titleY = useTransform(scrollYProgress, [0, 1], [0, -120]);
+  const titleScale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
 
   useEffect(() => {
     let cancelled = false;
@@ -245,11 +255,14 @@ export default function Hero() {
               Nungambakkam, Chennai
             </div>
 
-            <h1 className={styles.title}>
-              Where <em>Design</em>
-              <br />
-              Meets
-            </h1>
+            <motion.div className={styles.titleWrap} style={{ y: titleY, scale: titleScale }}>
+              <KineticText
+                as="h1"
+                className={styles.title}
+                inView={false}
+                segments={[{ text: "Where " }, { text: "Design", em: true }, { text: "\nMeets" }]}
+              />
+            </motion.div>
             <span className={styles.accent}>Craftsmanship</span>
 
             <p className={styles.subtitle}>

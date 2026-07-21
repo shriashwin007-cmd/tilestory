@@ -4,6 +4,7 @@ import { FormEvent, useState } from "react";
 import { STORE, waLink } from "@/lib/store";
 import Reveal from "./Reveal";
 import ArrowButton from "./ArrowButton";
+import KineticText from "./KineticText";
 import { useRewards } from "./Rewards/RewardsContext";
 import styles from "./Contact.module.css";
 
@@ -42,9 +43,11 @@ export default function Contact() {
           <div className="s-label" style={{ justifyContent: "center" }}>
             <span className="s-index">06</span>Get In Touch
           </div>
-          <h2 className="s-title">
-            Visit Our <em>Showroom</em>
-          </h2>
+          <KineticText
+            as="h2"
+            className="s-title"
+            segments={[{ text: "Visit Our " }, { text: "Showroom", em: true }]}
+          />
         </Reveal>
 
         <div className={styles.grid}>
