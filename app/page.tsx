@@ -1,5 +1,4 @@
 import Nav from "@/components/Nav";
-import Hero from "@/components/Hero";
 import Marquee from "@/components/Marquee";
 import About from "@/components/About";
 import Gallery from "@/components/Gallery";
@@ -20,7 +19,6 @@ export default async function Home() {
       <Nav />
       <div className="frame">
         <main>
-          <Hero />
           <Marquee />
           <About />
           <Gallery />

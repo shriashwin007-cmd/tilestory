@@ -3,6 +3,7 @@
   background: var(--bg-ink);
   border-top: 1px solid var(--border-on-dark);
   border-bottom: 1px solid var(--border-on-dark);
+  border-radius: var(--frame-radius, 0px) var(--frame-radius, 0px) 0 0;
   padding: 1.15rem 0;
   white-space: nowrap;
   -webkit-mask-image: linear-gradient(

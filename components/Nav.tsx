@@ -31,7 +31,7 @@ export default function Nav() {
   return (
     <>
       <nav className={`${styles.nav} ${scrolled ? styles.scrolled : ""}`}>
-        <a href="#hero" className={styles.logo}>
+        <a href="/" className={styles.logo}>
           <Image
             src="/images/logo.jpg"
             alt="Tile Story"
