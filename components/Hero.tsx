@@ -162,6 +162,7 @@ export default function Hero() {
       canvas.width = Math.round(rect.width * dpr);
       canvas.height = Math.round(rect.height * dpr);
       draw(currentFrameRef.current);
+      measure();
     };
 
     // Read real scroll progress fresh every animation frame instead of
@@ -180,10 +181,25 @@ export default function Hero() {
     const lastBeatOpacity = STORY_BEATS.map(() => -1);
     const beatWindows = STORY_BEATS.map((_, i) => beatWindow(i, STORY_BEATS.length, CONTENT_FADE_RANGE));
 
-    const tick = () => {
+    // section.getBoundingClientRect() forces a synchronous layout — calling
+    // it every animation frame, forever (this loop never stops, by design,
+    // see note above), was recalculating layout for the entire page 60x/sec
+    // for the whole session, fighting every other GSAP/Lenis write and
+    // making the whole site feel laggy, not just the hero. The section's
+    // top offset only actually changes on resize, so it's cached here and
+    // combined with the cheap, already-smoothed window.scrollY instead.
+    let sectionTop = 0;
+    let sectionHeight = 0;
+    const measure = () => {
       const rect = section.getBoundingClientRect();
-      const total = rect.height - window.innerHeight;
-      const progress = total > 0 ? -rect.top / total : 0;
+      sectionTop = rect.top + window.scrollY;
+      sectionHeight = rect.height;
+    };
+    measure();
+
+    const tick = () => {
+      const total = sectionHeight - window.innerHeight;
+      const progress = total > 0 ? (window.scrollY - sectionTop) / total : 0;
       const clamped = Math.min(1, Math.max(0, progress));
       targetFrameRef.current = clamped * (FRAME_COUNT - 1);
       targetOpacityRef.current = 1 - Math.min(1, clamped / CONTENT_FADE_RANGE);

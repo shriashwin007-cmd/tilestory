@@ -73,10 +73,10 @@
    uppercase, with a warm gradient fill for a more colorful, graphic feel. */
 .storyTitle {
   font-family: var(--font-display);
-  font-size: clamp(2.6rem, 4.4vw, 4rem);
+  font-size: clamp(3rem, 5vw, 4.6rem);
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
   line-height: 1;
   margin-bottom: 1rem;
   background: linear-gradient(100deg, var(--yellow-cream) 10%, var(--teal-light) 55%, var(--yellow-bright) 90%);
@@ -198,10 +198,10 @@
 }
 .title {
   font-family: var(--font-editorial);
-  font-size: clamp(3.2rem, 7.2vw, 6rem);
-  font-weight: 700;
-  line-height: 1.02;
-  letter-spacing: -0.01em;
+  font-size: clamp(3.8rem, 8.6vw, 7.6rem);
+  font-weight: 650;
+  line-height: 0.98;
+  letter-spacing: -0.02em;
   color: var(--text-on-dark);
 }
 .title em {
@@ -211,9 +211,9 @@
 .accent {
   display: block;
   font-family: var(--font-display);
-  font-size: clamp(1.1rem, 2.4vw, 1.8rem);
+  font-size: clamp(1.35rem, 2.9vw, 2.15rem);
   font-weight: 600;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   margin-top: 0.5rem;
   background: linear-gradient(
@@ -236,7 +236,7 @@
 }
 .subtitle {
   font-family: var(--font-body);
-  font-size: 1.08rem;
+  font-size: 1.18rem;
   line-height: 1.7;
   color: var(--text-on-dark-soft);
   max-width: 42ch;
