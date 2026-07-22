@@ -67,6 +67,9 @@ export default function Hero() {
   const targetOpacityRef = useRef(1);
   const currentOpacityRef = useRef(1);
   const rafRef = useRef<number | null>(null);
+  const cardLeftRef = useRef<HTMLDivElement | null>(null);
+  const cardRightRef = useRef<HTMLDivElement | null>(null);
+  const tileRef = useRef<HTMLDivElement | null>(null);
   const [ready, setReady] = useState(false);
   const { addPoints } = useRewards();
 
@@ -252,6 +255,54 @@ export default function Hero() {
     };
   }, [ready]);
 
+  // Mouse-driven parallax on the floating cards + tile — depth cue that
+  // makes them read as objects sitting in space rather than flat pasted-on
+  // rectangles. Each target gets its own lerped position (smoothed toward
+  // the cursor rather than snapping) and its own strength, so the tile
+  // (closer/bigger) drifts further than the two edge cards. Kept on a
+  // separate transform-only element from the CSS idle-float animation
+  // (see .heroCard/.heroTile in the CSS) so the two never fight over the
+  // same inline `transform`.
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+
+    const targets = [
+      { el: cardLeftRef.current, strength: 14 },
+      { el: cardRightRef.current, strength: 14 },
+      { el: tileRef.current, strength: 26 },
+    ].filter((t): t is { el: HTMLDivElement; strength: number } => !!t.el);
+    if (!targets.length) return;
+
+    let mouseX = 0;
+    let mouseY = 0;
+    const current = targets.map(() => ({ x: 0, y: 0 }));
+    let raf = 0;
+
+    const onMove = (e: MouseEvent) => {
+      mouseX = e.clientX / window.innerWidth - 0.5;
+      mouseY = e.clientY / window.innerHeight - 0.5;
+    };
+
+    const loop = () => {
+      targets.forEach((t, i) => {
+        const c = current[i];
+        c.x += (mouseX * t.strength - c.x) * 0.06;
+        c.y += (mouseY * t.strength - c.y) * 0.06;
+        t.el.style.transform = `translate(${c.x.toFixed(2)}px, ${c.y.toFixed(2)}px)`;
+      });
+      raf = requestAnimationFrame(loop);
+    };
+
+    window.addEventListener("mousemove", onMove);
+    raf = requestAnimationFrame(loop);
+
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
+
   return (
     <section
       className={styles.hero}
@@ -268,19 +319,33 @@ export default function Hero() {
           <ellipse cx="400" cy="400" rx="380" ry="300" />
         </svg>
 
-        <div className={`${styles.heroCard} ${styles.heroCardLeft}`} aria-hidden="true">
-          <img src="/images/hero-card-left.webp" alt="" />
+        <div
+          className={`${styles.parallaxItem} ${styles.heroCardWrap} ${styles.heroCardWrapLeft}`}
+          ref={cardLeftRef}
+          aria-hidden="true"
+        >
+          <div className={`${styles.heroCard} ${styles.heroCardLeft}`}>
+            <img src="/images/hero-card-left.webp" alt="" />
+          </div>
         </div>
-        <div className={`${styles.heroCard} ${styles.heroCardRight}`} aria-hidden="true">
-          <img src="/images/hero-card-right.webp" alt="" />
+        <div
+          className={`${styles.parallaxItem} ${styles.heroCardWrap} ${styles.heroCardWrapRight}`}
+          ref={cardRightRef}
+          aria-hidden="true"
+        >
+          <div className={`${styles.heroCard} ${styles.heroCardRight}`}>
+            <img src="/images/hero-card-right.webp" alt="" />
+          </div>
         </div>
 
         <div className={styles.fadeGroup} ref={fadeRef}>
           {/* Sits in the same fade/lift group as the headline — the tile
               "descends with the fonts" because it shares fadeGroup's
               imperative scroll-driven transform rather than getting its own. */}
-          <div className={styles.heroTile} aria-hidden="true">
-            <img src="/images/hero-tile.webp" alt="" className={styles.heroTileImg} />
+          <div className={`${styles.parallaxItem} ${styles.heroTileWrap}`} ref={tileRef} aria-hidden="true">
+            <div className={styles.heroTile}>
+              <img src="/images/hero-tile.webp" alt="" className={styles.heroTileImg} />
+            </div>
           </div>
 
           <div className={styles.content}>

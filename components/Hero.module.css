@@ -57,66 +57,98 @@
   }
 }
 
-/* Floating tilted photo cards peeking in from the hero's edges — persist
-   through the whole scrub (unlike the headline) so they keep framing the
-   composition even once the text has faded into the story beats. */
-.heroCard {
+/* Floating tilted photo cards peeking in from the hero's edges — mostly
+   off-canvas (a sliver, not a slab) so they read as a framing accent
+   rather than competing with the headline for attention, and anchored low
+   so they never cross the text column. Two-layer transform split: the
+   "Wrap" outer only ever gets entrance opacity + the JS parallax
+   translate (see the mousemove effect in Hero.tsx); the inner element
+   only ever gets the CSS idle-float keyframe. Kept on separate elements
+   so the two transform sources never overwrite each other. */
+.parallaxItem {
+  will-change: transform;
+}
+.heroCardWrap {
   position: absolute;
   z-index: 2;
-  top: 50%;
-  width: min(15vw, 200px);
+  bottom: 7vh;
+  width: min(10vw, 150px);
   opacity: 0;
-  animation: heroRise 1.2s var(--ease-smooth) forwards;
+  animation: heroFadeIn 1.2s var(--ease-smooth) forwards;
   pointer-events: none;
+}
+.heroCardWrapLeft {
+  left: -4.5vw;
+  animation-delay: 0.5s;
+}
+.heroCardWrapRight {
+  right: -4.5vw;
+  animation-delay: 0.65s;
+}
+.heroCard {
+  width: 100%;
 }
 .heroCard img {
   display: block;
   width: 100%;
-  border-radius: 12px;
-  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(244, 239, 228, 0.08);
+  border-radius: 10px;
+  box-shadow: 0 20px 46px rgba(0, 0, 0, 0.4);
 }
 .heroCardLeft {
-  left: -2vw;
-  transform: translateY(-58%) rotate(-8deg);
-  animation-delay: 0.5s;
+  animation: floatCardLeft 7s ease-in-out infinite;
 }
 .heroCardRight {
-  right: -2vw;
-  transform: translateY(-42%) rotate(7deg);
-  animation-delay: 0.65s;
+  animation: floatCardRight 7.5s ease-in-out infinite;
+  animation-delay: 0.3s;
+}
+@keyframes floatCardLeft {
+  0%, 100% { transform: translateY(0) rotate(-9deg); }
+  50% { transform: translateY(-14px) rotate(-6deg); }
+}
+@keyframes floatCardRight {
+  0%, 100% { transform: translateY(0) rotate(8deg); }
+  50% { transform: translateY(-12px) rotate(5deg); }
 }
 @media (max-width: 1150px) {
-  .heroCard {
+  .heroCardWrap {
     display: none;
   }
 }
 
 /* The "hero tile" — a single glossy panel tilted in 3D, sitting behind the
-   headline as a compositional anchor. Positioned within fadeGroup (not
-   .content) so it inherits the same imperative scroll-driven fade/lift as
-   the headline directly, rather than needing its own scroll listener. */
-.heroTile {
+   headline as a compositional anchor, low enough to clear the subtitle.
+   Positioned within fadeGroup (not .content) so it inherits the same
+   imperative scroll-driven fade/lift as the headline directly, rather
+   than needing its own scroll listener. */
+.heroTileWrap {
   position: absolute;
   z-index: 0;
-  right: 4vw;
-  bottom: 10vh;
-  width: min(28vw, 360px);
+  right: 5vw;
+  bottom: 5vh;
+  width: min(22vw, 300px);
   opacity: 0;
-  animation: heroRise 1.3s var(--ease-smooth) forwards;
+  animation: heroFadeIn 1.3s var(--ease-smooth) forwards;
   animation-delay: 0.9s;
   pointer-events: none;
   perspective: 1400px;
+}
+.heroTile {
+  animation: floatTile 8s ease-in-out infinite;
+  animation-delay: 0.15s;
+  transform-style: preserve-3d;
+}
+@keyframes floatTile {
+  0%, 100% { transform: translateY(0) rotateY(-14deg) rotateX(5deg) rotateZ(-2deg); }
+  50% { transform: translateY(-16px) rotateY(-10deg) rotateX(3deg) rotateZ(-1deg); }
 }
 .heroTileImg {
   display: block;
   width: 100%;
   border-radius: 16px;
-  box-shadow: 0 50px 90px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(244, 239, 228, 0.08);
-  transform: rotateY(-16deg) rotateX(6deg) rotateZ(-2deg);
-  transform-style: preserve-3d;
+  box-shadow: 0 40px 70px rgba(0, 0, 0, 0.45);
 }
 @media (max-width: 900px) {
-  .heroTile {
+  .heroTileWrap {
     display: none;
   }
 }
