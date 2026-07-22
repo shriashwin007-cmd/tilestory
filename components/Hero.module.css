@@ -33,6 +33,94 @@
     linear-gradient(to bottom, rgba(20, 18, 14, 0.4) 0%, rgba(20, 18, 14, 0.62) 100%);
 }
 
+/* Thin arcing line behind the headline — a quiet graphic accent, not meant
+   to be consciously noticed. */
+.orbitLine {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  width: min(92vw, 1150px);
+  height: auto;
+  transform: translate(-50%, -50%) rotate(-6deg);
+  pointer-events: none;
+  opacity: 0.16;
+}
+.orbitLine ellipse {
+  fill: none;
+  stroke: var(--yellow-bright);
+  stroke-width: 1;
+}
+@media (max-width: 700px) {
+  .orbitLine {
+    opacity: 0.1;
+  }
+}
+
+/* Floating tilted photo cards peeking in from the hero's edges — persist
+   through the whole scrub (unlike the headline) so they keep framing the
+   composition even once the text has faded into the story beats. */
+.heroCard {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  width: min(15vw, 200px);
+  opacity: 0;
+  animation: heroRise 1.2s var(--ease-smooth) forwards;
+  pointer-events: none;
+}
+.heroCard img {
+  display: block;
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(244, 239, 228, 0.08);
+}
+.heroCardLeft {
+  left: -2vw;
+  transform: translateY(-58%) rotate(-8deg);
+  animation-delay: 0.5s;
+}
+.heroCardRight {
+  right: -2vw;
+  transform: translateY(-42%) rotate(7deg);
+  animation-delay: 0.65s;
+}
+@media (max-width: 1150px) {
+  .heroCard {
+    display: none;
+  }
+}
+
+/* The "hero tile" — a single glossy panel tilted in 3D, sitting behind the
+   headline as a compositional anchor. Positioned within fadeGroup (not
+   .content) so it inherits the same imperative scroll-driven fade/lift as
+   the headline directly, rather than needing its own scroll listener. */
+.heroTile {
+  position: absolute;
+  z-index: 0;
+  right: 4vw;
+  bottom: 10vh;
+  width: min(28vw, 360px);
+  opacity: 0;
+  animation: heroRise 1.3s var(--ease-smooth) forwards;
+  animation-delay: 0.9s;
+  pointer-events: none;
+  perspective: 1400px;
+}
+.heroTileImg {
+  display: block;
+  width: 100%;
+  border-radius: 16px;
+  box-shadow: 0 50px 90px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(244, 239, 228, 0.08);
+  transform: rotateY(-16deg) rotateX(6deg) rotateZ(-2deg);
+  transform-style: preserve-3d;
+}
+@media (max-width: 900px) {
+  .heroTile {
+    display: none;
+  }
+}
+
 /* Right-side captions — each one reveals then disappears at its own point
    in the scroll (see beatWindow/beatOpacity in Hero.tsx), stacked in the
    same spot so only one is ever visible at a time. */
@@ -120,6 +208,8 @@
 }
 
 .content {
+  position: relative;
+  z-index: 1;
   padding: 0 1.5rem;
   max-width: 1360px;
   margin: 0 auto;
@@ -198,11 +288,16 @@
 }
 .title {
   font-family: var(--font-editorial);
-  font-size: clamp(3.8rem, 8.6vw, 7.6rem);
-  font-weight: 650;
-  line-height: 0.98;
-  letter-spacing: -0.02em;
+  font-size: clamp(4.2rem, 9.4vw, 8.6rem);
+  font-weight: 620;
+  line-height: 0.95;
+  letter-spacing: -0.025em;
   color: var(--text-on-dark);
+  /* Fraunces' optical-size axis leans into its display-cut, more
+     decorative letterforms at large sizes; WONK unlocks its quirkier
+     alternate curves — the closest this variable font gets to a true
+     swash without fake ligatures. */
+  font-variation-settings: "opsz" 144, "SOFT" 20, "WONK" 1;
 }
 .title em {
   font-style: italic;

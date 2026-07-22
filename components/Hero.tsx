@@ -264,7 +264,25 @@ export default function Hero() {
         <div className={styles.overlay} />
         {!ready && <div className={styles.loader} />}
 
+        <svg className={styles.orbitLine} viewBox="0 0 800 800" aria-hidden="true">
+          <ellipse cx="400" cy="400" rx="380" ry="300" />
+        </svg>
+
+        <div className={`${styles.heroCard} ${styles.heroCardLeft}`} aria-hidden="true">
+          <img src="/images/hero-card-left.webp" alt="" />
+        </div>
+        <div className={`${styles.heroCard} ${styles.heroCardRight}`} aria-hidden="true">
+          <img src="/images/hero-card-right.webp" alt="" />
+        </div>
+
         <div className={styles.fadeGroup} ref={fadeRef}>
+          {/* Sits in the same fade/lift group as the headline — the tile
+              "descends with the fonts" because it shares fadeGroup's
+              imperative scroll-driven transform rather than getting its own. */}
+          <div className={styles.heroTile} aria-hidden="true">
+            <img src="/images/hero-tile.webp" alt="" className={styles.heroTileImg} />
+          </div>
+
           <div className={styles.content}>
             <div className={styles.eyebrow}>
               <span className={styles.eyebrowLine} />
