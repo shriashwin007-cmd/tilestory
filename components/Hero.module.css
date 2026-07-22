@@ -14,12 +14,14 @@
   border-radius: var(--frame-radius, 0px) var(--frame-radius, 0px) 0 0;
 }
 
-.canvas {
+.bg {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  display: block;
+  background-image: url("/images/hero-bg.webp");
+  background-size: cover;
+  background-position: center;
 }
 
 .overlay {
@@ -153,82 +155,6 @@
   }
 }
 
-/* Right-side captions — each one reveals then disappears at its own point
-   in the scroll (see beatWindow/beatOpacity in Hero.tsx), stacked in the
-   same spot so only one is ever visible at a time. */
-.storyBeats {
-  position: absolute;
-  z-index: 2;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: min(480px, 46vw);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-}
-@media (min-width: 900px) {
-  .storyBeats {
-    display: flex;
-  }
-}
-.storyBeat {
-  position: absolute;
-  left: 3rem;
-  right: 3rem;
-  text-align: right;
-  will-change: opacity, transform;
-}
-.storyTag {
-  display: block;
-  font-family: var(--font-ui);
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.34em;
-  color: var(--yellow-bright);
-  margin-bottom: 0.9rem;
-}
-/* Distinct from the headline's editorial-italic style: bold display face,
-   uppercase, with a warm gradient fill for a more colorful, graphic feel. */
-.storyTitle {
-  font-family: var(--font-display);
-  font-size: clamp(3rem, 5vw, 4.6rem);
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: -0.015em;
-  line-height: 1;
-  margin-bottom: 1rem;
-  background: linear-gradient(100deg, var(--yellow-cream) 10%, var(--teal-light) 55%, var(--yellow-bright) 90%);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.storyDesc {
-  font-family: var(--font-body);
-  font-size: 1.05rem;
-  line-height: 1.65;
-  color: var(--text-on-dark-soft);
-  margin-left: auto;
-  max-width: 32ch;
-}
-
-.loader {
-  position: absolute;
-  inset: 0;
-  z-index: 4;
-  background: var(--bg-ink-soft);
-  animation: pulse 1.4s ease-in-out infinite;
-}
-@keyframes pulse {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 0.9; }
-}
-
-/* Everything here fades/lifts away as the frame sequence scrubs, driven by
-   JS (see Hero.tsx) rather than a scroll-timeline, to match the smoothing
-   already used for the canvas playback. */
 .fadeGroup {
   position: relative;
   z-index: 2;
@@ -236,7 +162,6 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  will-change: opacity, transform;
 }
 
 .content {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { waLink } from "@/lib/store";
 import MagneticButton from "./MagneticButton";
@@ -9,17 +9,6 @@ import KineticText from "./KineticText";
 import { useRewards } from "./Rewards/RewardsContext";
 import styles from "./Hero.module.css";
 
-const FRAME_COUNT = 150;
-const FRAME_PATH = (i: number) =>
-  `/scroll-frames/frame-${String(i + 1).padStart(4, "0")}.webp`;
-
-// Larger = more scroll distance = a calmer, slower scrub. (448 = 320 * 1.4)
-const SCROLL_LENGTH_VH = 448;
-// Lower = more lag behind the scroll target = smoother, more "eased" motion.
-const SMOOTHING = 0.08;
-// Fraction of the pinned scroll over which the headline fades/lifts away.
-const CONTENT_FADE_RANGE = 0.32;
-
 const CATEGORY_ROW = [
   { num: "01", label: "Flooring" },
   { num: "02", label: "Moroccan" },
@@ -27,233 +16,18 @@ const CATEGORY_ROW = [
   { num: "04", label: "Bathroom" },
 ];
 
-// Right-side captions that each reveal then disappear at their own point in
-// the scroll, one after another, filling the rest of the scrub after the
-// headline has faded away — timed to finish right as the video ends.
-const STORY_BEATS = [
-  { tag: "01", title: "Flooring", desc: "Wood-look porcelain to polished marble, for every room." },
-  { tag: "02", title: "Moroccan", desc: "Handcrafted encaustic patterns, laid one tile at a time." },
-  { tag: "03", title: "Large Slab", desc: "Book-matched marble in dramatic, seamless format." },
-  { tag: "04", title: "Bathroom", desc: "Spa-grade finishes for statement walls and floors." },
-];
-
-function beatWindow(index: number, count: number, rangeStart: number) {
-  const span = (1 - rangeStart) / count;
-  const gap = span * 0.12;
-  const start = rangeStart + index * span;
-  return { start, end: start + span - gap };
-}
-
-// Trapezoid: fades in over the first slice of the window, holds, fades out
-// over the last slice — 0 outside the window entirely.
-function beatOpacity(progress: number, start: number, end: number) {
-  if (progress <= start || progress >= end) return 0;
-  const span = end - start;
-  const fadeIn = start + span * 0.25;
-  const fadeOut = end - span * 0.25;
-  if (progress < fadeIn) return (progress - start) / (fadeIn - start);
-  if (progress > fadeOut) return 1 - (progress - fadeOut) / (end - fadeOut);
-  return 1;
-}
-
 export default function Hero() {
   const sectionRef = useRef<HTMLElement | null>(null);
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const fadeRef = useRef<HTMLDivElement | null>(null);
-  const storyRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const imagesRef = useRef<(ImageBitmap | null)[]>([]);
-  const targetFrameRef = useRef(0);
-  const currentFrameRef = useRef(0);
-  const targetOpacityRef = useRef(1);
-  const currentOpacityRef = useRef(1);
-  const rafRef = useRef<number | null>(null);
   const cardLeftRef = useRef<HTMLDivElement | null>(null);
   const cardRightRef = useRef<HTMLDivElement | null>(null);
   const tileRef = useRef<HTMLDivElement | null>(null);
-  const [ready, setReady] = useState(false);
   const { addPoints } = useRewards();
 
-  // Parallax drift on the headline itself, independent of the fadeGroup's
-  // own opacity/lift (that's handled imperatively in the rAF loop below).
-  // The scale/translate here composes on top of the parent's transform
-  // rather than fighting it, since they're on different DOM nodes.
+  // Gentle parallax drift on the headline as you scroll past the hero
+  // (a normal single-viewport section now, not a pinned scroll-scrub).
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] });
-  const titleY = useTransform(scrollYProgress, [0, 1], [0, -120]);
-  const titleScale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
-
-  useEffect(() => {
-    let cancelled = false;
-    const images: (ImageBitmap | null)[] = new Array(FRAME_COUNT).fill(null);
-    imagesRef.current = images;
-
-    // createImageBitmap decodes off the main thread and hands back a bitmap
-    // the compositor can use directly — plain Image()+decode() still paid a
-    // real decode/resample cost on drawImage (measured ~0.6-2s spread across
-    // a scroll pass, i.e. actual jank), because that path decodes for
-    // *display*, not specifically for canvas compositing.
-    const loadFrame = async (i: number) => {
-      try {
-        const res = await fetch(FRAME_PATH(i));
-        const blob = await res.blob();
-        if (cancelled) return;
-        images[i] = await createImageBitmap(blob);
-      } catch {
-        // frame just won't be drawable — draw() already guards on null.
-      }
-    };
-
-    // Loading the remaining 149 frames one at a time (await in a loop) kept
-    // a network request continuously in flight for ~30s total — which not
-    // only delayed the frames themselves, it starved every other request on
-    // the page (fonts, Catalog product images, etc.) of connection slots
-    // for that whole window. A handful of parallel workers pulling from a
-    // shared queue finishes in a fraction of the time and shares bandwidth
-    // properly with the rest of the page.
-    const CONCURRENCY = 6;
-    (async () => {
-      await loadFrame(0);
-      if (cancelled) return;
-      setReady(true);
-
-      let next = 1;
-      const worker = async () => {
-        while (next < FRAME_COUNT) {
-          const i = next++;
-          if (cancelled) return;
-          await loadFrame(i);
-        }
-      };
-      await Promise.all(Array.from({ length: CONCURRENCY }, worker));
-    })();
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const section = sectionRef.current;
-    const fadeEl = fadeRef.current;
-    if (!canvas || !section || !fadeEl) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    const draw = (frame: number) => {
-      const bitmap = imagesRef.current[Math.round(frame)];
-      if (!bitmap) return;
-      const cw = canvas.width;
-      const ch = canvas.height;
-      const iw = bitmap.width;
-      const ih = bitmap.height;
-      const scale = Math.max(cw / iw, ch / ih);
-      const dw = iw * scale;
-      const dh = ih * scale;
-      const dx = (cw - dw) / 2;
-      const dy = (ch - dh) / 2;
-      ctx.clearRect(0, 0, cw, ch);
-      ctx.drawImage(bitmap, dx, dy, dw, dh);
-    };
-
-    const resize = () => {
-      // Capped lower than the usual 2x: at 448vh of scroll this canvas is
-      // redrawn continuously while scrolling, and rendering it at full
-      // retina resolution measurably added to scroll jank for a background
-      // element that's already softened by a gradient overlay.
-      const dpr = Math.min(window.devicePixelRatio || 1, 1.25);
-      const rect = canvas.getBoundingClientRect();
-      canvas.width = Math.round(rect.width * dpr);
-      canvas.height = Math.round(rect.height * dpr);
-      draw(currentFrameRef.current);
-      measure();
-    };
-
-    // Read real scroll progress fresh every animation frame instead of
-    // relying on 'scroll' events + an IntersectionObserver to start/stop the
-    // loop — that combo could get stuck (loop never (re)started) around
-    // fullscreen transitions or other edge cases, leaving the hero frozen
-    // no matter how much the page was actually scrolled.
-    //
-    // The loop itself never stops (that's what fixed the freeze), but once
-    // the frame/opacity have converged to their targets it skips the actual
-    // canvas redraw and style writes — otherwise this would burn a full
-    // clearRect+drawImage 60x/sec for the entire session, even scrolled deep
-    // into the rest of the site, which is what made everything feel laggy.
-    let lastDrawnFrame = -1;
-    let lastOpacity = -1;
-    const lastBeatOpacity = STORY_BEATS.map(() => -1);
-    const beatWindows = STORY_BEATS.map((_, i) => beatWindow(i, STORY_BEATS.length, CONTENT_FADE_RANGE));
-
-    // section.getBoundingClientRect() forces a synchronous layout — calling
-    // it every animation frame, forever (this loop never stops, by design,
-    // see note above), was recalculating layout for the entire page 60x/sec
-    // for the whole session, fighting every other GSAP/Lenis write and
-    // making the whole site feel laggy, not just the hero. The section's
-    // top offset only actually changes on resize, so it's cached here and
-    // combined with the cheap, already-smoothed window.scrollY instead.
-    let sectionTop = 0;
-    let sectionHeight = 0;
-    const measure = () => {
-      const rect = section.getBoundingClientRect();
-      sectionTop = rect.top + window.scrollY;
-      sectionHeight = rect.height;
-    };
-    measure();
-
-    const tick = () => {
-      const total = sectionHeight - window.innerHeight;
-      const progress = total > 0 ? (window.scrollY - sectionTop) / total : 0;
-      const clamped = Math.min(1, Math.max(0, progress));
-      targetFrameRef.current = clamped * (FRAME_COUNT - 1);
-      targetOpacityRef.current = 1 - Math.min(1, clamped / CONTENT_FADE_RANGE);
-
-      const diff = targetFrameRef.current - currentFrameRef.current;
-      currentFrameRef.current += Math.abs(diff) > 0.02 ? diff * SMOOTHING : diff;
-      const frameIndex = Math.round(currentFrameRef.current);
-      if (frameIndex !== lastDrawnFrame) {
-        draw(currentFrameRef.current);
-        lastDrawnFrame = frameIndex;
-      }
-
-      const diffO = targetOpacityRef.current - currentOpacityRef.current;
-      currentOpacityRef.current += Math.abs(diffO) > 0.002 ? diffO * SMOOTHING : diffO;
-      const roundedOpacity = Math.round(currentOpacityRef.current * 1000) / 1000;
-      if (roundedOpacity !== lastOpacity) {
-        fadeEl.style.opacity = String(roundedOpacity);
-        fadeEl.style.transform = `translateY(${(1 - roundedOpacity) * -36}px)`;
-        fadeEl.style.pointerEvents = roundedOpacity < 0.4 ? "none" : "auto";
-        lastOpacity = roundedOpacity;
-      }
-
-      // Directly track the (already-smooth) trapezoid target with no extra
-      // lerp — the beatOpacity() curve itself changes gradually with scroll,
-      // so adding lag on top just made adjacent beats overlap and blend into
-      // illegible double-exposed text during the crossfade.
-      STORY_BEATS.forEach((_, i) => {
-        const { start, end } = beatWindows[i];
-        const roundedB = Math.round(beatOpacity(clamped, start, end) * 1000) / 1000;
-        if (roundedB !== lastBeatOpacity[i]) {
-          const el = storyRefs.current[i];
-          if (el) {
-            el.style.opacity = String(roundedB);
-            el.style.transform = `translateY(${(1 - roundedB) * 22}px)`;
-          }
-          lastBeatOpacity[i] = roundedB;
-        }
-      });
-
-      rafRef.current = requestAnimationFrame(tick);
-    };
-
-    resize();
-    window.addEventListener("resize", resize);
-    rafRef.current = requestAnimationFrame(tick);
-
-    return () => {
-      window.removeEventListener("resize", resize);
-      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
-    };
-  }, [ready]);
+  const titleY = useTransform(scrollYProgress, [0, 1], [0, -80]);
+  const titleScale = useTransform(scrollYProgress, [0, 1], [1, 1.08]);
 
   // Mouse-driven parallax on the floating cards + tile — depth cue that
   // makes them read as objects sitting in space rather than flat pasted-on
@@ -304,16 +78,10 @@ export default function Hero() {
   }, []);
 
   return (
-    <section
-      className={styles.hero}
-      ref={sectionRef}
-      id="hero"
-      style={{ height: `${SCROLL_LENGTH_VH}vh` }}
-    >
+    <section className={styles.hero} ref={sectionRef} id="hero">
       <div className={styles.sticky}>
-        <canvas ref={canvasRef} className={styles.canvas} />
+        <div className={styles.bg} />
         <div className={styles.overlay} />
-        {!ready && <div className={styles.loader} />}
 
         <svg className={styles.orbitLine} viewBox="0 0 800 800" aria-hidden="true">
           <ellipse cx="400" cy="400" rx="380" ry="300" />
@@ -338,10 +106,7 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className={styles.fadeGroup} ref={fadeRef}>
-          {/* Sits in the same fade/lift group as the headline — the tile
-              "descends with the fonts" because it shares fadeGroup's
-              imperative scroll-driven transform rather than getting its own. */}
+        <div className={styles.fadeGroup}>
           <div className={`${styles.parallaxItem} ${styles.heroTileWrap}`} ref={tileRef} aria-hidden="true">
             <div className={styles.heroTile}>
               <img src="/images/hero-tile.webp" alt="" className={styles.heroTileImg} />
@@ -420,23 +185,6 @@ export default function Hero() {
             <span className={styles.scrollHintDot} />
             Scroll
           </div>
-        </div>
-
-        <div className={styles.storyBeats} aria-hidden="true">
-          {STORY_BEATS.map((beat, i) => (
-            <div
-              key={beat.tag}
-              ref={(el) => {
-                storyRefs.current[i] = el;
-              }}
-              className={styles.storyBeat}
-              style={{ opacity: 0 }}
-            >
-              <span className={styles.storyTag}>{beat.tag}</span>
-              <h3 className={styles.storyTitle}>{beat.title}</h3>
-              <p className={styles.storyDesc}>{beat.desc}</p>
-            </div>
-          ))}
         </div>
       </div>
     </section>
