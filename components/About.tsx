@@ -1,5 +1,6 @@
 import { STORE } from "@/lib/store";
 import Reveal from "./Reveal";
+import DepthObject from "./DepthObject";
 import ScoreOnView from "./Rewards/ScoreOnView";
 import KineticText from "./KineticText";
 import styles from "./About.module.css";
@@ -17,7 +18,11 @@ export default function About() {
       />
       <div className={styles.inner}>
         <Reveal className={styles.imgWrap}>
-          <div className={styles.imgBox}>Showroom Photo</div>
+          <DepthObject
+            className={styles.imgBox}
+            src="/images/showroom.webp"
+            alt="Tile Story showroom — marble and designer bathroom displays"
+          />
           <div className={styles.delBadge}>
             <div className={styles.delIcon}>🚚</div>
             <div className={styles.delTxt}>Same-Day Delivery</div>
