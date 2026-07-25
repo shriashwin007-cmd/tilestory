@@ -4,6 +4,7 @@ import "./globals.css";
 import CustomCursor from "@/components/CustomCursor";
 import ScrollProgress from "@/components/ScrollProgress";
 import SmoothScroll from "@/components/SmoothScroll";
+import Mascot from "@/components/Mascot";
 import { RewardsProvider } from "@/components/Rewards/RewardsContext";
 import PointToasts from "@/components/Rewards/PointToasts";
 
@@ -46,6 +47,7 @@ export default function RootLayout({
           {children}
           <PointToasts />
         </RewardsProvider>
+        <Mascot />
       </body>
     </html>
   );
