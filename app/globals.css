@@ -90,6 +90,7 @@ body {
 :root {
   --frame-inset: 10px;
   --frame-radius: 24px;
+  --nav-height: 76px;
 }
 @media (min-width: 700px) {
   :root {
@@ -100,6 +101,7 @@ body {
   :root {
     --frame-inset: 22px;
     --frame-radius: 36px;
+    --nav-height: 84px;
   }
 }
 .frame {
@@ -110,6 +112,14 @@ body {
   margin: 0 var(--frame-inset) var(--frame-inset);
   border-radius: var(--frame-radius);
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+}
+/* Nav is position:fixed and overlays whatever's first in the document.
+   That was fine when Hero (100vh+) sat under it, but with Hero removed
+   the Marquee is short enough to be almost entirely hidden behind the
+   nav. Reserve the nav's height at the top of the flow so nothing
+   starts underneath it. */
+.frame > main {
+  padding-top: var(--nav-height);
 }
 
 a {

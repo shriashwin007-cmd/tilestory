@@ -10,7 +10,14 @@
   padding: 1.1rem 1.6rem;
   border-radius: 0 0 var(--frame-radius, 0px) var(--frame-radius, 0px);
   transition: background 0.5s, box-shadow 0.5s, padding 0.4s, border-color 0.5s;
-  border-bottom: 1px solid transparent;
+  /* Used to be transparent until scrolled, designed to sit over the old
+     hero's dark video background. Now that the hero's gone, the first
+     thing under the nav is the Marquee's moving text -- transparent nav
+     let that text show through and collide with the logo/links. Solid
+     from the start now; .scrolled just tightens the padding/shadow. */
+  background: rgba(22, 19, 14, 0.82);
+  backdrop-filter: blur(20px) saturate(1.2);
+  border-bottom: 1px solid var(--border-on-dark);
 }
 @media (min-width: 700px) {
   .nav {
@@ -18,9 +25,6 @@
   }
 }
 .nav.scrolled {
-  background: rgba(22, 19, 14, 0.82);
-  backdrop-filter: blur(20px) saturate(1.2);
-  border-bottom: 1px solid var(--border-on-dark);
   padding: 0.8rem 1.6rem;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
 }

@@ -14,6 +14,7 @@ export default function ProductCard({
 }) {
   const ref = useRef<HTMLDivElement | null>(null);
   const cycleRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const rectRef = useRef<DOMRect | null>(null);
   const [activeImg, setActiveImg] = useState(0);
   const images = product.images.filter(Boolean);
   const { addPoints, hasEarned } = useRewards();
@@ -25,16 +26,23 @@ export default function ProductCard({
     addPoints(favoriteKey, 8, `Favorited ${product.name}`);
   };
 
+  // getBoundingClientRect() forces a synchronous layout — reading it on
+  // every mousemove (a very high-frequency event) meant hovering any card
+  // while the page had pending style/layout work elsewhere caused visible
+  // stutter. The card's position only actually changes on scroll/resize,
+  // not on every pixel of mouse movement, so it's read once on enter and
+  // reused for the rest of the hover.
   const onMove = (e: React.MouseEvent) => {
     const el = ref.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
+    const rect = rectRef.current;
+    if (!el || !rect) return;
     const px = (e.clientX - rect.left) / rect.width - 0.5;
     const py = (e.clientY - rect.top) / rect.height - 0.5;
     el.style.transform = `perspective(900px) rotateY(${px * 7}deg) rotateX(${-py * 7}deg) translateY(-6px)`;
   };
 
   const onEnter = () => {
+    rectRef.current = ref.current?.getBoundingClientRect() ?? null;
     if (images.length < 2) return;
     cycleRef.current = setInterval(() => {
       setActiveImg((i) => (i + 1) % images.length);
@@ -44,6 +52,7 @@ export default function ProductCard({
   const onLeave = () => {
     const el = ref.current;
     if (el) el.style.transform = "";
+    rectRef.current = null;
     if (cycleRef.current) clearInterval(cycleRef.current);
     setActiveImg(0);
   };
