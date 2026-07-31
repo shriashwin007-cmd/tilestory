@@ -1,18 +1,24 @@
+/* Position is entirely transform-driven now (translate3d, set inline from
+   React state in vw/vh) so Tilo can walk to a new spot on screen -- a
+   transform is GPU-composited and animates smoothly with a CSS transition,
+   unlike animating left/top which forces layout on every frame. top:0/left:0
+   here just gives the transform a fixed (0,0) origin to translate from. */
 .wrap {
   position: fixed;
-  right: 1.6rem;
-  bottom: 1.6rem;
+  top: 0;
+  left: 0;
   z-index: 850;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
   gap: 0.6rem;
   pointer-events: none;
+  will-change: transform;
 }
 @media (min-width: 700px) {
   .wrap {
-    right: 2.2rem;
-    bottom: 2rem;
+    align-items: flex-end;
+    transition: transform 1.4s cubic-bezier(0.65, 0, 0.35, 1);
   }
 }
 
@@ -70,6 +76,21 @@
     transform: translateY(-14px) rotate(2.2deg);
   }
 }
+/* While actually walking to a new waypoint, swap the slow idle bob for a
+   quick "footstep" bounce -- same element, same transform property, so
+   this REPLACES floatY rather than stacking with it (the .walking class
+   and the default animation are mutually exclusive on .float). */
+.float.walking {
+  animation: walkBob 0.32s ease-in-out infinite;
+}
+@keyframes walkBob {
+  0%, 100% {
+    transform: translateY(0) rotate(-3deg);
+  }
+  50% {
+    transform: translateY(-9px) rotate(3deg);
+  }
+}
 
 /* Soft contact shadow — scaled opposite-phase to the float so it reads as
    the mascot casting a shadow that shrinks as it rises. Separate element,
@@ -119,6 +140,15 @@
   will-change: transform;
 }
 
+/* Faces the direction of travel (scaleX flip, set inline from React state
+   as Tilo starts walking left vs right). Its own element so it never
+   collides with the breathing-pulse transform on .pulseLayer below it. */
+.faceLayer {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.4s var(--ease-smooth, ease);
+}
+
 /* Idle breathing pulse — the actual clickable element. */
 .pulseLayer {
   all: unset;
@@ -145,12 +175,6 @@
 }
 
 @media (max-width: 699px) {
-  .wrap {
-    left: 0;
-    right: 0;
-    bottom: 0.9rem;
-    align-items: center;
-  }
   .float {
     width: 96px;
     height: 96px;
@@ -159,10 +183,17 @@
 
 @media (prefers-reduced-motion: reduce) {
   .float,
+  .float.walking,
   .shadow,
   .pulseLayer,
   .bounceLayer.bouncing,
   .bubble {
     animation: none;
+  }
+  .wrap {
+    transition: none;
+  }
+  .faceLayer {
+    transition: none;
   }
 }
