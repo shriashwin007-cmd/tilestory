@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Fraunces } from "next/font/google";
+import { Inter, Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
 import CustomCursor from "@/components/CustomCursor";
 import ScrollProgress from "@/components/ScrollProgress";
@@ -15,14 +15,19 @@ const inter = Inter({
   style: ["normal", "italic"],
 });
 
-// Large elegant serif for headlines — moody editorial feel, paired with
-// Inter's small uppercase spaced-out labels for contrast.
-const fraunces = Fraunces({
+// Bold structural grotesque for headlines, replacing the earlier serif
+// (Fraunces) — that pairing (large serif + small-caps sans labels) is
+// exactly the look every "editorial luxury" AI-built site converges on
+// right now. Bricolage Grotesque is graphic and slightly quirky rather
+// than literary/hushed, which reads as more specific to an actual tile
+// showroom (geometric, grid-based product) than a fashion-brand serif.
+// Kept the CSS variable name --font-fraunces so every component's
+// var(--font-display)/var(--font-editorial) reference in globals.css
+// picks this up with a single-file change.
+const fraunces = Bricolage_Grotesque({
   variable: "--font-fraunces",
   subsets: ["latin"],
   weight: "variable",
-  style: ["normal", "italic"],
-  axes: ["opsz", "SOFT", "WONK"],
 });
 
 export const metadata: Metadata = {
