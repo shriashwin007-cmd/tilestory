@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
-import CustomCursor from "@/components/CustomCursor";
 import ScrollProgress from "@/components/ScrollProgress";
 import SmoothScroll from "@/components/SmoothScroll";
 import Mascot from "@/components/Mascot";
@@ -47,7 +46,6 @@ export default function RootLayout({
         <div className="grain" aria-hidden="true" />
         <SmoothScroll />
         <ScrollProgress />
-        <CustomCursor />
         <RewardsProvider>
           {children}
           <PointToasts />
