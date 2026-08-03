@@ -133,23 +133,9 @@
   100% { transform: scale(1) rotate(0deg); }
 }
 
-.tiltLayer {
-  width: 100%;
-  height: 100%;
-  transform-style: preserve-3d;
-  will-change: transform;
-}
-
-/* Faces the direction of travel (scaleX flip, set inline from React state
-   as Tilo starts walking left vs right). Its own element so it never
-   collides with the breathing-pulse transform on .pulseLayer below it. */
-.faceLayer {
-  width: 100%;
-  height: 100%;
-  transition: transform 0.4s var(--ease-smooth, ease);
-}
-
-/* Idle breathing pulse — the actual clickable element. */
+/* Idle breathing pulse — the actual clickable element, now wrapping the
+   Three.js canvas (Mascot3D) instead of a flat <img>. Turning/facing is
+   handled inside the WebGL scene itself (real lit rotation), not CSS. */
 .pulseLayer {
   all: unset;
   display: block;
@@ -163,15 +149,6 @@
 @keyframes breathe {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.035); }
-}
-
-.img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.15));
-  user-select: none;
-  -webkit-user-drag: none;
 }
 
 @media (max-width: 699px) {
