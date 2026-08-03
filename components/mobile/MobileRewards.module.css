@@ -1,0 +1,158 @@
+.section {
+  padding: 2.5rem 1.1rem 3rem;
+  background: var(--bg-ink);
+}
+.label {
+  display: block;
+  font-family: var(--font-ui);
+  font-size: 0.65rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--teal-light);
+  margin-bottom: 0.5rem;
+}
+.title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-on-dark);
+  margin-bottom: 1.4rem;
+}
+
+.card {
+  background: var(--bg-ink-card);
+  border: 1px solid var(--border-on-dark);
+  border-radius: var(--radius-card);
+  padding: 1.3rem;
+}
+.pointsRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.pointsValue {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-on-dark);
+  line-height: 1;
+}
+.pointsLabel {
+  font-family: var(--font-ui);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-on-dark-muted);
+  margin-top: 0.3rem;
+}
+.tierBadge {
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--teal-light);
+  border: 1px solid var(--border-on-dark);
+  border-radius: 999px;
+  padding: 0.4rem 0.85rem;
+}
+.track {
+  height: 6px;
+  border-radius: 4px;
+  background: rgba(236, 226, 206, 0.1);
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+.fill {
+  height: 100%;
+  background: var(--teal-light);
+  border-radius: 4px;
+}
+.trackLabel {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: var(--text-on-dark-soft);
+  margin-bottom: 1.1rem;
+}
+.tierScroll {
+  display: flex;
+  gap: 0.6rem;
+  overflow-x: auto;
+  padding-bottom: 0.3rem;
+  margin-bottom: 1.1rem;
+}
+.tierStep {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: var(--radius-button);
+  background: rgba(236, 226, 206, 0.05);
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  opacity: 0.4;
+}
+.tierStepActive {
+  opacity: 1;
+  background: rgba(236, 226, 206, 0.1);
+}
+.tierStepName {
+  font-size: 0.6rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-on-dark-soft);
+}
+
+.codeBox {
+  border-top: 1px solid var(--border-on-dark);
+  padding-top: 1.1rem;
+}
+.codeLabel {
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  color: var(--text-on-dark-soft);
+  margin-bottom: 0.6rem;
+}
+.codeRow {
+  display: flex;
+  gap: 0.6rem;
+  margin-bottom: 0.8rem;
+}
+.code {
+  flex: 1;
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  color: var(--text-on-dark);
+  border: 1px dashed var(--border-on-dark);
+  border-radius: var(--radius-button);
+  padding: 0.7rem;
+}
+.copyBtn {
+  all: unset;
+  padding: 0.7rem 1rem;
+  border-radius: var(--radius-button);
+  background: rgba(236, 226, 206, 0.1);
+  color: var(--text-on-dark);
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+.redeemBtn {
+  display: block;
+  text-align: center;
+  padding: 0.9rem;
+  border-radius: var(--radius-button);
+  background: var(--teal-primary);
+  color: #f4efe4;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+.codeEmpty {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: var(--text-on-dark-muted);
+  border-top: 1px solid var(--border-on-dark);
+  padding-top: 1rem;
+}

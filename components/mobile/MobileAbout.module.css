@@ -1,0 +1,98 @@
+.about {
+  padding: 2.5rem 1.1rem 3rem;
+  background: var(--bg-dark);
+}
+.imgBox {
+  position: relative;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  box-shadow: var(--shadow-mid);
+}
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.badge {
+  position: absolute;
+  bottom: 0.8rem;
+  right: 0.8rem;
+  background: rgba(16, 14, 11, 0.78);
+  backdrop-filter: blur(8px);
+  border-radius: var(--radius-button);
+  padding: 0.5rem 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.badgeStars {
+  color: var(--yellow-gold);
+  font-size: 0.7rem;
+}
+.badgeNum {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: #f4efe4;
+  font-size: 0.9rem;
+}
+
+.body {
+  margin-top: 1.6rem;
+}
+.label {
+  display: block;
+  font-family: var(--font-ui);
+  font-size: 0.65rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--teal-primary);
+  margin-bottom: 0.6rem;
+}
+.title {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--text-primary);
+  margin-bottom: 0.9rem;
+}
+.desc {
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 1.1rem 0;
+}
+.tag {
+  font-family: var(--font-ui);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-button);
+  border: 1px solid var(--border-teal);
+  color: var(--teal-primary);
+  background: rgba(163, 133, 92, 0.08);
+}
+.infoCard {
+  background: var(--bg-card);
+  border-radius: var(--radius-card);
+  padding: 1rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.infoRow {
+  display: flex;
+  gap: 0.6rem;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}

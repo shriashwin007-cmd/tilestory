@@ -16,7 +16,8 @@ const DEFAULT_POS = { x: 92, y: 86 };
 // Mobile doesn't roam (no room to walk without covering content) -- it just
 // sits bottom-center, corrected right after mount since the desktop default
 // above has to be the SSR-safe initial value (no window at render time).
-const MOBILE_POS = { x: 50, y: 91 };
+// y is well clear of MobileHome's fixed bottom Call/WhatsApp tab bar.
+const MOBILE_POS = { x: 50, y: 78 };
 const WALK_MS = 1400;
 
 export default function Mascot() {

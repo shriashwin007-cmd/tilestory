@@ -1,0 +1,31 @@
+.bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 400;
+  display: flex;
+  gap: 0.7rem;
+  padding: 0.7rem 1rem calc(0.7rem + env(safe-area-inset-bottom, 0));
+  background: rgba(16, 14, 11, 0.92);
+  backdrop-filter: blur(16px);
+  border-top: 1px solid var(--border-on-dark);
+}
+.callBtn,
+.waBtn {
+  flex: 1;
+  text-align: center;
+  padding: 0.85rem;
+  border-radius: var(--radius-button);
+  font-family: var(--font-ui);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+.callBtn {
+  border: 1px solid var(--border-on-dark);
+  color: var(--text-on-dark);
+}
+.waBtn {
+  background: var(--teal-primary);
+  color: #f4efe4;
+}

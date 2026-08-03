@@ -1,0 +1,91 @@
+.section {
+  padding: 2.5rem 1.1rem 6rem;
+  background: var(--bg-void);
+}
+.label {
+  display: block;
+  font-family: var(--font-ui);
+  font-size: 0.65rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--teal-primary);
+  margin-bottom: 0.5rem;
+}
+.title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 1.4rem;
+}
+
+.infoCard {
+  background: var(--bg-card);
+  border-radius: var(--radius-card);
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  margin-bottom: 1.6rem;
+}
+.infoRow {
+  display: flex;
+  gap: 0.7rem;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+.mapLink {
+  color: var(--teal-primary);
+  font-size: 0.8rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+.fg {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.fl {
+  font-family: var(--font-ui);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+.fi,
+.fta {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-button);
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  outline: none;
+}
+.fta {
+  min-height: 90px;
+  resize: vertical;
+}
+.error {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: #b0453d;
+}
+.submit {
+  all: unset;
+  text-align: center;
+  padding: 1rem;
+  border-radius: var(--radius-button);
+  background: var(--teal-primary);
+  color: #f4efe4;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+}

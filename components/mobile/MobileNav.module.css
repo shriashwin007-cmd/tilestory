@@ -1,0 +1,118 @@
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 1.1rem;
+  background: rgba(16, 14, 11, 0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-on-dark);
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.logoMark {
+  border-radius: 50%;
+}
+.logoName {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-on-dark);
+}
+
+.burger {
+  all: unset;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  cursor: pointer;
+}
+.burgerLine {
+  width: 20px;
+  height: 2px;
+  background: var(--text-on-dark);
+  border-radius: 2px;
+  transition: transform 0.3s var(--ease-smooth), opacity 0.3s;
+}
+.burgerOpen1 {
+  transform: translateY(7px) rotate(45deg);
+}
+.burgerOpen2 {
+  opacity: 0;
+}
+.burgerOpen3 {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 495;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.sheet {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 498;
+  width: min(84vw, 340px);
+  height: 100dvh;
+  background: var(--bg-ink);
+  border-left: 1px solid var(--border-on-dark);
+  padding: 5.5rem 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transform: translateX(100%);
+  transition: transform 0.4s var(--ease-smooth);
+}
+.sheetOpen {
+  transform: translateX(0);
+}
+.sheetLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.sheetLink {
+  all: unset;
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--text-on-dark);
+  padding: 0.7rem 0;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border-on-dark);
+}
+.sheetActions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.sheetCall,
+.sheetWa {
+  text-align: center;
+  padding: 0.95rem 1rem;
+  border-radius: var(--radius-button);
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.sheetCall {
+  border: 1px solid var(--border-on-dark);
+  color: var(--text-on-dark);
+}
+.sheetWa {
+  background: var(--teal-primary);
+  color: #f4efe4;
+}

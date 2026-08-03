@@ -1,0 +1,86 @@
+.section {
+  padding: 2.5rem 0 3rem;
+  background: var(--bg-ink);
+}
+.head {
+  padding: 0 1.1rem;
+  margin-bottom: 1.3rem;
+}
+.label {
+  display: block;
+  font-family: var(--font-ui);
+  font-size: 0.65rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--teal-light);
+  margin-bottom: 0.5rem;
+}
+.title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-on-dark);
+}
+
+.rail {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 0.8rem;
+  padding: 0 1.1rem;
+  scrollbar-width: none;
+}
+.rail::-webkit-scrollbar {
+  display: none;
+}
+.card {
+  position: relative;
+  flex: 0 0 82vw;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  scroll-snap-align: start;
+  background: linear-gradient(160deg, var(--bg-ink-card), var(--bg-ink-soft));
+}
+.cardImg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.55), transparent 55%);
+}
+.cardNum {
+  position: absolute;
+  top: 1rem;
+  right: 1.1rem;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--text-on-dark-soft);
+}
+.cardTag {
+  position: absolute;
+  left: 1.1rem;
+  bottom: 1rem;
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: var(--text-on-dark);
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-top: 1.1rem;
+}
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--border-on-dark);
+  transition: background 0.3s, width 0.3s;
+}
+.dotActive {
+  background: var(--teal-light);
+  width: 18px;
+  border-radius: 4px;
+}
