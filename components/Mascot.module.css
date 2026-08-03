@@ -27,10 +27,16 @@
 }
 
 /* Speech bubble — remounts (via React `key`) on every section change, so
-   this entrance animation doubles as the crossfade between lines. */
+   this entrance animation doubles as the crossfade between lines. Also a
+   real tap target now (clicking it cycles a tip, same as tapping Tilo
+   himself), not just passive text. */
 .bubbleWrap {
+  all: unset;
+  display: block;
   max-width: 200px;
-  pointer-events: none;
+  pointer-events: auto;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 .bubble {
   font-family: var(--font-body);
@@ -56,7 +62,12 @@
 }
 @media (max-width: 699px) {
   .bubbleWrap {
-    display: none;
+    max-width: 46vw;
+  }
+  .bubble {
+    font-size: 0.72rem;
+    line-height: 1.35;
+    padding: 0.55rem 0.7rem;
   }
 }
 

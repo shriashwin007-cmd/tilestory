@@ -27,6 +27,16 @@ const SECTION_LINES: {
   { id: "contact", text: "Ready to visit the showroom? Let's talk.", pos: { x: 10, y: 82 }, mobilePos: { x: 22, y: 68 } },
 ];
 const DEFAULT_LINE = "Hey! I'm Tilo — need help finding your perfect tile?";
+// Shown on tap/click instead of the scroll-tied section line -- a direct
+// interaction deserves a direct reaction, not just passive commentary.
+const TAP_TIPS = [
+  "Tap the filter chips to narrow things down — try 'Textured' for outdoor spaces.",
+  "Every scroll and search earns real Tile Points. Check the Rewards section!",
+  "Marble, Moroccan, or matte — I don't play favorites. I love them all.",
+  "Same-day delivery across Chennai. Just WhatsApp me the details.",
+  "Psst — favoriting a tile earns you points too.",
+  "Go on, keep tapping. I've got nowhere to be.",
+];
 const DEFAULT_POS = { x: 92, y: 86 };
 // Kept clear of MobileHome's fixed bottom Call/WhatsApp tab bar (~80-90px).
 const MOBILE_DEFAULT_POS = { x: 50, y: 78 };
@@ -203,9 +213,23 @@ export default function Mascot() {
     };
   }, []);
 
+  const tapTipIndex = useRef(0);
+
   const triggerBounce = () => {
     setBounce(true);
     window.setTimeout(() => setBounce(false), 650);
+  };
+
+  // A real interaction, not just decoration: tapping/clicking Tilo (or the
+  // bubble itself) bounces him AND swaps in a tip -- cycled in order so
+  // repeated taps don't repeat the same line, distinct from the passive
+  // scroll-tied section commentary (which will naturally take back over on
+  // the next section change).
+  const handleTap = () => {
+    triggerBounce();
+    tapTipIndex.current = (tapTipIndex.current + 1) % TAP_TIPS.length;
+    setLine(TAP_TIPS[tapTipIndex.current]);
+    setBubbleKey((k) => k + 1);
   };
 
   return (
@@ -214,11 +238,11 @@ export default function Mascot() {
       ref={wrapRef}
       style={{ transform: `translate3d(${pos.x}vw, ${pos.y}vh, 0) translate(-50%, -50%)` }}
     >
-      <div className={styles.bubbleWrap}>
+      <button type="button" className={styles.bubbleWrap} onClick={handleTap} aria-label="Show a tip">
         <div key={bubbleKey} className={styles.bubble}>
           {line}
         </div>
-      </div>
+      </button>
 
       <div className={`${styles.float} ${walking ? styles.walking : ""}`}>
         <div className={styles.shadow} aria-hidden="true" />
@@ -226,7 +250,7 @@ export default function Mascot() {
           <button
             type="button"
             className={styles.pulseLayer}
-            onClick={triggerBounce}
+            onClick={handleTap}
             onMouseEnter={triggerBounce}
             aria-label="Tile Story assistant"
           >
