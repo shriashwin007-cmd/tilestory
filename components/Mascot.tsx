@@ -41,6 +41,7 @@ export default function Mascot() {
   const [walking, setWalking] = useState(false);
   const remeasureRef = useRef<() => void>(() => {});
   const walkTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const hasPositionedRef = useRef(false);
   // Read every frame by the Three.js scene in Mascot3D -- a plain mutable
   // ref rather than React state, since it updates continuously (mousemove,
   // scroll, idle turn) and none of that needs a re-render.
@@ -79,6 +80,27 @@ export default function Mascot() {
 
         const fallback = isDesktop ? DEFAULT_POS : MOBILE_DEFAULT_POS;
         const nextPos = section ? (isDesktop ? section.pos : section.mobilePos) : fallback;
+
+        // The very first position resolution (SSR-safe DEFAULT_POS ->
+        // wherever it actually belongs on this device/scroll position)
+        // isn't a "walk" -- it's just correcting for not knowing the
+        // viewport at render time. With the transition now applying on
+        // every screen size, animating that correction would look like an
+        // unwanted slide-in from the desktop corner on every mobile page
+        // load. Snap it instantly, then let every real walk after that
+        // animate normally.
+        if (!hasPositionedRef.current) {
+          hasPositionedRef.current = true;
+          if (wrapRef.current) wrapRef.current.style.transition = "none";
+          setPos(nextPos);
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              if (wrapRef.current) wrapRef.current.style.transition = "";
+            });
+          });
+          return;
+        }
+
         setPos((prev) => {
           if (prev.x === nextPos.x && prev.y === nextPos.y) return prev;
           tiltTarget.current.facing = nextPos.x < prev.x ? -1 : 1;

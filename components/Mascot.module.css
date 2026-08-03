@@ -14,11 +14,15 @@
   gap: 0.6rem;
   pointer-events: none;
   will-change: transform;
+  /* Was scoped to min-width:700px only, back when roaming was desktop-only
+     -- once mobile started roaming too (see Mascot.tsx) it inherited a
+     mobile position change with NO transition at all, i.e. an instant
+     jump/teleport. Applies everywhere now. */
+  transition: transform 1.4s cubic-bezier(0.65, 0, 0.35, 1);
 }
 @media (min-width: 700px) {
   .wrap {
     align-items: flex-end;
-    transition: transform 1.4s cubic-bezier(0.65, 0, 0.35, 1);
   }
 }
 
