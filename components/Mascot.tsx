@@ -55,7 +55,7 @@ export default function Mascot() {
   // Read every frame by the Three.js scene in Mascot3D -- a plain mutable
   // ref rather than React state, since it updates continuously (mousemove,
   // scroll, idle turn) and none of that needs a re-render.
-  const tiltTarget = useRef<TiltTarget>({ x: 0, y: 0, facing: 1 });
+  const tiltTarget = useRef<TiltTarget>({ x: 0, y: 0, facing: 1, spinTrigger: 0 });
 
   // Active-section tracking drives BOTH the speech bubble text and where
   // Tilo actually stands -- whichever observed section has the most visible
@@ -227,6 +227,7 @@ export default function Mascot() {
   // the next section change).
   const handleTap = () => {
     triggerBounce();
+    tiltTarget.current.spinTrigger += 1;
     tapTipIndex.current = (tapTipIndex.current + 1) % TAP_TIPS.length;
     setLine(TAP_TIPS[tapTipIndex.current]);
     setBubbleKey((k) => k + 1);
