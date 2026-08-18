@@ -4,9 +4,9 @@ import { useRef, useState } from "react";
 import styles from "./MobileGallery.module.css";
 
 const SHOTS = [
-  { tag: "Living Room · Large Slab" },
-  { tag: "Bathroom · Moroccan" },
-  { tag: "Villa Exterior · Elevation" },
+  { tag: "Living Room · Large Slab", video: "/videos/gallery-living-room.mp4" },
+  { tag: "Bathroom · Moroccan", video: "/videos/gallery-bathroom.mp4" },
+  { tag: "Villa Exterior · Elevation", video: "/videos/gallery-villa.mp4" },
 ];
 
 export default function MobileGallery() {
@@ -30,7 +30,16 @@ export default function MobileGallery() {
       <div className={styles.rail} ref={railRef} onScroll={onScroll}>
         {SHOTS.map((s, i) => (
           <div key={s.tag} className={styles.card}>
-            <div className={styles.cardImg} />
+            <video
+              className={styles.cardVideo}
+              src={s.video}
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="metadata"
+            />
+            <div className={styles.cardShade} />
             <span className={styles.cardNum}>0{i + 1}</span>
             <div className={styles.cardTag}>{s.tag}</div>
           </div>

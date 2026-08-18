@@ -6,9 +6,9 @@ import { waLink } from "@/lib/store";
 import styles from "./Gallery.module.css";
 
 const SHOTS = [
-  { num: "01", tag: "Living Room · Large Slab" },
-  { num: "02", tag: "Bathroom · Moroccan" },
-  { num: "03", tag: "Villa Exterior · Elevation" },
+  { num: "01", tag: "Living Room · Large Slab", video: "/videos/gallery-living-room.mp4" },
+  { num: "02", tag: "Bathroom · Moroccan", video: "/videos/gallery-bathroom.mp4" },
+  { num: "03", tag: "Villa Exterior · Elevation", video: "/videos/gallery-villa.mp4" },
 ];
 
 export default function Gallery() {
@@ -54,7 +54,15 @@ export default function Gallery() {
           <div className={styles.rail}>
             {SHOTS.map((s) => (
               <div key={s.tag} className={styles.card}>
-                <div className={styles.cardImg}>{s.tag}</div>
+                <video
+                  className={styles.cardVideo}
+                  src={s.video}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  preload="metadata"
+                />
                 <div className={styles.cardShade} />
                 <span className={styles.cardNum}>{s.num}</span>
                 <div className={styles.cardTag}>{s.tag}</div>
