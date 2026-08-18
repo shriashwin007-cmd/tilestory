@@ -1,8 +1,12 @@
 .section {
+  position: relative;
   padding: 2.5rem 0 3rem;
   background: var(--bg-ink);
+  overflow: hidden;
 }
 .head {
+  position: relative;
+  z-index: 1;
   padding: 0 1.1rem;
   margin-bottom: 1.3rem;
 }
@@ -23,6 +27,8 @@
 }
 
 .rail {
+  position: relative;
+  z-index: 1;
   display: flex;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
@@ -78,6 +84,8 @@
 }
 
 .dots {
+  position: relative;
+  z-index: 1;
   display: flex;
   justify-content: center;
   gap: 0.4rem;

@@ -1,0 +1,25 @@
+.bgWrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.bgVideo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.5;
+  will-change: transform;
+}
+/* Ink tint + vignette so the ambient motion reads as atmosphere behind the
+   sharp foreground cards/text, never competing with them for attention. */
+.bgShade {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at center, transparent 0%, rgba(8, 6, 4, 0.55) 75%),
+    linear-gradient(rgba(8, 6, 4, 0.35), rgba(8, 6, 4, 0.65));
+}

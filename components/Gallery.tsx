@@ -2,6 +2,7 @@ import Reveal from "./Reveal";
 import ArrowButton from "./ArrowButton";
 import ScoreOnView from "./Rewards/ScoreOnView";
 import KineticText from "./KineticText";
+import SectionBgVideo from "./SectionBgVideo";
 import { waLink } from "@/lib/store";
 import styles from "./Gallery.module.css";
 
@@ -14,6 +15,7 @@ const SHOTS = [
 export default function Gallery() {
   return (
     <section className={styles.section} id="gallery">
+      <SectionBgVideo src="/videos/gallery-section-bg.mp4" />
       <ScoreOnView
         sectionId="gallery"
         pointsKey="viewed_gallery"

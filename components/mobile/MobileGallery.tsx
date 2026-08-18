@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import SectionBgVideo from "../SectionBgVideo";
 import styles from "./MobileGallery.module.css";
 
 const SHOTS = [
@@ -22,6 +23,7 @@ export default function MobileGallery() {
 
   return (
     <section className={styles.section} id="gallery">
+      <SectionBgVideo src="/videos/gallery-section-bg.mp4" />
       <div className={styles.head}>
         <span className={styles.label}>Behind the Tiles</span>
         <h2 className={styles.title}>Spaces That Feel Considered</h2>
