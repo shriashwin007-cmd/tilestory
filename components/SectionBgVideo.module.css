@@ -11,26 +11,29 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* Pushes the generated clip's color further -- the source video reads
+     as fairly soft/pale on its own, and a flat scrim on top of a
+     already-soft clip is what made it read as "not visible" rather than
+     colorful. */
+  filter: saturate(1.55) contrast(1.08);
   will-change: transform;
 }
-/* Light ink tint + edge vignette -- enough to keep the ambient motion
-   readable as atmosphere behind the sharp foreground cards/text, without
-   flattening it into an imperceptible dark smear (the original 0.5 opacity
-   + heavy scrim combination did exactly that). */
+/* Ink tint + edge vignette -- enough to keep the ambient motion readable as
+   atmosphere behind the sharp foreground cards/text, without flattening it
+   into an imperceptible dark smear. Two stacked full-strength gradients
+   here previously compounded to near-total coverage at the edges, which is
+   exactly what made the background read as invisible -- a single much
+   lighter vignette instead. */
 .bgShade {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(ellipse at center, transparent 0%, rgba(8, 6, 4, 0.5) 85%),
-    linear-gradient(rgba(8, 6, 4, 0.15), rgba(8, 6, 4, 0.35));
+  background: radial-gradient(ellipse at center, rgba(8, 6, 4, 0.05) 0%, rgba(8, 6, 4, 0.4) 100%);
 }
-/* Cream tint for light sections (e.g. Catalog) -- same job (keep edges/text
-   legible over the motion) but lightening toward the section's own
-   background color instead of darkening toward ink. */
+/* Cream tint for light sections (e.g. Catalog) -- same fix, lightening
+   toward the section's own background color instead of darkening toward
+   ink. */
 .bgShadeLight {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(ellipse at center, transparent 0%, rgba(239, 231, 216, 0.6) 85%),
-    linear-gradient(rgba(239, 231, 216, 0.35), rgba(239, 231, 216, 0.55));
+  background: radial-gradient(ellipse at center, rgba(239, 231, 216, 0.05) 0%, rgba(239, 231, 216, 0.35) 100%);
 }
