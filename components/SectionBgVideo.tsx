@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -17,6 +17,18 @@ if (typeof window !== "undefined") {
 export default function SectionBgVideo({ src }: { src: string }) {
   const wrapRef = useRef<HTMLDivElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  // React's `muted` JSX attribute doesn't reliably set the DOM property
+  // before the browser's autoplay-policy check runs -- lose that race and
+  // the video silently sits paused on its first frame (which is exactly
+  // why the ambient background looked "invisible": a static dark frame,
+  // not a moving one).
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.muted = true;
+    video.play().catch(() => {});
+  }, []);
 
   useGSAP(
     () => {
@@ -61,7 +73,7 @@ export default function SectionBgVideo({ src }: { src: string }) {
         loop
         muted
         playsInline
-        preload="metadata"
+        preload="auto"
       />
       <div className={styles.bgShade} />
     </div>

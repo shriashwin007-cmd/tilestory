@@ -3,6 +3,7 @@ import ArrowButton from "./ArrowButton";
 import ScoreOnView from "./Rewards/ScoreOnView";
 import KineticText from "./KineticText";
 import SectionBgVideo from "./SectionBgVideo";
+import LoopVideo from "./LoopVideo";
 import { waLink } from "@/lib/store";
 import styles from "./Gallery.module.css";
 
@@ -56,15 +57,7 @@ export default function Gallery() {
           <div className={styles.rail}>
             {SHOTS.map((s) => (
               <div key={s.tag} className={styles.card}>
-                <video
-                  className={styles.cardVideo}
-                  src={s.video}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  preload="metadata"
-                />
+                <LoopVideo className={styles.cardVideo} src={s.video} />
                 <div className={styles.cardShade} />
                 <span className={styles.cardNum}>{s.num}</span>
                 <div className={styles.cardTag}>{s.tag}</div>

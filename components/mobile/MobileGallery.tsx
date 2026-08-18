@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import SectionBgVideo from "../SectionBgVideo";
+import LoopVideo from "../LoopVideo";
 import styles from "./MobileGallery.module.css";
 
 const SHOTS = [
@@ -32,15 +33,7 @@ export default function MobileGallery() {
       <div className={styles.rail} ref={railRef} onScroll={onScroll}>
         {SHOTS.map((s, i) => (
           <div key={s.tag} className={styles.card}>
-            <video
-              className={styles.cardVideo}
-              src={s.video}
-              autoPlay
-              loop
-              muted
-              playsInline
-              preload="metadata"
-            />
+            <LoopVideo className={styles.cardVideo} src={s.video} />
             <div className={styles.cardShade} />
             <span className={styles.cardNum}>0{i + 1}</span>
             <div className={styles.cardTag}>{s.tag}</div>
