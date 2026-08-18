@@ -1,5 +1,6 @@
 .section {
   position: relative;
+  overflow: hidden;
   padding: 4rem 1.5rem 4.5rem;
   background-color: var(--bg-void);
   background-image:
@@ -15,6 +16,8 @@
   }
 }
 .inner {
+  position: relative;
+  z-index: 1;
   max-width: 1400px;
   margin: 0 auto;
 }

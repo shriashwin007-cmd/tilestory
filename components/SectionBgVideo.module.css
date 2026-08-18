@@ -24,3 +24,13 @@
     radial-gradient(ellipse at center, transparent 0%, rgba(8, 6, 4, 0.5) 85%),
     linear-gradient(rgba(8, 6, 4, 0.15), rgba(8, 6, 4, 0.35));
 }
+/* Cream tint for light sections (e.g. Catalog) -- same job (keep edges/text
+   legible over the motion) but lightening toward the section's own
+   background color instead of darkening toward ink. */
+.bgShadeLight {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at center, transparent 0%, rgba(239, 231, 216, 0.6) 85%),
+    linear-gradient(rgba(239, 231, 216, 0.35), rgba(239, 231, 216, 0.55));
+}

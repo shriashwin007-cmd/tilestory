@@ -5,6 +5,7 @@ import { CATEGORIES, FINISHES, SIZES, type Product } from "@/lib/products";
 import { COLOR_FAMILIES } from "@/lib/colorFamilies";
 import { waLink } from "@/lib/store";
 import { useRewards } from "../Rewards/RewardsContext";
+import SectionBgVideo from "../SectionBgVideo";
 import styles from "./MobileCatalog.module.css";
 
 type Filters = {
@@ -53,6 +54,7 @@ export default function MobileCatalog({ products }: { products: Product[] }) {
 
   return (
     <section className={styles.section} id="collections">
+      <SectionBgVideo src="/videos/catalog-section-bg.mp4" tint="light" />
       <div className={styles.head}>
         <span className={styles.label}>Our Collections</span>
         <h2 className={styles.title}>Every Tile, Every Story</h2>

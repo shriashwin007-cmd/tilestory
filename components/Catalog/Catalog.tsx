@@ -7,6 +7,7 @@ import ProductCard from "./ProductCard";
 import ProductModal from "./ProductModal";
 import Reveal from "../Reveal";
 import KineticText from "../KineticText";
+import SectionBgVideo from "../SectionBgVideo";
 import { useRewards } from "../Rewards/RewardsContext";
 import styles from "./Catalog.module.css";
 
@@ -69,6 +70,7 @@ export default function Catalog({ products }: { products: Product[] }) {
 
   return (
     <section className={styles.section} id="collections">
+      <SectionBgVideo src="/videos/catalog-section-bg.mp4" tint="light" />
       <div className={styles.inner}>
         <div className={styles.head}>
           <span className="ghost-num">03</span>

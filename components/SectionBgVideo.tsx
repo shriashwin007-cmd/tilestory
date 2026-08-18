@@ -14,7 +14,16 @@ if (typeof window !== "undefined") {
 // opposed to the sharp foreground card videos, which stay static) -- makes
 // the section itself feel "alive" while you scroll through it, not just the
 // thumbnails inside it. Decorative only, so aria-hidden.
-export default function SectionBgVideo({ src }: { src: string }) {
+export default function SectionBgVideo({
+  src,
+  tint = "dark",
+}: {
+  src: string;
+  // The scrim needs to match the section it sits in -- a dark ink tint
+  // (Gallery) reads as muddy on the Catalog section's cream background,
+  // and a light cream tint would wash out on a dark section.
+  tint?: "dark" | "light";
+}) {
   const wrapRef = useRef<HTMLDivElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
@@ -75,7 +84,7 @@ export default function SectionBgVideo({ src }: { src: string }) {
         playsInline
         preload="auto"
       />
-      <div className={styles.bgShade} />
+      <div className={tint === "light" ? styles.bgShadeLight : styles.bgShade} />
     </div>
   );
 }
