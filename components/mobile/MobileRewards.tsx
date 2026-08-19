@@ -4,6 +4,7 @@ import { useState } from "react";
 import { TIERS, nextTier, tierForPoints } from "@/lib/rewards";
 import { waLink } from "@/lib/store";
 import { useRewards } from "../Rewards/RewardsContext";
+import AmbientBg from "../AmbientBg";
 import styles from "./MobileRewards.module.css";
 
 export default function MobileRewards() {
@@ -29,6 +30,7 @@ export default function MobileRewards() {
 
   return (
     <section className={styles.section} id="rewards">
+      <AmbientBg tone="dark" />
       <span className={styles.label}>Tile Points</span>
       <h2 className={styles.title}>Explore More, Save More</h2>
 

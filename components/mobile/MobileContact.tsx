@@ -3,6 +3,7 @@
 import { FormEvent, useState } from "react";
 import { STORE, waLink } from "@/lib/store";
 import { useRewards } from "../Rewards/RewardsContext";
+import AmbientBg from "../AmbientBg";
 import styles from "./MobileContact.module.css";
 
 export default function MobileContact() {
@@ -34,6 +35,7 @@ export default function MobileContact() {
 
   return (
     <section className={styles.section} id="contact">
+      <AmbientBg tone="light" />
       <span className={styles.label}>Get In Touch</span>
       <h2 className={styles.title}>Visit Our Showroom</h2>
 

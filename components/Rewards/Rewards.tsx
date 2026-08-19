@@ -6,6 +6,7 @@ import { waLink } from "@/lib/store";
 import Reveal from "../Reveal";
 import KineticText from "../KineticText";
 import { useRewards } from "./RewardsContext";
+import AmbientBg from "../AmbientBg";
 import styles from "./Rewards.module.css";
 
 const EARN_ACTIONS = [
@@ -58,6 +59,7 @@ export default function Rewards() {
 
   return (
     <section className={styles.section} id="rewards" ref={sectionRef}>
+      <AmbientBg tone="dark" />
       <div className={styles.inner}>
         <span className="ghost-num on-dark">04</span>
         <Reveal>

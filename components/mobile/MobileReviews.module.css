@@ -1,8 +1,12 @@
 .section {
+  position: relative;
+  overflow: hidden;
   padding: 2.5rem 0 3rem;
   background: var(--bg-dark);
 }
 .label {
+  position: relative;
+  z-index: 1;
   display: block;
   padding: 0 1.1rem;
   font-family: var(--font-ui);
@@ -13,6 +17,8 @@
   margin-bottom: 0.5rem;
 }
 .title {
+  position: relative;
+  z-index: 1;
   padding: 0 1.1rem;
   font-family: var(--font-display);
   font-size: 1.5rem;
@@ -21,6 +27,8 @@
   margin-bottom: 1.3rem;
 }
 .rail {
+  position: relative;
+  z-index: 1;
   display: flex;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
@@ -57,6 +65,8 @@
   color: var(--text-primary);
 }
 .dots {
+  position: relative;
+  z-index: 1;
   display: flex;
   justify-content: center;
   gap: 0.4rem;

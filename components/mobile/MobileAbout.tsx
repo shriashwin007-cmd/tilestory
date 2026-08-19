@@ -1,4 +1,5 @@
 import { STORE } from "@/lib/store";
+import SectionBgVideo from "../SectionBgVideo";
 import styles from "./MobileAbout.module.css";
 
 const TAGS = ["Flooring", "Bathroom", "Moroccan", "Large Slab", "Imported", "Elevation"];
@@ -6,6 +7,7 @@ const TAGS = ["Flooring", "Bathroom", "Moroccan", "Large Slab", "Imported", "Ele
 export default function MobileAbout() {
   return (
     <section className={styles.about} id="about">
+      <SectionBgVideo src="/videos/about-section-bg.mp4" tint="light" />
       <div className={styles.imgBox}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/images/showroom.webp" alt="Tile Story showroom" className={styles.img} />

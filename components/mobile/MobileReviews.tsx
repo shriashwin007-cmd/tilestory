@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import AmbientBg from "../AmbientBg";
 import styles from "./MobileReviews.module.css";
 import type { Review } from "@/lib/data";
 
@@ -17,6 +18,7 @@ export default function MobileReviews({ reviews }: { reviews: Review[] }) {
 
   return (
     <section className={styles.section} id="reviews">
+      <AmbientBg tone="light" />
       <span className={styles.label}>Customer Stories</span>
       <h2 className={styles.title}>What Our Clients Say</h2>
 

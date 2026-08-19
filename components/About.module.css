@@ -1,5 +1,6 @@
 .about {
   position: relative;
+  overflow: hidden;
   padding: 4.5rem 1.5rem;
   background-color: var(--bg-dark);
   background-image:
@@ -15,6 +16,8 @@
   }
 }
 .inner {
+  position: relative;
+  z-index: 1;
   max-width: 1180px;
   margin: 0 auto;
   display: grid;

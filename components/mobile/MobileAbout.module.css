@@ -1,9 +1,12 @@
 .about {
+  position: relative;
+  overflow: hidden;
   padding: 2.5rem 1.1rem 3rem;
   background: var(--bg-dark);
 }
 .imgBox {
   position: relative;
+  z-index: 1;
   border-radius: var(--radius-card);
   overflow: hidden;
   aspect-ratio: 4 / 3;
@@ -39,6 +42,8 @@
 }
 
 .body {
+  position: relative;
+  z-index: 1;
   margin-top: 1.6rem;
 }
 .label {

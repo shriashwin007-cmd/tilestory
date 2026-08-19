@@ -6,6 +6,7 @@ import Reveal from "./Reveal";
 import ArrowButton from "./ArrowButton";
 import KineticText from "./KineticText";
 import { useRewards } from "./Rewards/RewardsContext";
+import AmbientBg from "./AmbientBg";
 import styles from "./Contact.module.css";
 
 export default function Contact() {
@@ -37,6 +38,7 @@ export default function Contact() {
 
   return (
     <section className={styles.section} id="contact">
+      <AmbientBg tone="light" />
       <div className={styles.inner}>
         <Reveal className={styles.head}>
           <span className="ghost-num">06</span>

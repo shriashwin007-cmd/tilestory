@@ -1,6 +1,7 @@
 import Reveal from "./Reveal";
 import ScoreOnView from "./Rewards/ScoreOnView";
 import KineticText from "./KineticText";
+import AmbientBg from "./AmbientBg";
 import styles from "./Reviews.module.css";
 import type { Review } from "@/lib/data";
 
@@ -13,6 +14,7 @@ export default function Reviews({ reviews }: { reviews: Review[] }) {
         points={10}
         label="Read Customer Reviews"
       />
+      <AmbientBg tone="dark" />
       <div className={styles.glow} />
       <div className={styles.inner}>
         <span className="ghost-num on-dark">05</span>

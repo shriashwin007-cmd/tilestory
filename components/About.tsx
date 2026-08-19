@@ -3,6 +3,7 @@ import Reveal from "./Reveal";
 import DepthObject from "./DepthObject";
 import ScoreOnView from "./Rewards/ScoreOnView";
 import KineticText from "./KineticText";
+import SectionBgVideo from "./SectionBgVideo";
 import styles from "./About.module.css";
 
 const TAGS = ["Flooring", "Bathroom", "Moroccan", "Large Slab", "Imported", "Elevation"];
@@ -10,6 +11,7 @@ const TAGS = ["Flooring", "Bathroom", "Moroccan", "Large Slab", "Imported", "Ele
 export default function About() {
   return (
     <section className={styles.about} id="about">
+      <SectionBgVideo src="/videos/about-section-bg.mp4" tint="light" />
       <ScoreOnView
         sectionId="about"
         pointsKey="explored_story"
