@@ -4,6 +4,7 @@ import "./globals.css";
 import ScrollProgress from "@/components/ScrollProgress";
 import SmoothScroll from "@/components/SmoothScroll";
 import Mascot from "@/components/Mascot";
+import FallingPetals from "@/components/FallingPetals";
 import { RewardsProvider } from "@/components/Rewards/RewardsContext";
 import PointToasts from "@/components/Rewards/PointToasts";
 
@@ -44,6 +45,7 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${fraunces.variable}`}>
       <body>
         <div className="grain" aria-hidden="true" />
+        <FallingPetals />
         <SmoothScroll />
         <ScrollProgress />
         <RewardsProvider>

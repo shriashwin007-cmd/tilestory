@@ -61,6 +61,21 @@ function useCurvedPlaneGeometry(width: number, height: number) {
 // now, so Tilo visibly turns and drifts rather than just idling in place.
 function MascotMesh({ targetRef }: { targetRef: React.RefObject<TiltTarget> }) {
   const texture = useTexture("/images/mascot.png");
+
+  // Mipmapping downsamples the texture for oblique/receding angles, and on
+  // a hard cutout PNG that blends semi-opaque edge pixels with neighbors --
+  // the cream suit sits close in tone to the removed background, so at
+  // generated mip levels its alpha can drop below the alphaTest cutoff and
+  // get discarded entirely. Wasn't visible before the rotation range was
+  // widened (barely any oblique sampling happened), but the wider turn and
+  // full spin now sample steep angles constantly. Disabling mipmaps keeps
+  // every angle sampling the same full-resolution, correct-alpha texture.
+  useEffect(() => {
+    texture.generateMipmaps = false;
+    texture.minFilter = THREE.LinearFilter;
+    texture.needsUpdate = true;
+  }, [texture]);
+
   const groupRef = useRef<THREE.Group>(null);
   const meshRef = useRef<THREE.Mesh>(null);
   const idleT = useRef(Math.random() * 10);

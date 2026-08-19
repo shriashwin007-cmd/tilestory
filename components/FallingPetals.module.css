@@ -1,0 +1,60 @@
+.wrap {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Outer element handles horizontal sway (side-to-side drift); inner handles
+   the actual fall + spin. Two independent CSS animations on separate
+   elements so their durations/eases don't fight on the same transform. */
+.sway {
+  position: absolute;
+  top: -8%;
+  display: block;
+  animation-name: sway;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+@keyframes sway {
+  from {
+    transform: translateX(-14px);
+  }
+  to {
+    transform: translateX(14px);
+  }
+}
+
+.petal {
+  display: block;
+  border-radius: 0 100% 0 100%;
+  opacity: 0.55;
+  animation-name: fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+@keyframes fall {
+  from {
+    transform: translateY(-10vh) rotate(var(--rotate-start, 0deg));
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.55;
+  }
+  90% {
+    opacity: 0.55;
+  }
+  to {
+    transform: translateY(110vh) rotate(calc(var(--rotate-start, 0deg) + 340deg));
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wrap {
+    display: none;
+  }
+}
