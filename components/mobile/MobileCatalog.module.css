@@ -93,6 +93,23 @@
   grid-template-columns: 1fr 1fr;
   gap: 0.8rem;
 }
+
+.viewMoreBtn {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1.4rem;
+  padding: 0.9rem 1rem;
+  border-radius: var(--radius-button);
+  background: var(--teal-primary);
+  color: #f4efe4;
+  font-family: var(--font-ui);
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-align: center;
+}
 .card {
   all: unset;
   cursor: pointer;

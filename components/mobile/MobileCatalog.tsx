@@ -1,12 +1,17 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Link from "next/link";
 import { CATEGORIES, FINISHES, SIZES, type Product } from "@/lib/products";
 import { COLOR_FAMILIES } from "@/lib/colorFamilies";
 import { waLink } from "@/lib/store";
 import { useRewards } from "../Rewards/RewardsContext";
 import SectionBgVideo from "../SectionBgVideo";
 import styles from "./MobileCatalog.module.css";
+
+// Same reasoning as the desktop Catalog: home shows a short curated teaser,
+// full browse/search/filter lives on the dedicated /collections page.
+const PREVIEW_COUNT = 6;
 
 type Filters = {
   category: string | null;
@@ -23,7 +28,13 @@ function matchesColorFamily(colors: string[], familyName: string | null): boolea
   return colors.some((c) => family.match.includes(c.toUpperCase()));
 }
 
-export default function MobileCatalog({ products }: { products: Product[] }) {
+export default function MobileCatalog({
+  products,
+  mode = "full",
+}: {
+  products: Product[];
+  mode?: "full" | "preview";
+}) {
   const [search, setSearch] = useState("");
   const [filters, setFilters] = useState<Filters>(EMPTY_FILTERS);
   const [filterSheetOpen, setFilterSheetOpen] = useState(false);
@@ -60,26 +71,30 @@ export default function MobileCatalog({ products }: { products: Product[] }) {
         <h2 className={styles.title}>Every Tile, Every Story</h2>
       </div>
 
-      <div className={styles.toolbar}>
-        <div className={styles.searchBox}>
-          <span>🔍</span>
-          <input
-            className={styles.searchInput}
-            type="text"
-            placeholder="Search tiles..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-        </div>
-        <button type="button" className={styles.filterBtn} onClick={() => setFilterSheetOpen(true)}>
-          Filters {activeCount > 0 && <span className={styles.filterCount}>{activeCount}</span>}
-        </button>
-      </div>
+      {mode === "full" && (
+        <>
+          <div className={styles.toolbar}>
+            <div className={styles.searchBox}>
+              <span>🔍</span>
+              <input
+                className={styles.searchInput}
+                type="text"
+                placeholder="Search tiles..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
+            <button type="button" className={styles.filterBtn} onClick={() => setFilterSheetOpen(true)}>
+              Filters {activeCount > 0 && <span className={styles.filterCount}>{activeCount}</span>}
+            </button>
+          </div>
 
-      <div className={styles.count}>{results.length} tiles found</div>
+          <div className={styles.count}>{results.length} tiles found</div>
+        </>
+      )}
 
       <div className={styles.grid}>
-        {results.map((p) => (
+        {(mode === "preview" ? products.slice(0, PREVIEW_COUNT) : results).map((p) => (
           <button
             key={p.id}
             type="button"
@@ -108,6 +123,12 @@ export default function MobileCatalog({ products }: { products: Product[] }) {
           </button>
         ))}
       </div>
+
+      {mode === "preview" && (
+        <Link href="/collections" className={styles.viewMoreBtn}>
+          View Full Collection ({products.length})
+        </Link>
+      )}
 
       {/* Filter bottom sheet */}
       <div className={`${styles.sheetBackdrop} ${filterSheetOpen ? styles.sheetBackdropOpen : ""}`} onClick={() => setFilterSheetOpen(false)} />

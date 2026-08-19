@@ -19,7 +19,7 @@ export default function MobileHome({ products, reviews }: { products: Product[];
         <Marquee />
         <MobileAbout />
         <MobileGallery />
-        <MobileCatalog products={products} />
+        <MobileCatalog products={products} mode="preview" />
         <MobileRewards />
         <MobileReviews reviews={reviews} />
         <MobileContact />

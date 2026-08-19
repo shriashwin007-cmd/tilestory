@@ -223,6 +223,12 @@
   gap: 1.4rem;
 }
 
+.viewMoreWrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 2.4rem;
+}
+
 .empty {
   text-align: center;
   padding: 5rem 1rem;

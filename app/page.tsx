@@ -34,7 +34,7 @@ export default async function Home() {
           <Marquee />
           <About />
           <Gallery />
-          <Catalog products={products} />
+          <Catalog products={products} mode="preview" />
           <Rewards />
           <Reviews reviews={reviews} />
           <Contact />

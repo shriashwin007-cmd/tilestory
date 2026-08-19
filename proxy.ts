@@ -18,6 +18,18 @@ export async function proxy(request: NextRequest) {
 
   let response = NextResponse.next({ request: { headers: requestHeaders } });
 
+  const isAdminRoute = request.nextUrl.pathname.startsWith("/admin");
+  const isLoginRoute = request.nextUrl.pathname === "/admin/login";
+
+  // The public site (just "/") never needs an auth check -- only /admin
+  // does. Running Supabase's getUser() unconditionally on every request
+  // meant a single Supabase hiccup (e.g. its known transient clock-skew
+  // "JWT issued at future" error) took down the entire public homepage
+  // with a 500, not just the admin panel that actually depends on it.
+  if (!isAdminRoute && !isLoginRoute) {
+    return response;
+  }
+
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
@@ -37,12 +49,15 @@ export async function proxy(request: NextRequest) {
     }
   );
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  const isAdminRoute = request.nextUrl.pathname.startsWith("/admin");
-  const isLoginRoute = request.nextUrl.pathname === "/admin/login";
+  // Defense in depth even for /admin: a Supabase error here should mean
+  // "treat as logged out" (redirect to login), never a hard 500.
+  let user = null;
+  try {
+    const { data } = await supabase.auth.getUser();
+    user = data.user;
+  } catch {
+    user = null;
+  }
 
   if (isAdminRoute && !isLoginRoute && !user) {
     const url = request.nextUrl.clone();
@@ -60,5 +75,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/", "/admin/:path*"],
+  matcher: ["/", "/collections", "/admin/:path*"],
 };

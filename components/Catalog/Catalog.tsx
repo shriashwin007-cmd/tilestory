@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Link from "next/link";
 import { CATEGORIES, FINISHES, SIZES, type Product } from "@/lib/products";
 import { COLOR_FAMILIES } from "@/lib/colorFamilies";
 import ProductCard from "./ProductCard";
@@ -8,8 +9,15 @@ import ProductModal from "./ProductModal";
 import Reveal from "../Reveal";
 import KineticText from "../KineticText";
 import SectionBgVideo from "../SectionBgVideo";
+import ArrowButton from "../ArrowButton";
 import { useRewards } from "../Rewards/RewardsContext";
 import styles from "./Catalog.module.css";
+
+// Home page shows a short, curated teaser instead of the full searchable
+// grid -- the whole point of the dedicated /collections page is to move
+// "browse everything" off the homepage, since that's what was making the
+// homepage itself feel endless to scroll through.
+const PREVIEW_COUNT = 8;
 
 type Filters = {
   category: string | null;
@@ -27,7 +35,13 @@ function matchesColorFamily(colors: string[], familyName: string | null): boolea
   return colors.some((c) => family.match.includes(c.toUpperCase()));
 }
 
-export default function Catalog({ products }: { products: Product[] }) {
+export default function Catalog({
+  products,
+  mode = "full",
+}: {
+  products: Product[];
+  mode?: "full" | "preview";
+}) {
   const [search, setSearch] = useState("");
   const [filters, setFilters] = useState<Filters>(EMPTY_FILTERS);
   const [openId, setOpenId] = useState<string | null>(null);
@@ -68,6 +82,8 @@ export default function Catalog({ products }: { products: Product[] }) {
   const hasActiveFilters =
     !!search || !!filters.category || !!filters.finish || !!filters.size || !!filters.color;
 
+  const previewProducts = products.slice(0, PREVIEW_COUNT);
+
   return (
     <section className={styles.section} id="collections">
       <SectionBgVideo src="/videos/catalog-section-bg.mp4" tint="light" />
@@ -83,120 +99,139 @@ export default function Catalog({ products }: { products: Product[] }) {
             segments={[{ text: "Every Tile, " }, { text: "Every Story", em: true }]}
           />
 
-          <div className={styles.searchWrap}>
-            <div className={styles.searchBox}>
-              <span>🔍</span>
-              <input
-                className={styles.searchInput}
-                type="text"
-                placeholder="Search tiles by name, style, color, room..."
-                value={search}
-                onChange={(e) => {
-                  setSearch(e.target.value);
-                  if (e.target.value.trim()) addPoints("used_search", 10, "Searched the Collection");
-                }}
-              />
+          {mode === "full" && (
+            <div className={styles.searchWrap}>
+              <div className={styles.searchBox}>
+                <span>🔍</span>
+                <input
+                  className={styles.searchInput}
+                  type="text"
+                  placeholder="Search tiles by name, style, color, room..."
+                  value={search}
+                  onChange={(e) => {
+                    setSearch(e.target.value);
+                    if (e.target.value.trim()) addPoints("used_search", 10, "Searched the Collection");
+                  }}
+                />
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
-        <div className={styles.layout}>
-          <aside className={styles.filters}>
-            <div className={styles.filterHead}>
-              <span className={styles.filterTitle}>Filters</span>
-              {hasActiveFilters && (
-                <button className={styles.filterClear} onClick={clearAll}>
-                  Clear All
-                </button>
+        {mode === "preview" ? (
+          <>
+            <div className={styles.grid}>
+              {previewProducts.map((p, i) => (
+                <Reveal key={p.id} delay={(i % 4) * 90}>
+                  <ProductCard product={p} onOpen={openProductAndScore} />
+                </Reveal>
+              ))}
+            </div>
+            <div className={styles.viewMoreWrap}>
+              <ArrowButton as={Link} href="/collections">
+                View Full Collection ({products.length})
+              </ArrowButton>
+            </div>
+          </>
+        ) : (
+          <div className={styles.layout}>
+            <aside className={styles.filters}>
+              <div className={styles.filterHead}>
+                <span className={styles.filterTitle}>Filters</span>
+                {hasActiveFilters && (
+                  <button className={styles.filterClear} onClick={clearAll}>
+                    Clear All
+                  </button>
+                )}
+              </div>
+
+              <div className={styles.filterGroup}>
+                <span className={styles.filterLabel}>Category</span>
+                <div className={styles.chipGroup}>
+                  {CATEGORIES.map((c) => (
+                    <button
+                      key={c}
+                      className={`${styles.chip} ${filters.category === c ? styles.active : ""}`}
+                      onClick={() => toggle("category", c)}
+                    >
+                      {c}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className={styles.filterGroup}>
+                <span className={styles.filterLabel}>Finish</span>
+                <div className={styles.chipGroup}>
+                  {FINISHES.map((f) => (
+                    <button
+                      key={f}
+                      className={`${styles.chip} ${filters.finish === f ? styles.active : ""}`}
+                      onClick={() => toggle("finish", f)}
+                    >
+                      {f}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className={styles.filterGroup}>
+                <span className={styles.filterLabel}>Size</span>
+                <div className={styles.chipGroup}>
+                  {SIZES.map((s) => (
+                    <button
+                      key={s}
+                      className={`${styles.chip} ${filters.size === s ? styles.active : ""}`}
+                      onClick={() => toggle("size", s)}
+                    >
+                      {s}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className={styles.filterGroup}>
+                <span className={styles.filterLabel}>Color</span>
+                <div className={styles.colorGrid}>
+                  {COLOR_FAMILIES.map((c) => (
+                    <button
+                      key={c.name}
+                      className={`${styles.colorChip} ${filters.color === c.name ? styles.active : ""}`}
+                      style={{ background: c.hex }}
+                      title={c.name}
+                      onClick={() => toggle("color", c.name)}
+                    />
+                  ))}
+                </div>
+              </div>
+            </aside>
+
+            <div>
+              <div className={styles.resultsBar}>
+                <span className={styles.count}>
+                  <strong>{results.length}</strong>
+                  tiles found
+                </span>
+              </div>
+
+              {results.length === 0 ? (
+                <div className={styles.empty}>
+                  <div className={styles.emptyIc}>🔍</div>
+                  <div className={styles.emptyTitle}>No tiles found</div>
+                  <div className={styles.emptySub}>Try adjusting your search or filters</div>
+                </div>
+              ) : (
+                <div className={styles.grid}>
+                  {results.map((p, i) => (
+                    <Reveal key={p.id} delay={(i % 3) * 90}>
+                      <ProductCard product={p} onOpen={openProductAndScore} />
+                    </Reveal>
+                  ))}
+                </div>
               )}
             </div>
-
-            <div className={styles.filterGroup}>
-              <span className={styles.filterLabel}>Category</span>
-              <div className={styles.chipGroup}>
-                {CATEGORIES.map((c) => (
-                  <button
-                    key={c}
-                    className={`${styles.chip} ${filters.category === c ? styles.active : ""}`}
-                    onClick={() => toggle("category", c)}
-                  >
-                    {c}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className={styles.filterGroup}>
-              <span className={styles.filterLabel}>Finish</span>
-              <div className={styles.chipGroup}>
-                {FINISHES.map((f) => (
-                  <button
-                    key={f}
-                    className={`${styles.chip} ${filters.finish === f ? styles.active : ""}`}
-                    onClick={() => toggle("finish", f)}
-                  >
-                    {f}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className={styles.filterGroup}>
-              <span className={styles.filterLabel}>Size</span>
-              <div className={styles.chipGroup}>
-                {SIZES.map((s) => (
-                  <button
-                    key={s}
-                    className={`${styles.chip} ${filters.size === s ? styles.active : ""}`}
-                    onClick={() => toggle("size", s)}
-                  >
-                    {s}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className={styles.filterGroup}>
-              <span className={styles.filterLabel}>Color</span>
-              <div className={styles.colorGrid}>
-                {COLOR_FAMILIES.map((c) => (
-                  <button
-                    key={c.name}
-                    className={`${styles.colorChip} ${filters.color === c.name ? styles.active : ""}`}
-                    style={{ background: c.hex }}
-                    title={c.name}
-                    onClick={() => toggle("color", c.name)}
-                  />
-                ))}
-              </div>
-            </div>
-          </aside>
-
-          <div>
-            <div className={styles.resultsBar}>
-              <span className={styles.count}>
-                <strong>{results.length}</strong>
-                tiles found
-              </span>
-            </div>
-
-            {results.length === 0 ? (
-              <div className={styles.empty}>
-                <div className={styles.emptyIc}>🔍</div>
-                <div className={styles.emptyTitle}>No tiles found</div>
-                <div className={styles.emptySub}>Try adjusting your search or filters</div>
-              </div>
-            ) : (
-              <div className={styles.grid}>
-                {results.map((p, i) => (
-                  <Reveal key={p.id} delay={(i % 3) * 90}>
-                    <ProductCard product={p} onOpen={openProductAndScore} />
-                  </Reveal>
-                ))}
-              </div>
-            )}
           </div>
-        </div>
+        )}
       </div>
 
       {openProduct && (
