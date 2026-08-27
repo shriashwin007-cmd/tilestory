@@ -150,7 +150,14 @@
 
 /* Idle breathing pulse — the actual clickable element, now wrapping the
    Three.js canvas (Mascot3D) instead of a flat <img>. Turning/facing is
-   handled inside the WebGL scene itself (real lit rotation), not CSS. */
+   handled inside the WebGL scene itself (real lit rotation), not CSS.
+   filter:drop-shadow (not box-shadow) hugs the actual alpha-channel
+   silhouette rather than the bounding box -- the mascot's suit is a light
+   cream (~#c7bdb4), nearly the same tone as the site's own cream section
+   backgrounds, so without this it visually melts into light sections and
+   reads as "invisible" even though it's rendering fine. Two stacked
+   shadows: a tight dark contact edge + a soft wide halo, so it separates
+   from both light and dark backgrounds. */
 .pulseLayer {
   all: unset;
   display: block;
@@ -160,6 +167,9 @@
   pointer-events: auto;
   animation: breathe 4.4s ease-in-out infinite;
   -webkit-tap-highlight-color: transparent;
+  filter:
+    drop-shadow(0 1px 2px rgba(16, 14, 11, 0.45))
+    drop-shadow(0 6px 18px rgba(16, 14, 11, 0.3));
 }
 @keyframes breathe {
   0%, 100% { transform: scale(1); }
