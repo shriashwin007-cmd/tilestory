@@ -4,7 +4,7 @@
   border-top: 1px solid var(--border-on-dark);
   border-bottom: 1px solid var(--border-on-dark);
   border-radius: var(--frame-radius, 0px) var(--frame-radius, 0px) 0 0;
-  padding: 1.15rem 0;
+  padding: 1.6rem 0;
   white-space: nowrap;
   -webkit-mask-image: linear-gradient(
     to right,
@@ -29,15 +29,16 @@
   align-items: center;
   gap: 2.4rem;
   font-family: var(--font-display);
-  font-size: 0.95rem;
-  letter-spacing: 0.12em;
+  font-weight: 700;
+  font-size: clamp(1.6rem, 3.2vw, 2.6rem);
+  letter-spacing: 0.02em;
   text-transform: uppercase;
   color: var(--text-on-dark-soft);
   padding: 0 2.4rem;
 }
 .dot {
   color: var(--yellow-bright);
-  font-size: 0.55rem;
+  font-size: 0.8rem;
 }
 @keyframes marquee {
   from {

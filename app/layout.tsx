@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Bricolage_Grotesque } from "next/font/google";
+import { Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
 import ScrollProgress from "@/components/ScrollProgress";
 import SmoothScroll from "@/components/SmoothScroll";
@@ -8,22 +8,15 @@ import FallingPetals from "@/components/FallingPetals";
 import { RewardsProvider } from "@/components/Rewards/RewardsContext";
 import PointToasts from "@/components/Rewards/PointToasts";
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  style: ["normal", "italic"],
-});
-
-// Bold structural grotesque for headlines, replacing the earlier serif
-// (Fraunces) — that pairing (large serif + small-caps sans labels) is
-// exactly the look every "editorial luxury" AI-built site converges on
-// right now. Bricolage Grotesque is graphic and slightly quirky rather
-// than literary/hushed, which reads as more specific to an actual tile
-// showroom (geometric, grid-based product) than a fashion-brand serif.
-// Kept the CSS variable name --font-fraunces so every component's
-// var(--font-display)/var(--font-editorial) reference in globals.css
-// picks this up with a single-file change.
+// One typeface, sitewide -- Inter (previously the body/UI font) has been
+// dropped entirely rather than just unreferenced, so the site doesn't ship
+// a second web font that nothing uses. Bricolage Grotesque is graphic and
+// slightly quirky rather than literary/hushed, which reads as more specific
+// to an actual tile showroom (geometric, grid-based product) than a
+// fashion-brand serif. Kept the CSS variable name --font-fraunces so every
+// component's var(--font-display)/var(--font-editorial)/var(--font-body)/
+// var(--font-ui) reference in globals.css picks this up with a single-file
+// change.
 const fraunces = Bricolage_Grotesque({
   variable: "--font-fraunces",
   subsets: ["latin"],
@@ -42,7 +35,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${fraunces.variable}`}>
+    <html lang="en" className={fraunces.variable}>
       <body>
         <div className="grain" aria-hidden="true" />
         <FallingPetals />

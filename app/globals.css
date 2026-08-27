@@ -44,12 +44,18 @@
   --border-subtle: rgba(32, 27, 20, 0.12);
   --border-brown: rgba(122, 79, 46, 0.25);
   --border-on-dark: rgba(236, 226, 206, 0.14);
-  /* FONTS — Fraunces serif for large editorial headlines, Inter for
-     small uppercase spaced-out labels and body copy. */
-  --font-display: var(--font-fraunces), Georgia, serif;
-  --font-editorial: var(--font-fraunces), Georgia, serif;
-  --font-body: var(--font-inter), -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
-  --font-ui: var(--font-inter), -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  /* FONTS — one typeface sitewide (Bricolage Grotesque, the same bold
+     display face already used for the marquee/headlines), no second
+     body/UI font. Kept as four separate variables since every component
+     already references --font-body/--font-ui/--font-display/--font-editorial
+     rather than a hardcoded family, so this is a single-line change instead
+     of touching every component. Body-copy elements lean on a lighter
+     font-weight (set per-component) for readability rather than switching
+     family, since Bricolage is a variable font with a full weight range. */
+  --font-display: var(--font-fraunces), "Helvetica Neue", Arial, sans-serif;
+  --font-editorial: var(--font-fraunces), "Helvetica Neue", Arial, sans-serif;
+  --font-body: var(--font-fraunces), "Helvetica Neue", Arial, sans-serif;
+  --font-ui: var(--font-fraunces), "Helvetica Neue", Arial, sans-serif;
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
   /* SHADOWS — soft, warm, low-glare */
@@ -203,9 +209,9 @@ button {
   position: relative;
   z-index: 1;
   font-family: var(--font-editorial);
-  font-size: clamp(2.9rem, 5.4vw, 4.6rem);
+  font-size: clamp(3.3rem, 6.4vw, 5.6rem);
   font-weight: 640;
-  line-height: 1.05;
+  line-height: 1.02;
   letter-spacing: -0.015em;
   color: var(--text-primary);
 }
