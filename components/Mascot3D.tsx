@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useMemo, useRef } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
 import * as THREE from "three";
@@ -30,28 +30,6 @@ function FitCamera() {
     ortho.updateProjectionMatrix();
   }, [size.height, camera]);
   return null;
-}
-
-// A flat plane reads as a paper cutout no matter how it's lit. Subdividing
-// it and bowing the vertices outward along +Z (most in the center, tapering
-// to ~0 at the left/right edges) gives it an actual curved surface -- so
-// when it turns, the lighting sweeps across a real curve instead of a card
-// edge flashing white. Built once (useMemo), never mutated per-frame.
-function useCurvedPlaneGeometry(width: number, height: number) {
-  return useMemo(() => {
-    const segments = 32;
-    const geo = new THREE.PlaneGeometry(width, height, segments, segments);
-    const pos = geo.attributes.position;
-    const bulge = width * 0.16;
-    for (let i = 0; i < pos.count; i++) {
-      const x = pos.getX(i);
-      const norm = x / (width / 2); // -1..1 across the plane
-      const curve = Math.cos((norm * Math.PI) / 2); // 1 at center, 0 at edges
-      pos.setZ(i, curve * curve * bulge);
-    }
-    geo.computeVertexNormals();
-    return geo;
-  }, [width, height]);
 }
 
 // Real WebGL turning instead of a CSS rotateX/rotateY trick on a flat <img>:
@@ -86,7 +64,6 @@ function MascotMesh({ targetRef }: { targetRef: React.RefObject<TiltTarget> }) {
   const aspect = img?.width && img?.height ? img.width / img.height : 520 / 790;
   const height = WORLD_HEIGHT;
   const width = height * aspect;
-  const geometry = useCurvedPlaneGeometry(width, height);
 
   useFrame((_, delta) => {
     idleT.current += delta;
@@ -133,7 +110,17 @@ function MascotMesh({ targetRef }: { targetRef: React.RefObject<TiltTarget> }) {
 
   return (
     <group ref={groupRef}>
-      <mesh ref={meshRef} geometry={geometry}>
+      {/* Flat plane, not the earlier bowed/curved geometry -- that Z-bulge
+          combined with DoubleSide made the front and back faces sit close
+          enough in depth to z-fight at some angles, and the losing face
+          (wrong-facing normal, lit only by ambient) rendered dark enough to
+          read as a hole punched straight through the shirt. Confirmed by
+          screenshot: the "missing" pixels exactly matched the page
+          background color, not a lighter/grayed shirt -- genuine
+          transparency, not just poor contrast. A flat plane can't
+          self-z-fight with itself. */}
+      <mesh ref={meshRef}>
+        <planeGeometry args={[width, height]} />
         <meshStandardMaterial
           map={texture}
           transparent
