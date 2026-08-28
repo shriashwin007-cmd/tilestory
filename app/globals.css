@@ -93,7 +93,33 @@ html {
 }
 @media (max-width: 699px) {
   html {
-    font-size: 16.5px;
+    /* Bumped again for the client demo -- bigger, more confident type on
+       phones. Re-verified via headless-Chrome screenshots at 390x844 (the
+       same MobileAbout headline + MobileTabBar "WhatsApp" button that broke
+       last time at 17.5px) after this change; both compensated below
+       instead of capping the root size again. */
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 699px) {
+  /* Native-app tap feel: every tap gets an instant, subtle press-down
+     instead of the default flat/no-feedback mobile-web feel, and the grey
+     tap-highlight rectangle Android/iOS draw on <a>/<button> is removed
+     since we're drawing our own feedback here. */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+  a,
+  button,
+  [role="button"] {
+    transition: transform 0.15s var(--ease-smooth), opacity 0.15s var(--ease-smooth);
+  }
+  a:active,
+  button:active,
+  [role="button"]:active {
+    transform: scale(0.96);
+    opacity: 0.85;
   }
 }
 

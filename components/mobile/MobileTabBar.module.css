@@ -5,19 +5,23 @@
   bottom: 0;
   z-index: 400;
   display: flex;
-  gap: 0.5rem;
-  padding: 0.7rem 0.7rem calc(0.7rem + env(safe-area-inset-bottom, 0));
+  gap: 0.45rem;
+  padding: 0.64rem 0.64rem calc(0.64rem + env(safe-area-inset-bottom, 0));
   background: rgba(16, 14, 11, 0.92);
   backdrop-filter: blur(16px);
   border-top: 1px solid var(--border-on-dark);
 }
 .callBtn,
 .waBtn {
+  /* Held back a notch from the sitewide root font-size bump -- this is the
+     one bar with a fixed, unwrapping width budget ("WhatsApp" already
+     clipped once at a smaller root size), so it's kept at roughly its old
+     effective px size on purpose while everything else on the page grows. */
   text-align: center;
-  padding: 0.85rem 0.35rem;
+  padding: 0.85rem 0.3rem;
   border-radius: var(--radius-button);
   font-family: var(--font-ui);
-  font-size: 0.76rem;
+  font-size: 0.7rem;
   font-weight: 600;
   white-space: nowrap;
 }
