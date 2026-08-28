@@ -78,8 +78,23 @@
 }
 
 html {
+  /* Every font-size sitewide is set in rem (169 declarations across
+     components), always relative to this root value, never to a parent's
+     font-size -- so bumping it here scales every piece of text on the site
+     uniformly in one place, rather than hand-editing each declaration
+     individually. Verified via real screenshots: the full ~9% bump is
+     clean on desktop (confirmed no overflow), but on mobile it pushed at
+     least one headline (MobileAbout's "A Showroom Built on Craft & Trust")
+     just past the point where it wraps, clipping instead -- mobile gets a
+     smaller, safer bump instead. */
+  font-size: 17.5px;
   scroll-behavior: smooth;
   scroll-padding-top: 80px;
+}
+@media (max-width: 699px) {
+  html {
+    font-size: 16.5px;
+  }
 }
 
 body {
@@ -214,6 +229,7 @@ button {
   line-height: 1.02;
   letter-spacing: -0.015em;
   color: var(--text-primary);
+  overflow-wrap: break-word;
 }
 .s-title em {
   font-style: italic;

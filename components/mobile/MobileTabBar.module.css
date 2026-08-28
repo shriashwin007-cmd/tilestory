@@ -5,27 +5,34 @@
   bottom: 0;
   z-index: 400;
   display: flex;
-  gap: 0.7rem;
-  padding: 0.7rem 1rem calc(0.7rem + env(safe-area-inset-bottom, 0));
+  gap: 0.5rem;
+  padding: 0.7rem 0.7rem calc(0.7rem + env(safe-area-inset-bottom, 0));
   background: rgba(16, 14, 11, 0.92);
   backdrop-filter: blur(16px);
   border-top: 1px solid var(--border-on-dark);
 }
 .callBtn,
 .waBtn {
-  flex: 1;
   text-align: center;
-  padding: 0.85rem;
+  padding: 0.85rem 0.35rem;
   border-radius: var(--radius-button);
   font-family: var(--font-ui);
-  font-size: 0.82rem;
+  font-size: 0.76rem;
   font-weight: 600;
+  white-space: nowrap;
 }
 .callBtn {
+  /* "Call" and "WhatsApp" aren't the same width -- equal flex-grow still
+     split any leftover space 50/50 regardless of content, which wasn't
+     enough room for WhatsApp's longer text and clipped its last letter.
+     Call stays exactly its own content size (flex-grow:0); WhatsApp claims
+     all remaining space (flex-grow:1) instead of splitting it evenly. */
+  flex: 0 0 auto;
   border: 1px solid var(--border-on-dark);
   color: var(--text-on-dark);
 }
 .waBtn {
+  flex: 1 1 auto;
   background: var(--teal-primary);
   color: #f4efe4;
 }

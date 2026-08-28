@@ -25,6 +25,7 @@
   font-weight: 700;
   color: var(--text-primary);
   margin-bottom: 1.3rem;
+  overflow-wrap: break-word;
 }
 .rail {
   position: relative;

@@ -23,6 +23,7 @@
   font-weight: 700;
   color: var(--text-on-dark);
   margin-bottom: 1.4rem;
+  overflow-wrap: break-word;
 }
 
 .card {

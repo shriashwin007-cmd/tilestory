@@ -62,6 +62,7 @@
   line-height: 1.15;
   color: var(--text-primary);
   margin-bottom: 0.9rem;
+  overflow-wrap: break-word;
 }
 .desc {
   font-family: var(--font-body);

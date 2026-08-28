@@ -46,6 +46,7 @@
   line-height: 1.02;
   letter-spacing: -0.015em;
   color: var(--text-on-dark);
+  overflow-wrap: break-word;
 }
 .right {
   display: flex;
