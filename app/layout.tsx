@@ -8,6 +8,7 @@ import FallingPetals from "@/components/FallingPetals";
 import { RewardsProvider } from "@/components/Rewards/RewardsContext";
 import PointToasts from "@/components/Rewards/PointToasts";
 import { STORE } from "@/lib/store";
+import { getReviews } from "@/lib/data";
 
 // One typeface, sitewide -- the actual stencil-cut face the user pointed
 // to (visible bridges/gaps cut into the O, R, S, Y), not just "another bold
@@ -77,47 +78,63 @@ export const metadata: Metadata = {
 // (and feeds Google Maps/Business Profile matching) instead of just a plain
 // blue link. Built from the same STORE constants every other component
 // already renders, so it can't drift out of sync with what's on the page.
-const localBusinessJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "HomeAndConstructionBusiness",
-  name: STORE.name,
-  image: `${SITE_URL}/images/showroom.webp`,
-  url: SITE_URL,
-  telephone: STORE.phoneTel,
-  priceRange: "₹₹₹",
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "1 Sterling Road, Opposite Hard Rock Cafe",
-    addressLocality: "Nungambakkam, Chennai",
-    postalCode: "600034",
-    addressCountry: "IN",
-  },
-  openingHoursSpecification: [
-    {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-      opens: "09:00",
-      closes: "19:00",
-    },
-    {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: "Sunday",
-      opens: "10:00",
-      closes: "17:00",
-    },
-  ],
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: STORE.rating,
-    bestRating: "5",
-  },
-};
+async function buildLocalBusinessJsonLd() {
+  // Google's review-snippet validator requires ratingCount alongside
+  // ratingValue -- and per Google's structured-data policy that count has
+  // to reflect real reviews, not a marketing number, so it's pulled from
+  // the same Supabase table the Reviews section renders rather than
+  // hardcoded. No real reviews yet means no honest aggregateRating to
+  // publish, so the field is dropped entirely rather than faked.
+  const reviews = await getReviews().catch(() => []);
 
-export default function RootLayout({
+  return {
+    "@context": "https://schema.org",
+    "@type": "HomeAndConstructionBusiness",
+    name: STORE.name,
+    image: `${SITE_URL}/images/showroom.webp`,
+    url: SITE_URL,
+    telephone: STORE.phoneTel,
+    priceRange: "₹₹₹",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "1 Sterling Road, Opposite Hard Rock Cafe",
+      addressLocality: "Nungambakkam, Chennai",
+      postalCode: "600034",
+      addressCountry: "IN",
+    },
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        opens: "09:00",
+        closes: "19:00",
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: "Sunday",
+        opens: "10:00",
+        closes: "17:00",
+      },
+    ],
+    ...(reviews.length > 0
+      ? {
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: STORE.rating,
+            ratingCount: reviews.length,
+            bestRating: "5",
+          },
+        }
+      : {}),
+  };
+}
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const localBusinessJsonLd = await buildLocalBusinessJsonLd();
   return (
     <html lang="en" className={fraunces.variable}>
       <body>
